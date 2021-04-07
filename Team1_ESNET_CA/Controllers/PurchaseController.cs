@@ -10,6 +10,13 @@ namespace Team1_ESNET_CA.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["ItemImage"] = ItemImage;
+            ViewData["ItemName"] = ItemName;
+            ViewData["ItemDesc"] = ItemDesc;
+            ViewData["ItemDL"] = ItemDownload;
+            ViewData["PurDate"] = PurchaseDate;
+            ViewData["PurQuantity"] = PurchaseQuantity;
+            ViewData["PurActCode"] = ActivationCode;
             return View();
         }
     }
