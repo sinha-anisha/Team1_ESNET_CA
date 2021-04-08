@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Team1_ESNET_CA.Controllers
 {
-    public class PurchaseController : Controller
+    public class OrderController : Controller
     {
         public IActionResult Index()
         {
+            //Create var and link it up to SQL via (Folder.ActionName) = OrderData.GetOrderDetails(Any Parameters?)
+            //ViewData
             return View();
         }
     }
