@@ -9,8 +9,6 @@ namespace Team1_ESNET_CA.Models
     {
         //Model get;set; for Order Controller/View
         //Parameters we need
-        //Check if anisha if we are doing LINQ or EntityFrameWork
-        //Way of extracting data and creating model will be different. 
         public string ProductImg { get; set;}
         public string ProductName { get; set;}
         public string ProductDesc { get; set;}
