@@ -10,5 +10,48 @@
 }
 
 
-@*Style*@
-@*Table layout*@
+
+<style>
+    .table 
+    {
+
+    }
+
+    .img_container{
+
+    }
+
+    .desc_container{
+
+    }
+
+    .desc{
+
+    }
+</style>
+
+
+<table>
+    @for(int i = 0; i < orderimg.Count; i++)
+    {
+        if(i % 1 == 0)
+        {
+    @:<tr>
+        }
+        @:<td>
+            @:<div class="img_container">
+                @:<img src="orderimg[i]" width="235" height="350" />
+            @:</div>
+            @:<div class="desc_container">
+                @:<span class="desc">ordername[i]</span>
+                @:<span class="desc">orderdesc[i]</span>
+            @:</div>
+        @:</td>
+        @:<td class="order_details">
+            @:<span class="Od_desc">orderdate[i]</span>
+            @:<span class="Od_desc">ordernum[i]</span>
+            @:<span class="Od_desc">actcode[i]</span>
+        @:</td>
+    @:</tr>
+    }
+</table>
