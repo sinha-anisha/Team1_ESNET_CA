@@ -19,4 +19,4 @@ namespace Team1_ESNET_CA.Models
         public string Email { get;set;}
     }
     }
-}
+

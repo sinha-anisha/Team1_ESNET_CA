@@ -7,6 +7,7 @@
   <ItemGroup>
     <Folder Include="Views\Cart\" />
     <Folder Include="Views\Gallery\" />
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
   <ItemGroup>
