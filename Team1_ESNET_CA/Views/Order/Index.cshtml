@@ -1,8 +1,12 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    //Input new var to link up with Viewdata from Order Controller 
+﻿@{
+        ViewData["Title"] = "My Purchases";
+        var orderimg = (List<string>)ViewData["OrderImg"];
+        var ordername = (List<string>)ViewData["OrderName"];
+        var orderdesc = (List<string>)ViewData["OrderDesc"];
+        var orderdate = (List<string>)ViewData["OrderDate"];
+        var ordernum = (List<int>) ViewData["OrderNum"];
+        var actcode = (List<string>) ViewData["ActCode"];
+        var sessionId = (string)ViewData["sessionId"];
 }
 
 
