@@ -9,6 +9,53 @@
         var sessionId = (string)ViewData["sessionId"];
 }
 
+@section
+{
+    @*Input JS File here*@
+}
 
-@*Style*@
-@*Table layout*@
+
+<style>
+    .table 
+    {
+
+    }
+
+    .img_container{
+
+    }
+
+    .desc_container{
+
+    }
+
+    .desc{
+
+    }
+</style>
+
+
+<table>
+    @for(int i = 0; i < orderimg.Count; i++)
+    {
+        if(i % 2 == 0)
+        {
+         @:<tr>
+        }
+            @:<td>
+                @:<div class="img_container">
+                    @:<img src="orderimg[i]" width="235" height="350" />
+                @:</div>
+            @:</td>
+            @:<td>
+                @:<div class="desc_container">
+                    @:<span class="desc">ordername[i]</span>
+                    @:<span class="desc">orderdesc[i]</span>
+                @:</div>
+            @:</td>
+        if((i+1)% 2 ==0)
+            {
+                @:</tr>
+            }
+    }
+</table>
