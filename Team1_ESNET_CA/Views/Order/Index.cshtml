@@ -1,55 +1,112 @@
 ﻿@{
-        ViewData["Title"] = "My Purchases";
-        var orderimg = (List<string>)ViewData["OrderImg"];
-        var ordername = (List<string>)ViewData["OrderName"];
-        var orderdesc = (List<string>)ViewData["OrderDesc"];
-        var orderdate = (List<string>)ViewData["OrderDate"];
-        var ordernum = (List<int>) ViewData["OrderNum"];
-        var actcode = (List<string>) ViewData["ActCode"];
-        var sessionId = (string)ViewData["sessionId"];
+    ViewData["Title"] = "My Purchases";
+    var pdtImg = (string[])ViewData["pdtImg"];
+    var pdtName = (string[])ViewData["pdtName"];
+    var pdtDesc = (string[])ViewData["pdtDesc"];
+    var orderDate = (string[])ViewData["orderDate"];
+    var orderQty = (int[])ViewData["orderQty"];
+    //var actCode = (string[])ViewData["actCode"];
+    //var sessionId = (string)ViewData["sessionId"];
 }
 
+<<<<<<< HEAD
 @**@<style>
     .table 
     {
+=======
+<div class="text-center">
+    <h1 class="display-4">My Purchases</h1>
+    <br />
+</div>
+
+@*Style*@
+@*.img_container {
 
     }
 
-    .img_container{
+    .desc_container {
+>>>>>>> origin/Kat
 
     }
 
-    .desc_container{
+    .desc {
 
     }
 
-    .desc{
+    .order_details {
 
+    }
+
+    .Od_desc {
+
+    }*@
+<style>
+    .actCodeBox {
+        width: 130px;
+        height: 25px;
+        border: 1px solid black;
+        font-size: 14px;
+        color: black;
+        background-color: white;
     }
 </style>
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/Kat
 
-<table>
-    @for(int i = 0; i < orderimg.Count; i++)
+<script>
+    function downloadStarted() {
+        alert("Download started.");
+    }
+</script>
+
+@*Table layout*@
+<hr />
+<table width="100%" cellpadding="10" align="center">
+    @for (int i = 0; i < pdtImg.Length; i++)
     {
-        if(i % 2 == 0)
         {
-         @:<tr>
-        }
-            @:<td>
-                @:<div class="img_container">
-                    @:<img src="orderimg[i]" width="235" height="350" />
-                @:</div>
-            @:</td>
-            @:<td>
-                @:<div class="desc_container">
-                    @:<span class="desc">ordername[i]</span>
-                    @:<span class="desc">orderdesc[i]</span>
-                @:</div>
-            @:</td>
-        if((i+1)% 2 ==0)
-            {
-                @:</tr>
+    @:<tr style="border-bottom:1px solid lightgray">
             }
+
+            @:<td style="text-align:center">
+                @:<img src="@pdtImg[i]" width="250" />
+                @:<p><br /><button type="button" onclick="downloadStarted()">Download</button></p>
+            @:</td>
+
+            @:<td class="order_details" width="150">
+                @:<span class="desc">Product:</span>
+                @:<span class="desc">Description:</span>
+                @:<span class="Od_desc">Date of Purchase:</span>
+                @:<span class="Od_desc">Quantity:</span>
+                @:<span class="Od_desc">Activation Code:</span>
+            @:</td>
+
+            @:<td class="order_details">
+                @:<span class="desc">@pdtName[i]</span>
+                @:<span class="desc">@pdtDesc[i]</span>
+                @:<span class="Od_desc">@orderDate[i]</span>
+                @:<span class="Od_desc">@orderQty[i]</span>
+                    if (orderQty[i] > 1)
+                    {
+                <span>
+                    <select class="actCodeBox">
+                        <option selected>A011-1234-5678</option> @*how to generate random code?*@
+                        <option>A022-1234-8765</option> @*how to generate random code?*@
+                    </select>
+                </span>
+                    }
+                    else
+                    {
+                @:<span class="Od_desc">A027-9999-9876</span>
+                    }
+                @:
+            @:</td>
+
+            if (i + 1 % 2 == 0)
+            {
+    @:</tr>
+        }
     }
 </table>
