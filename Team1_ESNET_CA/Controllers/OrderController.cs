@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DependencyInjectionWshop.Models;
+
 using Microsoft.AspNetCore.Mvc;
+using Team1_ESNET_CA.Data;
 
 namespace Team1_ESNET_CA.Controllers
 {
@@ -17,9 +18,9 @@ namespace Team1_ESNET_CA.Controllers
         public IActionResult Index()
         {
             //Validate the right user before display the details
-            string sessionId = Request.Cookies["sessionId"];
-            if(sessionId != null)
-            {
+            /* string sessionId = Request.Cookies["sessionId"];
+             if (sessionId != null)
+             {*/
                 //Validate sessionId with User's sessionID
                 //Check with Anisha if we are going to put in cookies
                 //Confirm with Anisha if there is gonna be a central model for access to all models (eg. AppData)
@@ -37,9 +38,10 @@ namespace Team1_ESNET_CA.Controllers
                 ViewData["orderQty"] = orderdata.OrderQuantity;
                 ViewData["actCode"] = orderdata.ActivationCode;
                 ViewData["sessionId"] = sessionId;
-            }
 
-            return View("Index", "Order");
+             return View("Index", "Order");*/
+
+            return View();
         }
     }
 }
