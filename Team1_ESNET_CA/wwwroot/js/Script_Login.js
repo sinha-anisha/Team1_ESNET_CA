@@ -1,23 +1,31 @@
 ﻿window.onload = function () {
 
-    //alert("hiiiiiii");
+    
+    
     let form = document.getElementById("form");
+
+   // form.document.getElementById("uname").focus;
+
     form.onsubmit = function () {
 
-        let email = document.getElementById("uname");
-        let pass = document.getElementById("pwd");
+        let letters = /^[a-zA-Z0-9@_]+$/;
 
+        let email = document.getElementById("uname").value;
+        let pass = document.getElementById("pwd").value;
 
+       
+        let username = email.trim();
+        let password = pass.trim();
 
-        let username = email.value.trim();
-        let password = pass.value.trim();
+        if (username.length === 0 || password.length === 0)
+        {
 
-        if (username.length === 0 || password.length === 0) {
-
-            let err_elem = document.getElementById("err_msg");
-            err_elem.innerHTML = "Please fill up all fields.";
-            alert(err_elem.innerHTML);
-            alert("hghjh");
+            alert("Please fill up all fields.");
+            return false;
+        }
+        else if (!username.match(letters))
+        {
+                alert("Please enter letters,numbers,@ and underscores only.");
             return false;
         }
         return true;

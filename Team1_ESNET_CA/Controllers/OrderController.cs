@@ -46,18 +46,18 @@ namespace Team1_ESNET_CA.Controllers
 =======
             /* string sessionId = Request.Cookies["sessionId"];
              if (sessionId != null)
-             {*/
+             {/
                 //Validate sessionId with User's sessionID
                 //Check with Anisha if we are going to put in cookies
                 //Confirm with Anisha if there is gonna be a central model for access to all models (eg. AppData)
-                Customers customer = Customers.Find(x => x.sessionId == sessionId);
-                if (sessionId == null)
+                CustomerData customer = CustomerData.Find(x => x.sessionId == sessionId);
+                /*if (sessionId == null)
                 {
                     Console.WriteLine("Invalid Transaction, Please Login again");
                     return RedirectToAction ("Index", "Login")
-                }
-            }
-            */
+                }*/
+           /// }
+            
             public IActionResult Index()
             {
             string[] pdtImg =
@@ -85,7 +85,7 @@ namespace Team1_ESNET_CA.Controllers
             };
 
             int[] orderQty =
-            {
+             {
                 2,
                 1
             };
@@ -98,12 +98,7 @@ namespace Team1_ESNET_CA.Controllers
             */
 
             //Extract image data from OrderData after validation
-            ViewData["pdtImg"] = pdtImg;
-            ViewData["pdtName"] = pdtName;
-            ViewData["pdtDesc"] = pdtDesc;
-            ViewData["orderDate"] = orderDate;
-            ViewData["orderQty"] = orderQty;
->>>>>>> origin/Kat
+          
 
             return View();
         }
