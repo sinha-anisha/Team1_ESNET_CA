@@ -10,9 +10,9 @@ namespace Team1_ESNET_CA.Controllers
     public class OrderController : Controller
     {
         private readonly OrderData orderdata; //readonly immutable
-        public OrderController( OrderData orderdata)
+        public OrderController( OrderData orderData)
         {
-            this orderdata = orderdata; //OOPCS
+            this orderData = orderData; //OOPCS
         }
         public IActionResult Index()
         {
@@ -30,12 +30,12 @@ namespace Team1_ESNET_CA.Controllers
                     return RedirectToAction ("Index", "Login")
                 }
                 //Extract image data from OrderData after validation
-                ViewData["OrderImg"] = orderdata.ProductImg;
-                ViewData["OrderName"] = orderdata.ProductName;
-                ViewData["OrderDesc"] = orderdata.ProductDesc;
-                ViewData["OrderDate"] = orderdata.Orderdate;
-                ViewData["OrderNum"] = orderdata.OrderQuantity;
-                ViewData["ActCode"] = orderdata.ActivationCode;
+                ViewData["pdtImg"] = orderdata.ProductImg;
+                ViewData["pdtName"] = orderdata.ProductName;
+                ViewData["pdtDesc"] = orderdata.ProductDesc;
+                ViewData["orderDate"] = orderdata.Orderdate;
+                ViewData["orderQty"] = orderdata.OrderQuantity;
+                ViewData["actCode"] = orderdata.ActivationCode;
                 ViewData["sessionId"] = sessionId;
             }
 
