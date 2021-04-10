@@ -59,35 +59,33 @@
         {
     @:<tr style="border-bottom:1px solid lightgray">
             }
-        @:<div class="img_container">
+
             @:<td style="text-align:center">
-                @:<img src="@pdtImg[i]" width="250px" />
+                @:<img src="@pdtImg[i]" width="250" />
                 @:<p><br /><button type="button" onclick="downloadStarted()">Download</button></p>
             @:</td>
-        @:</div>
-        @:<div class="desc_container">
-            @:<td class="order_details" width=150px>
-                @:<span class="desc"><p>Product:</p></span>
-                @:<span class="desc"><p>Description:</p></span>
-                @:<span class="Od_desc"><p>Date of Purchase:</p></span>
-                @:<span class="Od_desc"><p>Quantity:</p></span>
-                @:<span class="Od_desc"><p>Activation Code:</p></span>
+
+            @:<td class="order_details" width="150">
+                @:<span class="desc">Product:</span>
+                @:<span class="desc">Description:</span>
+                @:<span class="Od_desc">Date of Purchase:</span>
+                @:<span class="Od_desc">Quantity:</span>
+                @:<span class="Od_desc">Activation Code:</span>
             @:</td>
-        @:</div>
-        @:<div class="desc_container">
+
             @:<td class="order_details">
-                @:<span class="desc"><p>@pdtName[i]</p></span>
-                @:<span class="desc"><p>@pdtDesc[i]</p></span>
-                @:<span class="Od_desc"><p>@orderDate[i]</p></span>
-                @:<span class="Od_desc"><p>@orderQty[i]</p></span>
+                @:<span class="desc">@pdtName[i]</span>
+                @:<span class="desc">@pdtDesc[i]</span>
+                @:<span class="Od_desc">@orderDate[i]</span>
+                @:<span class="Od_desc">@orderQty[i]</span>
                     if (orderQty[i] > 1)
                     {
-                <p>
+                <span>
                     <select class="actCodeBox">
                         <option selected>A011-1234-5678</option> @*how to generate random code?*@
                         <option>A022-1234-8765</option> @*how to generate random code?*@
                     </select>
-                </p>
+                </span>
                     }
                     else
                     {
@@ -95,7 +93,7 @@
                     }
                 @:
             @:</td>
-        @:</div>
+
             if (i + 1 % 2 == 0)
             {
     @:</tr>

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DependencyInjectionWshop.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Team1_ESNET_CA.Controllers
 {
     public class OrderController : Controller
     {
+        /* This section is not done yet!!
+         
         private readonly OrderData orderdata; //readonly immutable
         public OrderController( OrderData orderData)
         {
@@ -29,17 +30,55 @@ namespace Team1_ESNET_CA.Controllers
                     Console.WriteLine("Invalid Transaction, Please Login again");
                     return RedirectToAction ("Index", "Login")
                 }
-                //Extract image data from OrderData after validation
-                ViewData["pdtImg"] = orderdata.ProductImg;
-                ViewData["pdtName"] = orderdata.ProductName;
-                ViewData["pdtDesc"] = orderdata.ProductDesc;
-                ViewData["orderDate"] = orderdata.Orderdate;
-                ViewData["orderQty"] = orderdata.OrderQuantity;
-                ViewData["actCode"] = orderdata.ActivationCode;
-                ViewData["sessionId"] = sessionId;
             }
+            */
+            public IActionResult Index()
+            {
+            string[] pdtImg =
+            {
+                "/img/VSLogo.png",
+                "/img/NodeJSLogo.png"
+            };
 
-            return View("Index", "Order");
+            string[] pdtName =
+            {
+                "Microsoft Visual Studio",
+                "Node JS"
+            };
+
+            string[] pdtDesc =
+            {
+                "Lorem Ipsum",
+                "Lorem Ipsum"
+            };
+
+            string[] orderDate =
+            {
+                "9 April 2021",
+                "26 December 2020"
+            };
+
+            int[] orderQty =
+            {
+                2,
+                1
+            };
+
+            /*Not sure how to generate random activation code..??
+            string[] actCode =
+            {
+
+            }
+            */
+
+            //Extract image data from OrderData after validation
+            ViewData["pdtImg"] = pdtImg;
+            ViewData["pdtName"] = pdtName;
+            ViewData["pdtDesc"] = pdtDesc;
+            ViewData["orderDate"] = orderDate;
+            ViewData["orderQty"] = orderQty;
+
+            return View();
         }
     }
 }
