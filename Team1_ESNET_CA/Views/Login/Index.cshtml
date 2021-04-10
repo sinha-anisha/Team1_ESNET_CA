@@ -1,70 +1,74 @@
 ﻿
 @{
     ViewData["Title"] = "Index";
+    string uname = (string)ViewData["Username"];
+    string pwd = (string)ViewData["Password"];
 }
 
-@section Scripts{
-
-   
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/bootstrap-4.0.0-dist/css/bootstrap-grid.min.css">
-        <link rel="stylesheet" href="/bootstrap-4.0.0-dist/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css"  href="/css/Style_Login.css">
-        
-   
-
-}
-
-<body>
+@section Scripts{ 
 
 
-    <div class="mycontainer">
-        <div class="row no-gutters">
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            <div class="container col-lg-4">
+            <script src="~/js/Script_Login.js"></script>
+            <link rel="stylesheet" href="/bootstrap-4.0.0-dist/css/bootstrap-grid.min.css">
+            <link rel="stylesheet" href="/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+            <link rel="stylesheet" type="text/css" href="/css/Style_Login.css">
 
-                <img src="/Images/digital_world.jiff">
 
-            </div>
 
-            <div class="col-lg-8 py-4 ">
-                <div class="form-row my-auto justify-content-center align-items-center">
-                    <div class="col-lg-8">
-                        <h4 class="text-capitalize ">Sign-in into your account</h4>
+        }
+
+        <body>
+
+
+            <div class="mycontainer">
+                <div class="row no-gutters">
+
+                    <div class="container col-lg-4">
+
+                        <img src="/Images/digital_world.jiff">
+
+                    </div>
+
+                    <div class="col-lg-8 py-4 ">
+                        <div class="form-row my-auto justify-content-center align-items-center">
+                            <div class="col-lg-8">
+                                <h4 class="text-capitalize ">Sign-in into your account</h4>
+                            </div>
+                        </div>
+                        <form class="justify-content-center align-items-center" id="form" method="post">
+                            <div class="form-row my-auto justify-content-center align-items-center">
+                                <div class="col-lg-8">
+                                    <input type="email" id="uname" value=@uname    class="form-control my-3 p-2" tabindex="1" placeholder="Email address">
+                                </div>
+                            </div>
+
+                            <div class="form-row my-auto justify-content-center align-items-center">
+                                <div class="col-lg-8">
+                                    <input type="password" id="pwd" value=@pwd class="form-control my-3 p-2" tabindex="2" placeholder="********">
+                                </div>
+                            </div>
+                            <div class="form-row my-auto justify-content-center align-items-center">
+                                <div class="col-lg-8">
+                                    <button type="submit" tabindex="3" class="btn mt-2 mb-2">Login</button>
+                                </div>
+                            </div>
+                            <div class="form-row my-auto justify-content-center align-items-center">
+                                <div class="col-lg-5">
+
+                                    <a href="#" tabindex="4">Forgot Password</a>
+                                </div>
+                                <div class="col-lg-3">
+
+                                    <a href="#" tabindex="5">Register</a>
+                                </div>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
-                <form class="justify-content-center align-items-center">
-                    <div class="form-row my-auto justify-content-center align-items-center">
-                        <div class="col-lg-8">
-                            <input type="email" class="form-control my-3 p-2" tabindex="1" placeholder="Email address">
-                        </div>
-                    </div>
-
-                    <div class="form-row my-auto justify-content-center align-items-center">
-                        <div class="col-lg-8">
-                            <input type="password" class="form-control my-3 p-2" tabindex="2" placeholder="********">
-                        </div>
-                    </div>
-                    <div class="form-row my-auto justify-content-center align-items-center">
-                        <div class="col-lg-8">
-                            <button type="button" tabindex="3" class="btn mt-2 mb-2">Login</button>
-                        </div>
-                    </div>
-                    <div class="form-row my-auto justify-content-center align-items-center">
-                        <div class="col-lg-5">
-
-                            <a href="#" tabindex="4">Forgot Password</a>
-                        </div>
-                        <div class="col-lg-3">
-
-                            <a href="Register.html" tabindex="5">Register</a>
-                        </div>
-                    </div>
-                </form>
-
             </div>
-        </div>
-    </div>
-</body>
+        </body>
 
