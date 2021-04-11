@@ -13,24 +13,37 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Hello</a>
+                
+                <a class="navbar-brand"  asp-controller="Home" asp-action="Index">Hello</a>
+                
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Gallery</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Gallery</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Purchase History</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Logout</a>
-                        </li>
+
                     </ul>
                 </div>
+
+               <div style="float:right">
+                    @if (ViewData["sessionId"] == null)
+                    {
+                        <a class="nav-link text-primary mr-2" asp-controller="Login" asp-action="Index">Login</a>
+                    }
+                    else
+                    {
+                        <a class="nav-link text-danger mr-2" asp-controller="Logout" asp-action="Index">Logout</a>
+                    }
+                
+               </div>
                 <form class="d-flex" id="cartid">
                     <a class="bg-transparent" href="xyz.html"><i class="fa fa-shopping-cart mr-1"></i><sup class="shop-badge  mr-5">0</sup></a>
                 </form>
