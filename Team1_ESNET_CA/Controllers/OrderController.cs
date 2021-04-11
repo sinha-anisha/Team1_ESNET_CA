@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Team1_ESNET_CA.Data;
+using Team1_ESNET_CA.Models;
 
 namespace Team1_ESNET_CA.Controllers
 {
@@ -50,14 +51,9 @@ namespace Team1_ESNET_CA.Controllers
                 //Validate sessionId with User's sessionID
                 //Check with Anisha if we are going to put in cookies
                 //Confirm with Anisha if there is gonna be a central model for access to all models (eg. AppData)
-                Customers customer = Customers.Find(x => x.sessionId == sessionId);
-                if (sessionId == null)
-                {
-                    Console.WriteLine("Invalid Transaction, Please Login again");
-                    return RedirectToAction ("Index", "Login")
-                }
-            }
-            */
+
+           
+            /*
             public IActionResult Index()
             {
             string[] pdtImg =
@@ -95,7 +91,7 @@ namespace Team1_ESNET_CA.Controllers
             {
 
             }
-            */
+            
 
             //Extract image data from OrderData after validation
             ViewData["pdtImg"] = pdtImg;
@@ -106,6 +102,27 @@ namespace Team1_ESNET_CA.Controllers
 >>>>>>> origin/Kat
 
             return View();
+        }*/
+        public IActionResult Index()
+        {
+            //Link Controller to model to Database
+            List<Order> FinishedPdt = OrderData.getPdtInfo()
+                
+                //Mock Data
+            string[] pdtImg =
+            {
+                "/img/VSLogo.png",
+                "/img/NodeJSLogo.png"
+            };
+                //Create ViewData
+                ViewData["pdtInfos"] = FinishedPdt;
+                ViewData["pdtImg"] = pdtImg;
         }
+        public IActionResult getActCode()
+        {
+            //Link Controller to model to Database
+            List<Order> actCode = OrderData.getActCode()
+        }
+
     }
 }
