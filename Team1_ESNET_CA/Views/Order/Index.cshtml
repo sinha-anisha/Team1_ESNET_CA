@@ -1,41 +1,10 @@
 ﻿@{
     ViewData["Title"] = "My Purchases";
     var pdtInfo = (List<Order>)ViewData["pdtInfos"];
-    var pdtImg = ViewData["pdtImg"]; 
+    var pdtImg = (string[])ViewData["pdtImg"]; 
 }
 
-<<<<<<< HEAD
-<style>
-    .table 
-    {
 
-<div class="text-center">
-    <h1 class="display-4">My Purchases</h1>
-    <br />
-</div>
-    <style>
-
-@*Style
-.img_container {
-
-    }
-
-    .desc_container {
->>>>>>> origin/Kat
-
-    }
-
-    .desc {
-
-    }
-
-    .order_details {
-
-    }
-
-    .Od_desc {
-
-    }
 <style>
     .actCodeBox {
         width: 130px;
@@ -46,63 +15,62 @@
         background-color: white;
     }
 </style>
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/Kat
 
 <script>
     function downloadStarted() {
         alert("Download started.");
     }
-</script>
+</script>-->-->
 
 @*Table layout*@
-<hr />
-<table width="100%" cellpadding="10" align="center">
-    @for (int i = 0; i < pdtImg.Length; i++)
+        <hr /> 
+            <div class="text-center"> <h1 class="display-4">My Purchases</h1>
+            <br /> 
+            </div> 
+            <table width="100%" cellpadding="10" align="center">
+        @for (int i = 0; i < pdtImg.Length; i++)
     {
         {
-    @:<tr style="border-bottom:1px solid lightgray">
-            }
+    @: <tr style="border-bottom:1px solid lightgray">
+                    }
 
-            @:<td style="text-align:center">
-                @:<img src="@pdtImg[i]" width="250" />
-                @:<p><br /><button type="button" onclick="downloadStarted()">Download</button></p>
-            @:</td>
-
-            @:<td class="order_details" width="150">
-                @:<span class="desc">Product:</span>
-                @:<span class="desc">Description:</span>
-                @:<span class="Od_desc">Date of Purchase:</span>
-                @:<span class="Od_desc">Quantity:</span>
-                @:<span class="Od_desc">Activation Code:</span>
-            @:</td>
-
-            @:<td class="order_details">
-                @:<span class="desc">@pdtInfo.ProductName[i]</span>
-                @:<span class="desc">@pdtInfo.ProductDesc[i]</span>
-                @:<span class="Od_desc">@pdtInfo.OrderDate[i]</span>
-                @:<span class="Od_desc">@pdtInfo.OrderQuantity[i]</span>
-                    if (orderQty[i] > 1)
+            @: <td style="text-align:center">
+                        @: <img src="@pdtImg[i]" width="250" />
+                        @: <p><br /><button type="button" onclick="downloadStarted()">Download</button></p>
+                    @: </td>
+        
+            @: <td class="order_details" width="150">
+                        @: <span class="desc">Product:</span>
+                        @: <span class="desc">Description:</span>
+                        @: <span class="Od_desc">Date of Purchase:</span>
+                        @: <span class="Od_desc">Quantity:</span>
+                        @: <span class="Od_desc">Activation Code:</span>
+                    @: </td>
+        
+            /*@: <td class="order_details">
+                        @: <span class="desc"> @pdtInfo.ProductName[i] </span>
+                        @: <span class="desc"> @pdtInfo.ProductDesc[i] </span>
+                        @: <span class="Od_desc"> @pdtInfo.OrderDate[i] </span>
+                        @: <span class="Od_desc"> @pdtInfo.OrderQuantity[i] </span>
+                            if (orderQty[i] > 1)
                     {
-                <span>
-                    <select class="actCodeBox">
-                        <option selected>A011-1234-5678</option> @*how to generate random code?*@
-                        <option>A022-1234-8765</option> @*how to generate random code?*@
-                    </select>
-                </span>
+                 <span> <select class="actCodeBox"> <option selected>A011-1234-5678</option> 
+            
+        <option>A022-1234-8765</option>-->
+                     @*how to generate random code?*@
+        <!--</select> </span> 
                     }
                     else
                     {
-                @:<span class="Od_desc">A027-9999-9876</span>
-                    }
+                @: <span class="Od_desc">A027-9999-9876</span>
+                            }
                 @:
-            @:</td>
-
+                    @: </td>*/
+        
             if (i + 1 % 2 == 0)
             {
-    @:</tr>
-        }
+    @: </tr>
+                }
     }
-</table>
+        </table>

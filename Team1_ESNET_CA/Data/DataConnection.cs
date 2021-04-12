@@ -7,7 +7,7 @@ namespace Team1_ESNET_CA.Data
 {
     public class DataConnection
     {
-        protected static readonly string connectionString = "Server=(local);Database=CA_DB; Integrated Security=true";
+        protected static readonly string connectionString = "Server=(local);Database=Necrosoft_Gen_Edited; Integrated Security=true";
 
     }
 }
