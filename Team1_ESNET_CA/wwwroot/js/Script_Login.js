@@ -9,7 +9,7 @@
     form.onsubmit = function ()
     {
 
-        let letters = /^[a-zA-Z0-9@_]+$/;
+        let letters = /^[a-zA-Z0-9@_.]+$/;
 
         let email = document.getElementById("uname").value;
         let pass = document.getElementById("pwd").value;

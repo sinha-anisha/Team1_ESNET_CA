@@ -18,8 +18,7 @@
 
 
 body {
-    //background: grey;
-}
+    }
 
 .row {
     background: #b3b3b3;
@@ -44,3 +43,10 @@ body {
         border: 1px solid;
         color: black;
     }
+
+#error_msg {
+    color: red;
+    padding: 3px;
+    text-align: center;
+    font-family: 'Times New Roman, Times, serif';
+}

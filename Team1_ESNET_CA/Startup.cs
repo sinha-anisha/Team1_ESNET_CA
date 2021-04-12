@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Team1_ESNET_CA.Data;
 using Team1_ESNET_CA.Util;
 
 namespace Team1_ESNET_CA
@@ -25,8 +26,12 @@ namespace Team1_ESNET_CA
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            /* services.AddSingleton(_ => {
+                 return Helper.InitAppData();
+             });*/
+
             services.AddSingleton(_ => {
-                return Helper.InitAppData();
+                return CustomerData.InitAppData();
             });
 
         }

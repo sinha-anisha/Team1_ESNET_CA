@@ -1,14 +1,15 @@
 ﻿window.onload = function () {
 
+    let error_elem = document.getElementById("error_msg");
 
-
+    
     let form = document.getElementById("form");
 
     // form.document.getElementById("uname").focus;
 
     form.onsubmit = function () {
 
-        let validmail = /^[a-zA-Z0-9@_]+$/;
+        let validmail = /^[a-zA-Z0-9@_.]+$/;
         let letters = /^[a-zA-Z]+$/;
         let validmobile = /^[0-9]+$/;
         let validpwd = /^[a-zA_Z0-9@_]+$/;
@@ -25,7 +26,9 @@
         if (fname.length === 0 || lname.length === 0 || mail.length === 0 || mobile.length === 0 || pwd.length === 0 || confirmpwd.length === 0 )
         {
 
-            alert("Please fill up all fields.");
+            //alert("Please fill up all fields.");
+
+            error_elem.innerHTML = "Please fill up all fields.";
             return false;
         }
         else if (!fname.match(letters))
