@@ -1,12 +1,7 @@
 ﻿@{
     ViewData["Title"] = "My Purchases";
-    var pdtImg = (string[])ViewData["pdtImg"];
-    var pdtName = (string[])ViewData["pdtName"];
-    var pdtDesc = (string[])ViewData["pdtDesc"];
-    var orderDate = (string[])ViewData["orderDate"];
-    var orderQty = (int[])ViewData["orderQty"];
-    //var actCode = (string[])ViewData["actCode"];
-    //var sessionId = (string)ViewData["sessionId"];
+    var pdtInfo = (List<Order>)ViewData["pdtInfos"];
+    var pdtImg = ViewData["pdtImg"]; 
 }
 
 <<<<<<< HEAD
@@ -85,10 +80,10 @@
             @:</td>
 
             @:<td class="order_details">
-                @:<span class="desc">@pdtName[i]</span>
-                @:<span class="desc">@pdtDesc[i]</span>
-                @:<span class="Od_desc">@orderDate[i]</span>
-                @:<span class="Od_desc">@orderQty[i]</span>
+                @:<span class="desc">@pdtInfo.ProductName[i]</span>
+                @:<span class="desc">@pdtInfo.ProductDesc[i]</span>
+                @:<span class="Od_desc">@pdtInfo.OrderDate[i]</span>
+                @:<span class="Od_desc">@pdtInfo.OrderQuantity[i]</span>
                     if (orderQty[i] > 1)
                     {
                 <span>

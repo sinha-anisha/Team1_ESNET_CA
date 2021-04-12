@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Team1_ESNET_CA.Data;
 
 namespace Team1_ESNET_CA.Models
 {
@@ -17,5 +19,6 @@ namespace Team1_ESNET_CA.Models
         public string ActivationCode { get; set;}
         public string SessionId { get;set;}
         public string Email { get;set;}
+        public string ProductID { get;set;}
     }
 }
