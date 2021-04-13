@@ -32,6 +32,10 @@ namespace Team1_ESNET_CA
 
             services.AddSingleton(_ => {
                 return CustomerData.InitAppData();
+                return Product_Data.InitAppData();
+                return Helper.InitAppData();
+
+
             });
 
         }
