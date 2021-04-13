@@ -13,25 +13,20 @@ namespace Team1_ESNET_CA.Controllers
        
         
 
-        public IActionResult Index()
+        public IActionResult Index(Order ProductName)
         {
             //Link Controller to model to Database
-            //List<Order> FinishedPdt = OrderData.getPdtInfo();
+            List<Order> FinishedPdt = OrderData.getPdtInfo(ProductName);
                 
-              
-            string[] pdtImg =
-            {
-                "/img/VSLogo.png",
-                "/img/NodeJSLogo.png"
-            };
                 
-                //ViewData["pdtInfos"] = FinishedPdt;
-                ViewData["pdtImg"] = pdtImg;
+                ViewData["pdtInfos"] = FinishedPdt;
+
             return View();
         }
-        public IActionResult getActCode()
+        public IActionResult getActCode(Order OrderID)
         {
-           // List<Order> actCode = OrderData.getActCode();
+            List<string> actCode = OrderData.getActCode(OrderID);
+            ViewData["actCodes"] = actCode;
             return View();
         }
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 using System.Linq;
 using System.Threading.Tasks;
 using Team1_ESNET_CA.Data;
@@ -14,7 +15,7 @@ namespace Team1_ESNET_CA.Data
     {
         protected static new readonly string connectionString = "Server=(local);Database=Necrosoft_Gen_Edited; Integrated Security=true";
 
-        public List<Order> getPdtInfo(string ProductDesc)
+        public static List<Order> getPdtInfo(Order ProductName)
         {
             List<Order> pdtInfos = new List<Order>();
 
@@ -24,8 +25,8 @@ namespace Team1_ESNET_CA.Data
                 conn.Open();
 
                 //SQL string
-                string sql = @"SELECT  Product_Name, Product_Image, Product_Description FROM Product";
-                //WHERE Product_Name = " + pdtInfos.ProductName; //KIV
+                string sql = @"SELECT  Product_Name, Product_Image, Product_Description 
+                                FROM Product WHERE Product_Name = " + ProductName; 
 
                 //SQLCommand
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -49,10 +50,10 @@ namespace Team1_ESNET_CA.Data
         }
 
 
-        public List<Order> GetActCode()
+        public static List<string> getActCode(Order OrderID)
         {
 
-            List<Order> actCodes = new List<Order>();
+            List<string> actcode = new List<string>();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -60,44 +61,24 @@ namespace Team1_ESNET_CA.Data
                 conn.Open();
 
 
-                string sql = @"SELECT Quantity FROM Order ";
-                //WHERE Product_ID = " + actCodes.ProductID;
+                string sql = @"SELECT COUNT(ProductID) FROM Order_Details 
+                            WHERE Order_ID = " + OrderID;
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    Order actCode = new Order();
-
-                    for (int i = 0; i < (int)reader["Quantity"]; i++)
-                    {
-                        string genActCode = CreateActivationKey();
-                        var actKeyExist = GetActivationKeys().Any(key =>  genActCode.Equals(key));
-                        if (actKeyExist)
+                        for (int i = 0; i < (int)reader["ProductID"]; i++)
                         {
-                            genActCode = CreateActivationKey();
+                            var uid = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", ""); 
+                            
+                            actcode.Add(uid);
                         }
-                    }
-                    actCodes.Add(actCode);
-                }
+                };
                 conn.Close();
             }
-
-            return actCodes;
-
-        }
-
-
-        private string CreateActivationKey()
-        {
-            var actKey = Guid.NewGuid().ToString();
-            return actKey;
-        }
-        private string GetActivationKeys()
-        {
-            string valuekey = "";
-           return valuekey;
+             return actcode;
         }
     } 
-    }
+}
