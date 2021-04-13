@@ -11,9 +11,11 @@ namespace Team1_ESNET_CA.Models
         public AppData()
         {
             Customers = new List<Customer>();
+            Product = new List<Product>();
 
         }
 
         public List<Customer> Customers { get; set; }
+        public List<Product> Product { get; set; }
     }
 }
