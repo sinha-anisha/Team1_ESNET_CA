@@ -15,6 +15,13 @@ namespace Team1_ESNET_CA.Controllers
 
         public IActionResult Index(Order ProductName)
         {
+         string sessionId = HttpContext.Session.GetString("sessionId");
+
+         if (sessionId == null)
+         {
+            // No username is found in session, so the user needs to login
+            return RedirectToAction("Index", "Login");
+         }
             //Link Controller to model to Database
             List<Order> FinishedPdt = OrderData.getPdtInfo(ProductName);
                 
