@@ -17,13 +17,14 @@ namespace Team1_ESNET_CA.Data
         {
             AppData appData = new AppData();
 
-            GetProducts(appData.Product);
+            //GetProducts(appData.Product);
 
             return appData;
         }
 
-        public static List<Product> GetProducts(List<Product> products)
+        public static List<Product> GetProducts()
         {
+            List<Product> products = new List<Product>();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -36,17 +37,41 @@ namespace Team1_ESNET_CA.Data
                 {
                     Product product = new Product()
                     {
-                        Product_ID = (string)reader["Product_ID"],
+                        //Product_ID = (string)reader["Product_ID"],
                         Product_Name = (string)reader["Product_Name"],
                         Product_Image = (string)reader["Product_Image"],
                         Product_Description = (string)reader["Product_Description"],
-                        Unit_Price = (float)reader["Unit_Price"],
+                        //Unit_Price = (float)reader["Unit_Price"],
                         Download_Link = (string)reader["Download_Link"]
                     };
                     products.Add(product);
                 }
             }
             return products;
+        }
+        public static List<Product> GetProductsN()
+        {
+            List<Product> productsn = new List<Product>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string sql = @"SELECT Product.Product_ID,Product.Unit_Price FROM Product";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Product product = new Product()
+                    {
+                                               
+                        Unit_Price = (float)reader["Unit_Price"]
+                        
+                    };
+                    productsn.Add(product);
+                }
+            }
+            return productsn;
         }
         /*public static void AddGallery(List<Product> products, string filename)
         {
