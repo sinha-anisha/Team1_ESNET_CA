@@ -50,7 +50,7 @@ namespace Team1_ESNET_CA.Data
         }
 
 
-        public static List<string> getActCode(Order OrderID)
+        public static List<string> getActCode(Order orderIden)
         {
 
             List<string> actcode = new List<string>();
@@ -62,7 +62,7 @@ namespace Team1_ESNET_CA.Data
 
 
                 string sql = @"SELECT COUNT(ProductID) FROM Order_Details 
-                            WHERE Order_ID = " + OrderID;
+                            WHERE Order_ID = " + orderIden;
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();

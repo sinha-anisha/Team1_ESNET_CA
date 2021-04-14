@@ -23,9 +23,9 @@ namespace Team1_ESNET_CA.Controllers
 
             return View();
         }
-        public IActionResult getActCode(Order OrderID)
+        public IActionResult getActCode(Order orderIden)
         {
-            List<string> actCode = OrderData.getActCode(OrderID);
+            List<string> actCode = OrderData.getActCode(orderIden);
             ViewData["actCodes"] = actCode;
             return View();
         }
