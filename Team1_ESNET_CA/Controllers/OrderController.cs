@@ -23,18 +23,11 @@ namespace Team1_ESNET_CA.Controllers
             return RedirectToAction("Index", "Login");
          }
             //Link Controller to model to Database
-            List<Product> FinishedPdt = OrderData.getPdtInfo(ProductID);
+            List<Order> FinishedPdt = OrderData.getPdtInfo(ProductID);
 
-                ViewData["pdtInfos"] = FinishedPdt;
+                ViewData["orderInfos"] = FinishedPdt;
 
-            return RedirectToAction("getOrderdetails");
-        }
-        public IActionResult getOrderdetails (Order Order_ID)
-        {
-            List<Order> orderDetails = OrderData.getOrderInfo(Order_ID);
-
-            ViewData["orderInfos"] = orderDetails;
-            return View();
+            return View() ;
         }
         public IActionResult getActCode(Order orderIden)
         {
