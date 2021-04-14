@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Team1_ESNET_CA.Models;
 using System.IO;
 using System.Text.RegularExpressions;
+using Team1_ESNET_CA.Data;
 
 
 namespace Team1_ESNET_CA.Util
@@ -22,7 +23,7 @@ namespace Team1_ESNET_CA.Util
 
             AddCustomers(appData.Customers);
 
-            //AddGallery(appData.Product);
+            AddGallery(appData.Product);
 
             return appData;
         }
@@ -49,13 +50,14 @@ namespace Team1_ESNET_CA.Util
         }
 
 
-        public static void AddGallery(List<Product> Product_Image, string filename)
+        public static void AddGallery(List<Product> Product_Images)
         {
-            if (Product_Image == null)
+            /*if (Product_Images == null)
                 return;
 
-            
-            string[] lines = File.ReadAllLines(Product_Image + "/" + filename);
+
+            //string[] lines = File.ReadAllLines(Product_Images);
+
             foreach (string line in lines)
             {
                 string[] pair = line.Split(";");
@@ -69,12 +71,12 @@ namespace Team1_ESNET_CA.Util
                 Product product = new Product()
                 {
                     Product_ID = Product_ID,
-                    Download_Link = pair[0],
+                    Product_Image = pair[0],
                     
                     Tags = new List<string>(pair[1].Split(","))
                 };
-                Product_Image.Add(product);
-            }
+                Product_Images.Add(product);
+            }*/
         }
 
 

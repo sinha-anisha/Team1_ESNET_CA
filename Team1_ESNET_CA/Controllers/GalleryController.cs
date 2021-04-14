@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team1_ESNET_CA.Models;
+using Team1_ESNET_CA.Data;
+
 namespace Team1_ESNET_CA.Controllers
 {
     public class GalleryController : Controller
@@ -17,7 +19,10 @@ namespace Team1_ESNET_CA.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Gallery"] = appData.Product;
+            List<Product> products = Product_Data.GetProducts();
+            List<Product> productsn = Product_Data.GetProducts();
+            ViewData["products"] = products;
+            ViewData["productsn"] = productsn;
 
             // to highlight "Office" as the selected menu-item
             
