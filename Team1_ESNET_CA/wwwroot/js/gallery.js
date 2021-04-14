@@ -59,7 +59,7 @@ sessionStorage.setItem("count", updatedcount);
 var cartdiv = document.getElementById("cartid");
 cartdiv.innerHTML = updatedcount;
 
-}
+
 
 
 function addItem() {

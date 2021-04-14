@@ -29,7 +29,7 @@ namespace Team1_ESNET_CA.Data
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = @"SELECT Product.Product_Name,Product.Product_Image,Product.Product_Description,Product.Unit_Price, Product.Download_Link FROM Product";
+                string sql = @"SELECT Product.Product_ID, Product.Product_Name,Product.Product_Image,Product.Product_Description,Product.Unit_Price, Product.Download_Link FROM Product";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -37,11 +37,11 @@ namespace Team1_ESNET_CA.Data
                 {
                     Product product = new Product()
                     {
-                        //Product_ID = (string)reader["Product_ID"],
+                        Product_ID = (int)reader["Product_ID"],
                         Product_Name = (string)reader["Product_Name"],
                         Product_Image = (string)reader["Product_Image"],
                         Product_Description = (string)reader["Product_Description"],
-                        //Unit_Price = (float)reader["Unit_Price"],
+                        Unit_Price = (double)reader["Unit_Price"],
                         Download_Link = (string)reader["Download_Link"]
                     };
                     products.Add(product);
@@ -49,54 +49,55 @@ namespace Team1_ESNET_CA.Data
             }
             return products;
         }
-        public static List<Product> GetProductsN()
+       /* public static List<Product> AddProducts(Product pdt, int qty)
         {
-            List<Product> productsn = new List<Product>();
+            List<Product> products = new List<Product>();
+
+
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = @"SELECT Product.Product_ID,Product.Unit_Price FROM Product";
+                string sql = @"insert into Cart (Cart_ID,Product_ID,Email,Quantity)
+                                Values(@Cart_ID,@Product_ID,@Email,@Quantity)";
+
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                SqlDataReader reader = cmd.ExecuteReader();
 
-                while (reader.Read())
+                Product product = new Product()
                 {
-                    Product product = new Product()
-                    {
-                                               
-                        Unit_Price = (float)reader["Unit_Price"]
-                        
-                    };
-                    productsn.Add(product);
-                }
-            }
-            return productsn;
-        }
-        /*public static void AddGallery(List<Product> products, string filename)
-        {
-            if (products == null)
-                return;
-
-            string[] lines = File.ReadAllLines("SeedData" + "/" + filename);
-            foreach (string line in lines)
-            {
-                string[] pair = line.Split(";");
-                if (pair.Length != 2)
-                    continue;   // not what we expected; skip
-
-                Regex regex = new Regex("https://images.unsplash.com/photo-(.*)\\?w=350");
-                Match match = regex.Match(pair[0]);
-                string photoId = match.Groups[1].ToString();
-
-                Photo photo = new Photo()
-                {
-                    Id = photoId,
-                    Url = pair[0],
-                    Tags = new List<string>(pair[1].Split(","))
+                    cmd.Parameters.AddWithValue("@Cart_ID", ),
+                    cmd.Parameters.AddWithValue("@Poduct_ID", pdt.Product_ID),
+                    cmd.Parameters.AddWithValue("@Email", ),
+                    cmd.Parameters.AddWithValue("@Quantity",qty)
+                
                 };
+                products.Add(product);
 
-                photos.Add(photo);
-            }*/
+
+                return products;
+            }
+
+
+        }*/
     }
+
 }
+
+   /* 
+    cmd.Parameters.AddWithValue("@First_Name", cust.First_Name);
+    cmd.Parameters.AddWithValue("@Last_Name", cust.Last_Name);
+    cmd.Parameters.AddWithValue("@Password", cust.Password);
+    cmd.Parameters.AddWithValue("@Mobile", cust.Mobile);
+
+    int i = cmd.ExecuteNonQuery();
+    if (i > 0)
+    {
+        ViewData["errMsg"] = "Registration Completed.";
+        return RedirectToAction("Index", "Home");
+    }
+    else
+    {
+        ViewData["errMsg"] = "Registration NOT Completed.";
+        return View();
+    }
+}*/

@@ -7,7 +7,7 @@ namespace Team1_ESNET_CA.Models
 {
     public class Product
     {
-        public string Product_ID { get; set; }
+        public int Product_ID { get; set; }
         
         public string Product_Name { get; set; }
 
@@ -15,7 +15,7 @@ namespace Team1_ESNET_CA.Models
         
         public string Product_Description { get; set; }
 
-        public float Unit_Price { get; set; }
+        public double Unit_Price { get; set; }
 
         public string Download_Link { get; set; }
 

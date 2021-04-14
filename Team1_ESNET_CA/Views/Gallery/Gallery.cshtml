@@ -1,9 +1,8 @@
-﻿@{
-    ViewData["Title"] = "Gallery Page";
+﻿
+@{ ViewData["Title"] = "Gallery Page";
 
-    var Product_Image = (List<Product>)ViewData["Product_Image"];
-    var likes = (List<string>)ViewData["likes"];
-}
+                var products = (List<Product>)ViewData["products"];
+                var likes = (List<string>)ViewData["likes"]; }
 
 @section Scripts
     {
@@ -39,62 +38,54 @@
         bottom: 10px;
         opacity: 0.7;
     }
-    .button{
+
+    .button {
         width: 40px;
         height: 40px;
-        position: absolute
-        right: 10px;
+        position: absolute ;
         bottom: 10px;
     }
+
     .bold_menu {
         font-weight: bold;
     }
 </style>
 
-<input autofocus placeholder="search" class="form-control" type="text" autocomplete="off" name="Search" id="search"/>
+<input autofocus placeholder="search" class="form-control" type="text" autocomplete="off" name="Search" id="search" />
 <br />
 <table>
 
-    @for (int i = 0; i <Product_Image.Count; i++)
-    {
-        @*string[] atag = tags[i].Split(",");*@
 
+    @for (int i = 0; i < products.Count; i++)
+    //@for (int i = 0; i < Product_Image.Count; i++)
+
+    {
         if (i % 3 == 0)
         {
-            @:<tr>
-            }
-
-            @:<td>
-                @:<div class="img_container">
-                    @:<img src=@Product_Image[i].Download_Link width="350" height="235" />
-            /*if (ViewData["sessionId"] != null)
-                   {
-            string icon_link = "/img/like_gray.png";
-
-                        string id = likes.Find(x => x == Product_Image[i].Product_ID);
-                        if (id != null)
-                        {
-                            icon_link = "/img/like.png";
-                        }
-
-                        @:<img src=@icon_link class="like_icon" id=@Product_Image[i].Download_Link />
-                    }
-
-                    @:<div class="badge_container">
-                        @for (int k = 0; k < Product_Image[i].Tags.Count; k++)
-                        {
-                            @:<span class="badge badge-pill badge-dark">@Product_Image[i].Tags[k]</span>
-                        }
-                    @:</div>*/
-                @:</div>
-            @:</td>
+@:<tr>
+}
+       
+@:<td>
+    @:<div class="img_container">
+        @:<img src=@products[i].Product_Image width="350" height="250" />
+        <br />
+                        <br />
+                                        <p>Product Name: @products[i].Product_Name</p>//@photos[i].Url
+                        <p>Product Description: @products[i].Product_Description</p>
+                                        <p>Price: @products[i].Unit_Price</p>
+                                        @:<input type="text" id="quantity" />
+                                                        @:<input type="button" id="add" value="Add item" asp-controller="Gallery" asp-action="AddToCart">
+                                                        <br />
+                                                                        <br />
+                                                                                    @:</div>
+                                                                                @:</td>
 
 
+                                                                                if ((i + 1) % 3 == 0)
+                                                                                {
+                                                            @:</tr>
+                                                        }
+                                                    }
 
-        if ((i + 1) % 3 == 0)
-        {
-            @:</tr>
-        }
-    }
 
 </table>
