@@ -14,19 +14,18 @@ namespace Team1_ESNET_CA.Data
     public class OrderData : DataConnection
     {
         protected static new readonly string connectionString = "Server=(local);Database=Necrosoft_14_04_21; Integrated Security=true";
-
-        public static List<Order> getPdtInfo(Order ProductName)
+        public static List<Order> getOrderInfo(Order Order_ID)
         {
-            List<Order> pdtInfos = new List<Order>();
-
+            List<Order> orderDetails = new List<Order>();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
 
                 //SQL string
-                string sql = @"SELECT  Product_Name, Product_Image, Product_Description 
-                                FROM Product WHERE Product_Name = " + ProductName; 
+                string sql = @"SELECT o.Order_Date, o.Quantity, od.Activation_Code
+                               FROM [Product] AS p , [Order] AS O , [Order_Details] as OD
+                                WHERE O.Order_ID = '124'";
 
                 //SQLCommand
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -34,12 +33,43 @@ namespace Team1_ESNET_CA.Data
 
                 while (reader.Read())
                 {
-                    Order pdtinfo = new Order()
+                    Order orderinfo = new Order()
+                    {
+                        OrderDate = (DateTime)reader["Order_Date"],
+                        OrderQuantity = (int)reader["Quantity"]
+                    };
+                    orderDetails.Add(orderinfo);
+                }
+                conn.Close();
+            }
+            return orderDetails;
+        }
+        public static List<Product> getPdtInfo(Product Product_ID)
+        {
+            List<Product> pdtInfos = new List<Product>();
+
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                
+                //SQL string
+                string sql = @"SELECT p.Product_Name, p.Product_Image, P.Product_Description
+                               FROM [Product] AS p , [Order_Details] as OD
+                                WHERE [OD].Product_ID = '100'"; 
+
+                //SQLCommand
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Product pdtinfo = new Product()
                     {
                         //link to model var name
-                        ProductName = (string)reader["Product_Name"],
-                        ProductImg = (string)reader["Product_Image"],
-                        ProductDesc = (string)reader["Product_Description"]
+                        Product_Name = (string)reader["Product_Name"],
+                        Product_Image = (string)reader["Product_Image"],
+                        Product_Description = (string)reader["Product_Description"]
                     };
                     pdtInfos.Add(pdtinfo);
                 }
@@ -61,7 +91,7 @@ namespace Team1_ESNET_CA.Data
                 conn.Open();
 
 
-                string sql = @"SELECT COUNT(ProductID) FROM Order_Details 
+                string sql = @"SELECT COUNT(ProductID) FROM [Order_Details] 
                             WHERE Order_ID = " + orderIden;
 
                 SqlCommand cmd = new SqlCommand(sql, conn);

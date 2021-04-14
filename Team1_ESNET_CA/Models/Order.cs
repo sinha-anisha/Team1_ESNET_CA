@@ -11,10 +11,10 @@ namespace Team1_ESNET_CA.Models
     {
         //Model get;set; for Order Controller/View
         //Parameters we need
-        public string ProductImg { get; set;}
-        public string ProductName { get; set;}
-        public string ProductDesc { get; set;}
-        public string OrderDate { get;set;}
+        //public string ProductImg { get; set;}
+       // public string ProductName { get; set;}
+        //public string ProductDesc { get; set;}
+        public DateTime OrderDate { get;set;}
         public int OrderQuantity { get; set;}
         public string ActivationCode { get; set;}
         public string SessionId { get;set;}

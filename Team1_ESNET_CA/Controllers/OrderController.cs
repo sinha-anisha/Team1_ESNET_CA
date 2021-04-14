@@ -13,9 +13,9 @@ namespace Team1_ESNET_CA.Controllers
        
         
 
-        public IActionResult Index(Order ProductName)
+        public IActionResult Index(Product ProductID)
         {
-         string sessionId = HttpContext.Session.GetString("sessionId");
+         string sessionId = Request.Cookies["sessionId"];
 
          if (sessionId == null)
          {
@@ -23,11 +23,17 @@ namespace Team1_ESNET_CA.Controllers
             return RedirectToAction("Index", "Login");
          }
             //Link Controller to model to Database
-            List<Order> FinishedPdt = OrderData.getPdtInfo(ProductName);
-                
-                
+            List<Product> FinishedPdt = OrderData.getPdtInfo(ProductID);
+
                 ViewData["pdtInfos"] = FinishedPdt;
 
+            return RedirectToAction("getOrderdetails");
+        }
+        public IActionResult getOrderdetails (Order Order_ID)
+        {
+            List<Order> orderDetails = OrderData.getOrderInfo(Order_ID);
+
+            ViewData["orderInfos"] = orderDetails;
             return View();
         }
         public IActionResult getActCode(Order orderIden)
