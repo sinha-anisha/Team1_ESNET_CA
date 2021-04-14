@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Gallery Page";
 
-    var Product_Image = (List<Product>)ViewData["Product_Image"];
+    var Product_Image = (string [])ViewData["Product_Image"];
     var likes = (List<string>)ViewData["likes"];
 }
 
@@ -49,7 +49,7 @@
 
 <table>
 
-    @for (int i = 0; i < Product_Image.Count; i++)
+    @for (int i = 0; i < 5; i++)
     {
         @*string[] atag = tags[i].Split(",");*@
 
@@ -60,7 +60,7 @@
 
             @:<td>
                 @:<div class="img_container">
-                    @:<img src=@Product_Image[i].Download_Link width="350" height="235" />
+                    @:<img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=350" width="350" height="235" />
 
 
 
@@ -69,21 +69,21 @@
                     {
                         string icon_link = "/img/like_gray.png";
 
-                        string id = likes.Find(x => x == Product_Image[i].Product_ID);
+                        string id = likes.Find(x => x == "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=350");
                         if (id != null)
                         {
                             icon_link = "/img/like.png";
                         }
 
-                        @:<img src=@icon_link class="like_icon" id=@Product_Image[i].Download_Link />
+                        @:<img src=@icon_link class="like_icon" id="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=350" />
                     }
 
-                    @:<div class="badge_container">
+                   /* @:<div class="badge_container">
                         @for (int k = 0; k < Product_Image[i].Tags.Count; k++)
                         {
                             @:<span class="badge badge-pill badge-dark">@Product_Image[i].Tags[k]</span>
                         }
-                    @:</div>
+                    @:</div>*/
                 @:</div>
             @:</td>
 
