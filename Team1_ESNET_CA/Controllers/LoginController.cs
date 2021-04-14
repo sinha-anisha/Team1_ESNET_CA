@@ -36,6 +36,8 @@ namespace Team1_ESNET_CA.Controllers
             }
             else
             {
+                cust.Username = username;
+
                 cust.SessionId = Guid.NewGuid().ToString();
                 Response.Cookies.Append("sessionId",cust.SessionId);
 

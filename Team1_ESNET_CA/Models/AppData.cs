@@ -12,10 +12,11 @@ namespace Team1_ESNET_CA.Models
         {
             Customers = new List<Customer>();
             Product = new List<Product>();
-
+            Carts = new List<Cart>();
         }
 
         public List<Customer> Customers { get; set; }
         public List<Product> Product { get; set; }
+        public List<Cart> Carts { get; set; }
     }
 }
