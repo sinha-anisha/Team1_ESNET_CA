@@ -13,7 +13,7 @@ namespace Team1_ESNET_CA.Data
 {
     public class OrderData : DataConnection
     {
-        protected static new readonly string connectionString = "Server=(local);Database=Necrosoft_Gen_Edited; Integrated Security=true";
+        protected static new readonly string connectionString = "Server=(local);Database=Necrosoft_14_04_21; Integrated Security=true";
 
         public static List<Order> getPdtInfo(Order ProductName)
         {
