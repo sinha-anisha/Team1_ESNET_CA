@@ -7,6 +7,7 @@ using Team1_ESNET_CA.Models;
 using Team1_ESNET_CA.Data;
 using System.Data.SqlClient;
 
+
 namespace Team1_ESNET_CA.Controllers
 {
     public class GalleryController : Controller
@@ -19,12 +20,21 @@ namespace Team1_ESNET_CA.Controllers
             this.appData = appData;
         }
 
-        public IActionResult Index()
+        
+
+        public IActionResult Index(string search)
         {
+
             List<Product> products = Product_Data.GetProducts();
             List<Product> productsn = Product_Data.GetProducts();
             ViewData["products"] = products;
-            
+
+            var productlist = from s in Product_Data.GetProducts()
+                              select s;
+            if (!String.IsNullOrEmpty(search))
+            {
+                productlist = productlist.Where(s => s.Product_Name.Contains(search) || search == null);
+            }
             string sessionId = HttpContext.Request.Cookies["sessionId"];
             if (sessionId != null)
             {
@@ -35,8 +45,8 @@ namespace Team1_ESNET_CA.Controllers
                 ViewData["sessionId"] = sessionId;
                 
             }
-
-            return View();
+            
+            return View(productlist.ToList());
         }
 
 
