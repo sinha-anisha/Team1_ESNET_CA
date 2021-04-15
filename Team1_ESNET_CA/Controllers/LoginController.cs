@@ -39,7 +39,9 @@ namespace Team1_ESNET_CA.Controllers
             }
             else
             {
+                
                 cust.Email = username;
+                ViewData["username"] = username;
                 Session session = new Session()
                 {
                     Session_ID = Guid.NewGuid().ToString(),
@@ -63,6 +65,7 @@ namespace Team1_ESNET_CA.Controllers
                     Response.Cookies.Append("sessionId", session.Session_ID);
                 }
                 ViewData["sessionId"] = Request.Cookies["sessionId"];
+                
 
             }
             return RedirectToAction("Index", "Gallery");

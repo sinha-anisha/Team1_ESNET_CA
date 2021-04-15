@@ -13,7 +13,7 @@ namespace Team1_ESNET_CA.Data
 {
     public class OrderData : DataConnection
     {
-        public static List<string> generateActCode(shoppingCartItem shoppingCartID, shoppingCartItem shoppingProductID)
+        public static List<string> generateActCode(Cart Order_ID , Cart Product_ID)
         {
 
             List<string> actcodes = new List<string>();
@@ -25,7 +25,7 @@ namespace Team1_ESNET_CA.Data
 
 
                 string sql = @"SELECT COUNT(Product_ID) FROM [Cart_Product] 
-                            WHERE Order_ID = " + shoppingCartID;
+                            WHERE Order_ID = " + Order_ID;
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -40,16 +40,16 @@ namespace Team1_ESNET_CA.Data
                                 VALUES ( @Activation_Code, @Order_ID, @Product_ID)";
 
                         SqlCommand cmd1 = new SqlCommand(sql1, conn);
-                            cmd1.Parameters.AddWithValue("@Activation_Code", uid);
-                            cmd1.Parameters.AddWithValue("@Order_ID", shoppingCartID);
-                            cmd1.Parameters.AddWithValue("@Product_ID", shoppingProductID);
+                        cmd1.Parameters.AddWithValue("@Activation_Code", uid);
+                        cmd1.Parameters.AddWithValue("@Order_ID", Order_ID);
+                        cmd1.Parameters.AddWithValue("@Product_ID", Product_ID);
                     }
                 };
                 conn.Close();
             }
             return actcodes;
         }
-        public static List<Order> getPdtInfo(session Email )
+        public static List<Order> getPdtInfo(Session Email)
         {
             List<Order> orderInfos = new List<Order>();
 
@@ -57,15 +57,15 @@ namespace Team1_ESNET_CA.Data
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                
+
                 //SQL string
                 string sql = @"SELECT p.Product_Name, p.Product_Image, p.Product_Description, o.Order_Date,od.OrderID,od.Product_ID , od.Activation_Code
                                 FROM Product AS p, [Order] AS o, Order_Details AS od
                                 WHERE p.Product_ID = od.Product_ID
                                 AND o.Order_ID = od.Order_ID
                                 GROUP BY od.OrderID
-                                HAVING o.Email = " + Email; 
-               
+                                HAVING o.Email = " + Email;
+
 
                 //SQLCommand
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -90,5 +90,5 @@ namespace Team1_ESNET_CA.Data
             }
             return orderInfos;
         }
-    } 
+    }
 }

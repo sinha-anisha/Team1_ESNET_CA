@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
     var products = (List<Product>)ViewData["products"];
     var likes = (List<string>)ViewData["likes"];
-
+    var cust = (List<Customer>)ViewData["username"];
 }
 
 @section Scripts
@@ -72,7 +72,7 @@
                 <div class="img_container">
                     <form method="post" id="form" action="/Cart/AddToCart">
                         <input type="hidden" name="Product_ID" value="@products[i].Product_ID" />
-                        <input type="hidden" name="Email" value="anisha@gmail.com" />
+                        <input type="hidden" name="Email" value=@cust[i].Email/>
                         <img src=@products[i].Product_Image width="350" height="250" />
                         <div>Product Name: @products[i].Product_Name</div>
                         <div>Product Description: @products[i].Product_Description</div>

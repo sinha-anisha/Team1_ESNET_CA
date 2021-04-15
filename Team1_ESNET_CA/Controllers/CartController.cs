@@ -22,10 +22,9 @@ namespace Team1_ESNET_CA.Controllers
             this.appData = appData;
         }
   
-        public IActionResult AddToCart( Customer cust , Product pdt,Cart c)
+        public IActionResult AddToCart( string Email , Product pdt,Cart c)
         {
-            string Cart_ID = "";
-            string Email = "";
+            
            
            
        
@@ -58,33 +57,39 @@ namespace Team1_ESNET_CA.Controllers
 */
                 //cmd.ExecuteNonQuery();
 
-                cmd3.Parameters.AddWithValue("@Cart_ID", Cart_ID);
+               /* cmd3.Parameters.AddWithValue("@Cart_ID", Cart_ID);
                 cmd3.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
-                cmd3.Parameters.AddWithValue("@Quantity", c.Quantity);
+                cmd3.Parameters.AddWithValue("@Quantity", c.Quantity);*/
                 //cmd1.ExecuteNonQuery();
                 string sessionId = Request.Cookies["sessionId"];
 
                 if (sessionId != null)
                 {
-                    Session session = appData.Sessions.FirstOrDefault(x => x.Email == cust.Email);
+                    Session session = appData.Sessions.FirstOrDefault(x =>x.Email == Email);
                     if (session != null)
                     {
-                        Cart_ID = sessionId;
-                        Email = cust.Username;
-                        cmdWithEmail.Parameters.AddWithValue("@Cart_ID", Cart_ID);
+                        c.Cart_ID = sessionId;
+                        c.Email = Email;
+                        cmdWithEmail.Parameters.AddWithValue("@Cart_ID", c.Cart_ID);
                         cmdWithEmail.Parameters.AddWithValue("@Email", c.Email);
                         cmdWithEmail.Parameters.AddWithValue("@Total_Qty_Cart", c.Total_Qty_Cart);
+
+                        cmd3.Parameters.AddWithValue("@Cart_ID", c.Cart_ID);
+                        cmd3.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
+                        cmd3.Parameters.AddWithValue("@Quantity", c.Quantity);
                         cmdWithEmail.ExecuteNonQuery();
                         cmd3.ExecuteNonQuery();
                     }
                 }
                 else
                 {
-                    Cart_ID = Guid.NewGuid().ToString();
-                    cmdNoEmail.Parameters.AddWithValue("@Cart_ID", Cart_ID);
+                    c.Cart_ID = Guid.NewGuid().ToString();
+                    cmdNoEmail.Parameters.AddWithValue("@Cart_ID",c.Cart_ID);
                     cmdNoEmail.Parameters.AddWithValue("@Email", "NULL");
                     cmdNoEmail.Parameters.AddWithValue("@Total_Qty_Cart", c.Total_Qty_Cart);
-
+                     cmd3.Parameters.AddWithValue("@Cart_ID", c.Cart_ID);
+                cmd3.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
+                cmd3.Parameters.AddWithValue("@Quantity", c.Quantity);
                     cmdNoEmail.ExecuteNonQuery();
                     cmd3.ExecuteNonQuery();
                 }
