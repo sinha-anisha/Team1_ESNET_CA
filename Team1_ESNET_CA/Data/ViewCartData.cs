@@ -18,8 +18,8 @@ namespace Team1_ESNET_CA.Data
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = @"SELECT Q.[Product_ID], Q.[Product_Name], Q.[Product_Image], Q.[Product_Description], Q.[Unit_Price], C.[Product_ID], C.Quantity
-                                FROM [Quantity] AS Q,[Cart]
+                string sql = @"SELECT Q.[Product_ID], Q.[Product_Name], Q.[Product_Image], Q.[Product_Description], Q.[Unit_Price], C.[Product_ID], C.[Quantity], C.[Cart_ID]
+                                FROM [Quantity] AS Q,[Cart] AS C
                                 WHERE Q.[Product_ID] =C.[Product_ID]";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -29,11 +29,13 @@ namespace Team1_ESNET_CA.Data
                 {
                     ViewCartProduct product = new ViewCartProduct()
                     {
+                        productId = (int)reader["Product_ID"],
                         productNmae = (string)reader["Product_Name"],
                         productImage = (string)reader["Product_Image"],
                         productDescription = (string)reader["Product_Description"],
                         unitPrice = (double)reader["Unit_Price"],
-                        Quantity = (int)reader["Quantity"]
+                        Quantity = (int)reader["Quantity"],
+                        CartId = (int)reader["Cart_ID"]
                     };
                     products.Add(product);
                 }
