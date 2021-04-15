@@ -2,9 +2,8 @@
 @{
     ViewData["Title"] = "Index";
     var products = (List<Product>)ViewData["products"];
-    var likes = (List<string>)ViewData["likes"];
-    var cust = (List<Customer>)ViewData["username"];
-}
+    var likes = (List<string>)ViewData["likes"]; 
+    }
 
 @section Scripts
     {
@@ -54,42 +53,46 @@
 </style>
 
 <input autofocus placeholder="search" class="form-control" type="text" autocomplete="off" name="Search" id="search" />
-<form class="d-flex" id="cartid">
-    <a class="bg-transparent" href="https://localhost:44380/order"><i class="fa fa-shopping-cart mr-1"></i><sup class="shop-badge  mr-5">@ViewData["Total_Qty_Cart"]</sup></a>
-</form>
+
 <table>
+    <tr>
+        <th>Product Name</th>
+    </tr>
 
 
-    @for (int i = 0; i < products.Count; i++)
+
+    @{ int i = 0;}
+    @foreach (var item in Model)
 
     {
-        if (i % 3 == 0)
+
+
+        @if (i % 3 == 0)
         {
             @:<tr>
             }
 
-            <td>
-                <div class="img_container">
-                    <form method="post" id="form" action="/Cart/AddToCart">
-                        <input type="hidden" name="Product_ID" value="@products[i].Product_ID" />
-                        <input type="hidden" name="Email" value=@cust[i].Email/>
-                        <img src=@products[i].Product_Image width="350" height="250" />
-                        <div>Product Name: @products[i].Product_Name</div>
-                        <div>Product Description: @products[i].Product_Description</div>
-                        <div>Price: @products[i].Unit_Price</div>
-                        <input type="text" id="quantity" name="Quantity" />
-                        <button type="submit" class="btn btn-success">Add To Cart</button>
-                    </form>
-                </div>
-            </td>
- if ((i + 1) % 3 == 0)
-            {
-            @:</tr>
-        }
-    }
-
-
+<td>
+    <div class="img_container">
+        <form method="post" id="form" action="/Cart/AddToCart">
+            <input type="hidden" name="Product_ID" value="@products[i].Product_ID" />
+            <input type="hidden" name="Email" value="anisha@gmail.com" />
+            <img src=@products[i].Product_Image width="350" height="250" />
+            <div>Product Name: @products[i].Product_Name</div>
+            <div>Product Description: @products[i].Product_Description</div>
+            <div>Price: @products[i].Unit_Price</div>
+            <input type="text" id="quantity" name="Quantity" />
+            <button type="submit" class="btn btn-success">Add To Cart</button>
+        </form>
+    </div>
+</td> if ((i + 1) % 3 == 0)
+                {
+@:</tr>
+}
+}
 
 
 </table>
+<!--<input autofocus placeholder="search" class="form-control" type="text" autocomplete="off" name="Search" id="search" />-->
+
 
