@@ -62,8 +62,10 @@ namespace Team1_ESNET_CA.Controllers
 
                     Response.Cookies.Append("sessionId", session.Session_ID);
                 }
+                ViewData["sessionId"] = Request.Cookies["sessionId"];
+
             }
-                return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Gallery");
 
         }
     }
