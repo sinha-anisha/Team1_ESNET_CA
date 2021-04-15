@@ -2,7 +2,8 @@
 @{
     ViewData["Title"] = "Index";
     var products = (List<Product>)ViewData["products"];
-    var likes = (List<string>)ViewData["likes"]; 
+    var likes = (List<string>)ViewData["likes"];
+   var Email =ViewData["username"];
     }
 
 @section Scripts
@@ -61,38 +62,33 @@
 
 
 
-    @{ int i = 0;}
-    @foreach (var item in Model)
+    @for(int i=0;i<products.Count;i++)
 
     {
-
-
         @if (i % 3 == 0)
-        {
-            @:<tr>
-            }
+         {
+       @:<tr>
+         }
 
-<td>
-    <div class="img_container">
-        <form method="post" id="form" action="/Cart/AddToCart">
-            <input type="hidden" name="Product_ID" value="@products[i].Product_ID" />
-            <input type="hidden" name="Email" value="anisha@gmail.com" />
+         <td>
+         <div class="img_container">
+         <form method="post" id="form" action="/Cart/AddToCart">
+            <input type="hidden" name="Product_ID" value=@products[i].Product_ID />
+            <input type="hidden" name="Email" value=@ />
             <img src=@products[i].Product_Image width="350" height="250" />
             <div>Product Name: @products[i].Product_Name</div>
             <div>Product Description: @products[i].Product_Description</div>
             <div>Price: @products[i].Unit_Price</div>
             <input type="text" id="quantity" name="Quantity" />
             <button type="submit" class="btn btn-success">Add To Cart</button>
-        </form>
-    </div>
-</td> if ((i + 1) % 3 == 0)
-                {
-@:</tr>
-}
-}
-
-
+          </form>
+          </div>
+          </td>
+        @if ((i + 1) % 3 == 0)
+         {
+        @:</tr>
+         }
+     }
 </table>
-<!--<input autofocus placeholder="search" class="form-control" type="text" autocomplete="off" name="Search" id="search" />-->
 
 
