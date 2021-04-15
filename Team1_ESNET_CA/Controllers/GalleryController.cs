@@ -7,7 +7,6 @@ using Team1_ESNET_CA.Models;
 using Team1_ESNET_CA.Data;
 using System.Data.SqlClient;
 
-
 namespace Team1_ESNET_CA.Controllers
 {
     public class GalleryController : Controller
@@ -20,11 +19,8 @@ namespace Team1_ESNET_CA.Controllers
             this.appData = appData;
         }
 
-        
-
-        public IActionResult Index(string search)
+        public IActionResult Index()
         {
-
             List<Product> products = Product_Data.GetProducts();
             List<Product> productsn = Product_Data.GetProducts();
             ViewData["products"] = products;

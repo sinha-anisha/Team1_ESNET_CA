@@ -39,9 +39,7 @@ namespace Team1_ESNET_CA.Controllers
             }
             else
             {
-                
                 cust.Email = username;
-                ViewData["username"] = username;
                 Session session = new Session()
                 {
                     Session_ID = Guid.NewGuid().ToString(),
@@ -62,13 +60,10 @@ namespace Team1_ESNET_CA.Controllers
                     cmd.Parameters.AddWithValue("@TimeStamp", session.TimeStamp);
                     cmd.ExecuteNonQuery();
 
-                    Response.Cookies.Append("sessionId", session.Session_ID);
+                   HttpContext.Response.Cookies.Append("sessionId", session.Session_ID);
                 }
-                ViewData["sessionId"] = Request.Cookies["sessionId"];
-                
-
             }
-            return RedirectToAction("Index", "Gallery");
+                return RedirectToAction("Index", "Home");
 
         }
     }
