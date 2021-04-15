@@ -13,27 +13,29 @@ namespace Team1_ESNET_CA.Controllers
 
 
 
-        public IActionResult Index(Session email)
+        public IActionResult Index(Session e)
         {
             string sessionId = Request.Cookies["sessionId"];
 
-            if (sessionId == null)
+            if (sessionId != null)
             {
-                // No username is found in session, so the user needs to login
-                return RedirectToAction("Index", "Login");
+                //validate with customer email before retrieving product infomation
+
+                //Link Controller to model to Database
+                List<Order> FinishedPdt = OrderData.getPdtInfo(e);
+
+                ViewData["orderInfos"] = FinishedPdt;
+
+                return View();
             }
-            //Link Controller to model to Database
-            List<Order> FinishedPdt = OrderData.getPdtInfo(email);
-
-            ViewData["orderInfos"] = FinishedPdt;
-
-            return View();
+            // No username is found in session, so the user needs to login
+            return RedirectToAction("Index", "Login");
         }
-        public IActionResult getActCode(Cart productId , Cart orderId)
+        public IActionResult getActCode(Order prodId , Order ordId)
         {
-            List<string> actCode = OrderData.generateActCode(productId, orderId);
-            ViewData["actCodes"] = actCode;
-            return View();
+            List<Order> orderdetail = OrderData.generateActCode(prodId, ordId);
+            //ViewData["orderdetails"] = orderdetail; may not need a viewdata.
+            return RedirectToAction("index", "order");
         }
 
     }

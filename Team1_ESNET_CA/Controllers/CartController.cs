@@ -20,6 +20,7 @@ namespace Team1_ESNET_CA.Controllers
         public CartController(AppData appData)
         {
             this.appData = appData;
+            CheckOut(appData.Carts);
         }
   
         public IActionResult AddToCart( string Email , Product pdt,Cart c)
@@ -92,6 +93,7 @@ namespace Team1_ESNET_CA.Controllers
                 cmd3.Parameters.AddWithValue("@Quantity", c.Quantity);
                     cmdNoEmail.ExecuteNonQuery();
                     cmd3.ExecuteNonQuery();
+                    conn.Close();
                 }
                 //cmd3.ExecuteNonQuery();
                 ViewData["sessionId"] = Request.Cookies["sessionId"];
@@ -99,6 +101,41 @@ namespace Team1_ESNET_CA.Controllers
 
             }
             return RedirectToAction("Index", "Gallery");
+        }
+
+        public  IActionResult CheckOut ( List<Cart> c)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                //insert into Order
+                string sql = @"INSERT INTO Orders (Order_ID, Order_Date, Email, Quantity)
+                               VALUES(@Order_ID, @Order_Date, @Email, @Quantity)";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+                //check if user is log in
+                string session = Request.Cookies["sessionId"];
+                if (session != null)
+                {
+                    foreach (Cart cart in c)
+                    {
+                        Session sessionid = appData.Sessions.FirstOrDefault(x => x.Email == cart.Email);
+                        if (sessionid != null)
+                        {
+                            //Add to Order Table and Order Detail Tables
+                            cmd.Parameters.AddWithValue("@Order_ID", cart.Cart_ID);
+                            //cmd.Parameters.AddWithValue("@Order_Date", cart.Date); Check if cart table have date
+                            cmd.Parameters.AddWithValue("@Email", cart.Email);
+                            cmd.Parameters.AddWithValue("@Quantity", cart.Quantity);
+                            cmd.ExecuteNonQuery();
+                            return RedirectToAction("getActCode", "Order");
+                        }
+                    }
+
+                }
+                conn.Close();
+            }
+            return RedirectToAction("index", "Login");
         }
 
 

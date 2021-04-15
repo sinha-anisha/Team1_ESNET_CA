@@ -13,10 +13,11 @@ namespace Team1_ESNET_CA.Data
 {
     public class OrderData : DataConnection
     {
-        public static List<string> generateActCode(Cart Order_ID , Cart Product_ID)
+        public static List<Order> generateActCode(Order Order_ID , Order Product_ID)
         {
+            //Need do validation on current Order_Id with session_ID
 
-            List<string> actcodes = new List<string>();
+            List<Order> orderdetails = new List<Order>();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -24,7 +25,7 @@ namespace Team1_ESNET_CA.Data
                 conn.Open();
 
 
-                string sql = @"SELECT COUNT(Product_ID) FROM [Cart_Product] 
+                string sql = @"SELECT COUNT(Product_ID) FROM Orders
                             WHERE Order_ID = " + Order_ID;
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -40,14 +41,18 @@ namespace Team1_ESNET_CA.Data
                                 VALUES ( @Activation_Code, @Order_ID, @Product_ID)";
 
                         SqlCommand cmd1 = new SqlCommand(sql1, conn);
-                        cmd1.Parameters.AddWithValue("@Activation_Code", uid);
-                        cmd1.Parameters.AddWithValue("@Order_ID", Order_ID);
-                        cmd1.Parameters.AddWithValue("@Product_ID", Product_ID);
+                        Order orderdetail = new Order();
+                        {
+                            cmd1.Parameters.AddWithValue("@Activation_Code", uid);
+                            cmd1.Parameters.AddWithValue("@Order_ID", Order_ID);
+                            cmd1.Parameters.AddWithValue("@Product_ID", Product_ID);
+                        };
+                        orderdetails.Add(orderdetail);
                     }
                 };
                 conn.Close();
             }
-            return actcodes;
+            return orderdetails;
         }
         public static List<Order> getPdtInfo(Session Email)
         {
