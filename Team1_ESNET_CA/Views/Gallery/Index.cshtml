@@ -14,7 +14,8 @@
 <style>
     table {
         width: 100%;
-        margin: auto;
+        margin-left: 5px;
+        margin-right: 5px;
     }
 
     .badge {
@@ -51,6 +52,13 @@
     .bold_menu {
         font-weight: bold;
     }
+    td{
+        padding: 10px;
+        text-align: center;
+        vertical-align:auto ;
+    }
+
+   
 </style>
 
 @model IEnumerable<Team1_ESNET_CA.Models.Product>
@@ -63,10 +71,9 @@
     @Html.TextBox("search")
     <input type="submit" value="Submit" />
 }
+<br>
 <table>
-    <tr>
-        <th>Product Name</th>
-    </tr>
+
 
 
 
@@ -82,31 +89,33 @@
             }
 
 
-        <td>
-            <div class="img_container">
-                <form method="post" id="form" action="/Cart/AddToCart">
+        @:<td>
+            @:<div class="img_container">
+                @:<form method="post" id="form" action="/Cart/AddToCart">
                     <input type="hidden" name="Product_ID" value="@item.Product_ID" />
                     <input type="hidden" name="Email" value="anisha@gmail.com" />
-                    <img src=@item.Product_Image width="350" height=250 />
-                    <div>Product Name: @item.Product_Name</div>
-                    <div>Product Description: @item.Product_Description</div>
-                    <div>Price: @item.Unit_Price</div>
+                    @:<img src=@item.Product_Image width="350" height=250 /><br><br>
+                    @:<div>Product Name: @item.Product_Name
+                        @:</div><br><br>
+                    @:<div>@item.Product_Description</div><br>
+                    @:<div>Price: @item.Unit_Price
+                        @:</div><br>
                     <input type="text" id="quantity" name="Quantity" />
                     <button type="submit" class="btn btn-success">Add To Cart</button>
 
-                </form>
+                @:</form>
 
-            </div>
-            @{ i++;}
-        </td>
+            @:</div>
+
+        @:</td>
 
 
         @if ((i + 1) % 3 == 0)
         {
-        @:</tr> }
-
-            }
+        @:</tr>
         }
+        { i++;}
+    }
 
 
 </table>
