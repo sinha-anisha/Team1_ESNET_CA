@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+
+}
+@section Scripts{ 
+
+
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <script src="~/js/Script_Login.js"></script>
+            <link rel="stylesheet" href="/bootstrap-4.0.0-dist/css/bootstrap-grid.min.css">
+            <link rel="stylesheet" href="/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+            <link rel="stylesheet" type="text/css" href="/css/Style_Login.css">
+
+
+
+        }
+
+        <body>
+
+
+            <div class="mycontainer">
+                <div class="row no-gutters">
+
+                    <div class="container col-lg-4">
+
+                        <img src="/Images/digital.jpg">
+
+                    </div>
+
+                    <div class="col-lg-8 py-4 ">
+
+                        <div class="form-row my-auto justify-content-center align-items-center">
+                           
+                            <div class="col-lg-8">
+                                <h4 class="text-capitalize ">Sign-in to your account</h4>
+                            </div>
+                        </div>
+                        <form class="justify-content-center align-items-center" action="/Login/Authenticate" id="form" method="post">
+                            <div class="form-row my-auto justify-content-center align-items-center">
+                                <div class="col-lg-8">
+                                    <input type="text"  value ="@ViewData["username"]" name="username" id="uname" class="form-control my-3 p-2" tabindex="1" placeholder="Email address">
+                                </div>
+                            </div>
+
+                            <div class="form-row my-auto justify-content-center align-items-center">
+                                <div class="col-lg-8">
+                                    <input type="password" id="pwd" name="password" class="form-control my-3 p-2" tabindex="2" placeholder="********">
+                                </div>
+                            </div>
+                            <div class="form-row my-auto justify-content-center align-items-center">
+                                <div class="col-lg-8">
+                                    <input id="submitbtn" type="submit" tabindex="3" class="btn mt-2 mb-2" />
+                                </div>
+                            </div>
+                            <div class="form-row my-auto justify-content-center align-items-center">
+                                <div class="col-lg-8 " id="error_msg">
+                                    @ViewData["errmsg"]
+                                </div>
+                            </div>
+                            <div class="form-row my-auto justify-content-center align-items-center">
+                                <div class="col-lg-5">
+
+                                    <a href="#" tabindex="4">Forgot Password</a>
+                                </div>
+                                <div class="col-lg-3">
+
+                                    <a  tabindex="5" asp-controller="Register" asp-action="Index">Register</a>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </body>
+

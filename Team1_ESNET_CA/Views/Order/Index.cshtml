@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "My Purchases";
+    var orderInfo = (List<Order>)ViewData["orderInfos"];
+   // var pdtImg = (string[])ViewData["pdtImg"]; 
+}
+
+
+<style>
+    .actCodeBox {
+        width: 130px;
+        height: 25px;
+        border: 1px solid black;
+        font-size: 14px;
+        color: black;
+        background-color: white;
+    }
+</style>
+
+
+<script>
+    function downloadStarted() {
+        alert("Download started.");
+    }
+</script>
+
+@*Table layout*@
+        <hr /> 
+            <div class="text-center"> <h1 class="display-4">My Purchases</h1>
+            <br /> 
+            </div> 
+            <table width="100%" cellpadding="10" align="center">
+            @foreach (Order orderinfo in orderInfo)
+            {
+    @: <tr style="border-bottom:1px solid lightgray">
+
+
+            @: <td style="text-align:center">
+                        @: <img src="@orderinfo.ProductImg" width="250" />
+                        @: <p><br /><button type="button" onclick="downloadStarted()">Download</button></p>
+                    @: </td>
+        
+            @: <td class="order_details" width="150">
+                        @: <span class="desc">Product:</span>
+                        @: <span class="desc">Description:</span>
+                        @: <span class="Od_desc">Date of Purchase:</span>
+                        @: <span class="Od_desc">Quantity:</span>
+                        @: <span class="Od_desc">Activation Code:</span>
+                    @: </td>
+        
+            @: <td class="order_details">
+                        @: <span class="desc"> @orderinfo.ProductName </span>
+                        @: <span class="desc"> @orderinfo.ProductDesc </span>
+                        @: <span class="Od_desc"> @orderinfo.OrderDate</span>
+                        @: <span class="Od_desc"> @orderinfo.OrderQuantity</span>
+                        if (orderinfo.OrderQuantity >= 1)
+                            {
+                                for (int i = 0; i < orderinfo.OrderQuantity; i++)
+                                {
+                                <span> <select class="actCodeBox"> <option selected>@orderinfo.ActivationCode</option> 
+                                </select> </span> 
+                                }
+                            }
+                        }   
+               </td>
+
+        </tr>
+                }
+    }
+        </table>

@@ -1,0 +1,122 @@
+﻿
+
+@{ ViewData["Title"] = "Index";
+    var products = (List<Product>)ViewData["products"];
+    var likes = (List<string>)ViewData["likes"]; }
+
+@section Scripts
+{
+    <script src="~/js/shared/image_gallery.js"></script>
+    <script src="~/js/cartTotal.js"></script>
+}
+
+<style>
+    table {
+        width: 100%;
+        margin: auto;
+    }
+
+    .badge {
+        font-size: 14px !important;
+    }
+
+    .like_icon {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: 5px;
+        right: 30px;
+        cursor: pointer;
+    }
+
+    .img_container {
+        position: relative;
+    }
+
+    .badge_container {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        opacity: 0.7;
+    }
+
+    .button {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        bottom: 10px;
+    }
+
+    .bold_menu {
+        font-weight: bold;
+    }
+</style>
+
+ Cart: <span id="displaycart"></span>
+
+@model IEnumerable<Team1_ESNET_CA.Models.Product>
+@{ ViewBag.Title = "search"; }
+<h2>Search</h2>
+@using (Html.BeginForm("index", "Gallery", FormMethod.Get))
+{
+@Html.TextBox("search")
+                <input type="submit" value="Submit" />}
+
+<script>
+    var count = 0;
+    sessionStorage.setItem("cartTotal", count.toString());
+
+    sessionStorage.setItem("itemOneTotal", count.toString());
+    sessionStorage.setItem("itemTwoTotal", count.toString());
+    sessionStorage.setItem("itemThreeTotal", count.toString());
+    sessionStorage.setItem("itemFourTotal", count.toString());
+    sessionStorage.setItem("itemFiveTotal", count.toString());
+    sessionStorage.setItem("itemSixTotal", count.toString());
+</script>
+<table>
+    <tr>
+        <th>Product Name</th>
+    </tr>
+
+
+
+    @{ int i = 0;}
+    @foreach (var item in Model)
+
+    {
+
+
+@if (i % 3 == 0)
+{
+@:<tr>
+}
+
+
+                <td>
+                    <div class="img_container">
+                        <form method="post" id="form" action="/Cart/AddToCart">
+                            <input type="hidden" name="Product_ID" value="@item.Product_ID" />
+                            <input type="hidden" name="Email" value="anisha@gmail.com" />
+                            <img src=@item.Product_Image width="350" height=250 />
+                            <div>Product Name: @item.Product_Name</div>
+                            <div>Product Description: @item.Product_Description</div>
+                            <div>Price: @item.Unit_Price</div>
+                            @*<input type="text" id="quantity" name="Quantity" />*@
+                            @*<button type="submit" class="btn btn-success" onclick="add()">Add To Cart</button>*@
+                            <input type="button" id="" value="Add" onclick="add()"/>
+
+                        </form>
+
+                    </div>
+                    @{ i++;}
+                </td>
+
+
+                                @if ((i + 1) % 3 == 0)
+                                {
+            @:</tr> }
+        }}
+
+
+</table>
+<!--<input autofocus placeholder="search" class="form-control" type="text" autocomplete="off" name="Search" id="search" />-->

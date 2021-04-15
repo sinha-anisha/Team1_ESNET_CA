@@ -1,0 +1,73 @@
+﻿@using Team1_ESNET_CA.Models;
+@{
+    var Total_Qty_Cart = ViewData["Total_Qty_Cart"];
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Team1_ESNET_CA</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">.
+
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Hello</a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Gallery" asp-action="Index">Gallery </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Purchase History</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div style="float:right">
+                    @if (ViewData["sessionId"] == null)
+                    {
+                        <a class="nav-link text-primary mr-2" asp-controller="Login" asp-action="Index">Login</a>
+                    }
+                    else
+                    {
+                        <a class="nav-link text-danger mr-2" asp-controller="Logout" asp-action="Index">Logout</a>
+                    }
+
+                </div>
+                <form class="d-flex" id="cartid">
+                    <a class="bg-transparent" href="https://localhost:44380/order"><i class="fa fa-shopping-cart mr-1"></i><sup class="shop-badge  mr-5">@Total_Qty_Cart</sup></a>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - Team1_ESNET_CA - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
