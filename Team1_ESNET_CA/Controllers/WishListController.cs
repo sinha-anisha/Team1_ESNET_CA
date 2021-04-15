@@ -9,11 +9,11 @@ using Team1_ESNET_CA.Models;
 
 namespace Team1_ESNET_CA.Controllers
 {
-    public class HomeController : Controller
+    public class WishListController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<WishListController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public WishListController(ILogger<WishListController> logger)
         {
             _logger = logger;
         }

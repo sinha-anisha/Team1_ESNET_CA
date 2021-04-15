@@ -41,7 +41,7 @@ namespace Team1_ESNET_CA.Controllers
                 cust.SessionId = Guid.NewGuid().ToString();
                 Response.Cookies.Append("sessionId",cust.SessionId);
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Gallery");
             }
         }
     }
