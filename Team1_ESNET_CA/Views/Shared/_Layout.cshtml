@@ -1,7 +1,5 @@
 ﻿@using Team1_ESNET_CA.Models;
-@{
-    var Total_Qty_Cart = ViewData["Total_Qty_Cart"];
-}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,7 +47,7 @@
 
                 </div>
                 <form class="d-flex" id="cartid">
-                    <a class="bg-transparent" href="https://localhost:44380/order"><i class="fa fa-shopping-cart mr-1"></i><sup class="shop-badge  mr-5">@Total_Qty_Cart</sup></a>
+                    <a class="bg-transparent" href="https://localhost:44380/order"><i class="fa fa-shopping-cart mr-1"></i><sup class="shop-badge  mr-5">@ViewData["Total_Qty_Cart"]</sup></a>
                 </form>
             </div>
         </nav>

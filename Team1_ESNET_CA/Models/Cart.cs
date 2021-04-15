@@ -11,6 +11,15 @@ namespace Team1_ESNET_CA.Models
         public int Product_ID { get; set; }
         public string Email { get; set; }
         public int Quantity { get; set; }
-        public int Total_Qty_Cart { get; set; }
+        public int Total_Qty_Cart {
+            get
+            {
+                return 0;
+            }
+            set
+            {
+               
+            }
+        }
     }
 }
