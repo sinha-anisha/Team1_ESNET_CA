@@ -34,7 +34,7 @@ namespace Team1_ESNET_CA.Data
                         productImage = (string)reader["Product_Image"],
                         productDescription = (string)reader["Product_Description"],
                         unitPrice = (double)reader["Unit_Price"],
-                        Quantity = (int)reader["Quantity"],
+                        //Quantity = (int)reader["Quantity"],
                         CartId = (int)reader["Cart_ID"]
                     };
                     products.Add(product);
