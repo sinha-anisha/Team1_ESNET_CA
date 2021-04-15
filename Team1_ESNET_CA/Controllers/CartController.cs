@@ -48,14 +48,14 @@ namespace Team1_ESNET_CA.Controllers
                 //SqlCommand cmd4 = new SqlCommand(sql1, conn);
 
 
-                cmdWithEmail.Parameters.AddWithValue("@Cart_ID", Cart_ID);
+               /* cmdWithEmail.Parameters.AddWithValue("@Cart_ID", Cart_ID);
                 cmdWithEmail.Parameters.AddWithValue("@Email", c.Email);
-                cmdWithEmail.Parameters.AddWithValue("@Total_Qty_Cart", c.Total_Qty_Cart);
+                cmdWithEmail.Parameters.AddWithValue("@Total_Qty_Cart", c.Total_Qty_Cart);*/
 
-                cmdNoEmail.Parameters.AddWithValue("@Cart_ID", Cart_ID);
+                /*cmdNoEmail.Parameters.AddWithValue("@Cart_ID", Cart_ID);
                 cmdNoEmail.Parameters.AddWithValue("@Email", "NULL");
                 cmdNoEmail.Parameters.AddWithValue("@Total_Qty_Cart", c.Total_Qty_Cart);
-
+*/
                 //cmd.ExecuteNonQuery();
 
                 cmd3.Parameters.AddWithValue("@Cart_ID", Cart_ID);
@@ -71,6 +71,9 @@ namespace Team1_ESNET_CA.Controllers
                     {
                         Cart_ID = sessionId;
                         Email = cust.Username;
+                        cmdWithEmail.Parameters.AddWithValue("@Cart_ID", Cart_ID);
+                        cmdWithEmail.Parameters.AddWithValue("@Email", c.Email);
+                        cmdWithEmail.Parameters.AddWithValue("@Total_Qty_Cart", c.Total_Qty_Cart);
                         cmdWithEmail.ExecuteNonQuery();
                         cmd3.ExecuteNonQuery();
                     }
@@ -78,6 +81,10 @@ namespace Team1_ESNET_CA.Controllers
                 else
                 {
                     Cart_ID = Guid.NewGuid().ToString();
+                    cmdNoEmail.Parameters.AddWithValue("@Cart_ID", Cart_ID);
+                    cmdNoEmail.Parameters.AddWithValue("@Email", "NULL");
+                    cmdNoEmail.Parameters.AddWithValue("@Total_Qty_Cart", c.Total_Qty_Cart);
+
                     cmdNoEmail.ExecuteNonQuery();
                     cmd3.ExecuteNonQuery();
                 }
