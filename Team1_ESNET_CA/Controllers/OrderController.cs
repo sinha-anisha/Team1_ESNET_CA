@@ -31,7 +31,7 @@ namespace Team1_ESNET_CA.Controllers
         }
         public IActionResult getActCode(Order orderIden)
         {
-            List<string> actCode = OrderData.getActCode(orderIden);
+            List<string> actCode = OrderData.generateActCode(orderIden);
             ViewData["actCodes"] = actCode;
             return View();
         }
