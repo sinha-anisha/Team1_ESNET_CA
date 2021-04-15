@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Team1_ESNET_CA.Models;
+@{
+    var Total_Qty_Cart = ViewData["Total_Qty_Cart"];
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -13,18 +17,18 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                
-                <a class="navbar-brand"  asp-controller="Home" asp-action="Index">Hello</a>
-                
+
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Hello</a>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                
+
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark"  asp-controller="Gallery" asp-action="Index">Gallery </a>
+                            <a class="nav-link text-dark" asp-controller="Gallery" asp-action="Index">Gallery </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Purchase History</a>
@@ -33,7 +37,7 @@
                     </ul>
                 </div>
 
-               <div style="float:right">
+                <div style="float:right">
                     @if (ViewData["sessionId"] == null)
                     {
                         <a class="nav-link text-primary mr-2" asp-controller="Login" asp-action="Index">Login</a>
@@ -42,10 +46,10 @@
                     {
                         <a class="nav-link text-danger mr-2" asp-controller="Logout" asp-action="Index">Logout</a>
                     }
-                
-               </div>
+
+                </div>
                 <form class="d-flex" id="cartid">
-                    <a class="bg-transparent" href="https://localhost:44380/order"><i class="fa fa-shopping-cart mr-1"></i><sup class="shop-badge  mr-5">0</sup></a>
+                    <a class="bg-transparent" href="https://localhost:44380/order"><i class="fa fa-shopping-cart mr-1"></i><sup class="shop-badge  mr-5">@Total_Qty_Cart</sup></a>
                 </form>
             </div>
         </nav>

@@ -14,6 +14,8 @@ namespace Team1_ESNET_CA.Controllers
     public class CartController : Controller
     {
         protected static readonly string connectionString = "Server=(local);Database=Necrosoft_14_04_21; Integrated Security=true";
+        
+       
 
         private readonly AppData appData;
 
@@ -41,8 +43,6 @@ namespace Team1_ESNET_CA.Controllers
                 if (customer != null)
                 {
                     Cart_ID = sessionId;
-
-                    // uname = HttpContext.Request.ge
                     uname = cust.Username;
                 }
                 else
@@ -55,29 +55,42 @@ namespace Team1_ESNET_CA.Controllers
             {
                 Cart_ID = Guid.NewGuid().ToString();
             }
+            c.Total_Qty_Cart = c.Total_Qty_Cart + c.Quantity;
 
-            int qty = c.Quantity;
+           
 
-           // return RedirectToAction("ActionName", "ControllerName", new { userId = id });
+
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = @"insert into Cart (Cart_ID,Product_ID,Quantity)
+                string sql = @"insert into Cart (Cart_ID,Email,Total_Qty_Cart)
+                                Values(@Cart_ID,@Email,@Total_Qty_Cart)";
+
+                string sql1 = @"insert into Cart_Product(Cart_ID,Product_ID,Quantity)
                                 Values(@Cart_ID,@Product_ID,@Quantity)";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlCommand cmd1 = new SqlCommand(sql1, conn);
 
 
                 cmd.Parameters.AddWithValue("@Cart_ID", Cart_ID);
-                cmd.Parameters.AddWithValue("@Product_ID",c.Product_ID);
-                //cmd.Parameters.AddWithValue("@Email", Email);
-                cmd.Parameters.AddWithValue("@Quantity", c.Quantity);
+                cmd.Parameters.AddWithValue("@Email", c.Email);
+                cmd.Parameters.AddWithValue("@Total_Qty_Cart", c.Total_Qty_Cart);
+                
                 cmd.ExecuteNonQuery();
 
 
+
+                cmd1.Parameters.AddWithValue("@Cart_ID", Cart_ID);
+                cmd1.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
+                cmd1.Parameters.AddWithValue("@Quantity", c.Quantity);
+                cmd1.ExecuteNonQuery();
+
+                ViewData["Total_Qty_Cart"] = c.Total_Qty_Cart;
+
             }
-            return View("Index");
+            return RedirectToAction("Index", "Gallery");
         }
 
 

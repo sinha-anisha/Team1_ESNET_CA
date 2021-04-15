@@ -36,7 +36,7 @@ namespace Team1_ESNET_CA.Controllers
                 
             }
 
-            return View("Gallery");
+            return View();
         }
 
 
