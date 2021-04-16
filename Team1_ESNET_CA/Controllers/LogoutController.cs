@@ -28,7 +28,7 @@ namespace Team1_ESNET_CA.Controllers
             Response.Cookies.Delete("sessionId");
 
             // direct user back to our default gallery
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Gallery");
         }
     }
 }
