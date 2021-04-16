@@ -20,15 +20,14 @@ namespace Team1_ESNET_CA.Controllers
         public CartController(AppData appData)
         {
             this.appData = appData;
-            CheckOut(appData.Carts);
         }
-  
-        public IActionResult AddToCart( string Email , Product pdt,Cart c)
+
+        public IActionResult AddToCart(string Email, Product pdt, Cart c)
         {
-            
-           
-           
-       
+
+
+
+
             c.Total_Qty_Cart = c.Total_Qty_Cart + c.Quantity;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -48,9 +47,9 @@ namespace Team1_ESNET_CA.Controllers
                 //SqlCommand cmd4 = new SqlCommand(sql1, conn);
 
 
-               /* cmdWithEmail.Parameters.AddWithValue("@Cart_ID", Cart_ID);
-                cmdWithEmail.Parameters.AddWithValue("@Email", c.Email);
-                cmdWithEmail.Parameters.AddWithValue("@Total_Qty_Cart", c.Total_Qty_Cart);*/
+                /* cmdWithEmail.Parameters.AddWithValue("@Cart_ID", Cart_ID);
+                 cmdWithEmail.Parameters.AddWithValue("@Email", c.Email);
+                 cmdWithEmail.Parameters.AddWithValue("@Total_Qty_Cart", c.Total_Qty_Cart);*/
 
                 /*cmdNoEmail.Parameters.AddWithValue("@Cart_ID", Cart_ID);
                 cmdNoEmail.Parameters.AddWithValue("@Email", "NULL");
@@ -58,15 +57,15 @@ namespace Team1_ESNET_CA.Controllers
 */
                 //cmd.ExecuteNonQuery();
 
-               /* cmd3.Parameters.AddWithValue("@Cart_ID", Cart_ID);
-                cmd3.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
-                cmd3.Parameters.AddWithValue("@Quantity", c.Quantity);*/
+                /* cmd3.Parameters.AddWithValue("@Cart_ID", Cart_ID);
+                 cmd3.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
+                 cmd3.Parameters.AddWithValue("@Quantity", c.Quantity);*/
                 //cmd1.ExecuteNonQuery();
                 string sessionId = Request.Cookies["sessionId"];
 
                 if (sessionId != null)
                 {
-                    Session session = appData.Sessions.FirstOrDefault(x =>x.Email == Email);
+                    Session session = appData.Sessions.FirstOrDefault(x => x.Email == Email);
                     if (session != null)
                     {
                         c.Cart_ID = sessionId;
@@ -85,12 +84,12 @@ namespace Team1_ESNET_CA.Controllers
                 else
                 {
                     c.Cart_ID = Guid.NewGuid().ToString();
-                    cmdNoEmail.Parameters.AddWithValue("@Cart_ID",c.Cart_ID);
+                    cmdNoEmail.Parameters.AddWithValue("@Cart_ID", c.Cart_ID);
                     cmdNoEmail.Parameters.AddWithValue("@Email", "NULL");
                     cmdNoEmail.Parameters.AddWithValue("@Total_Qty_Cart", c.Total_Qty_Cart);
-                     cmd3.Parameters.AddWithValue("@Cart_ID", c.Cart_ID);
-                cmd3.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
-                cmd3.Parameters.AddWithValue("@Quantity", c.Quantity);
+                    cmd3.Parameters.AddWithValue("@Cart_ID", c.Cart_ID);
+                    cmd3.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
+                    cmd3.Parameters.AddWithValue("@Quantity", c.Quantity);
                     cmdNoEmail.ExecuteNonQuery();
                     cmd3.ExecuteNonQuery();
                     conn.Close();
@@ -101,41 +100,6 @@ namespace Team1_ESNET_CA.Controllers
 
             }
             return RedirectToAction("Index", "Gallery");
-        }
-
-        public  IActionResult CheckOut ( List<Cart> c)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                //insert into Order
-                string sql = @"INSERT INTO Orders (Order_ID, Order_Date, Email, Quantity)
-                               VALUES(@Order_ID, @Order_Date, @Email, @Quantity)";
-                SqlCommand cmd = new SqlCommand(sql, conn);
-
-                //check if user is log in
-                string session = Request.Cookies["sessionId"];
-                if (session != null)
-                {
-                    foreach (Cart cart in c)
-                    {
-                        Session sessionid = appData.Sessions.FirstOrDefault(x => x.Email == cart.Email);
-                        if (sessionid != null)
-                        {
-                            //Add to Order Table and Order Detail Tables
-                            cmd.Parameters.AddWithValue("@Order_ID", cart.Cart_ID);
-                            //cmd.Parameters.AddWithValue("@Order_Date", cart.Date); Check if cart table have date
-                            cmd.Parameters.AddWithValue("@Email", cart.Email);
-                            cmd.Parameters.AddWithValue("@Quantity", cart.Quantity);
-                            cmd.ExecuteNonQuery();
-                            return RedirectToAction("getActCode", "Order");
-                        }
-                    }
-
-                }
-                conn.Close();
-            }
-            return RedirectToAction("index", "Login");
         }
 
 
