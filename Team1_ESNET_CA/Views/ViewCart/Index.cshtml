@@ -94,8 +94,6 @@
 
     <hr>
     <form>
-
-        <input id="TotalPrice" onchange="calculate()" />
         <table>
 
             @foreach (var product in products)
@@ -111,13 +109,13 @@
                                 <p>@product.productDescription</p>
 
                             </div>
-                            <div class="format">product description</div>
                         </div>
 
                         <form>
                             <div class="column">
                                 <div class="button">
                                     <input type="number" id="quantity" name="quantity" min="1" max="100" value="@product.Quantity">
+                                    <input type="submit" name="changeQuantity"/>
                                 </div>
                             </div>
                         </form>

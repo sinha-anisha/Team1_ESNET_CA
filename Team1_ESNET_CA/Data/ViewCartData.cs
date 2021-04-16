@@ -9,7 +9,7 @@ namespace Team1_ESNET_CA.Data
 {
     public class ViewCartData
     {
-        protected static readonly string connectionString = "Server=DESKTOP-SMR4OLJ; Database=NewDatabase; Integrated Security=true";
+        protected static readonly string connectionString = "Server=(local);Database=Necrosoft_14_04_21; Integrated Security=true";
 
         public static List<ViewCartProduct> GetAllProduct()
         {
@@ -34,7 +34,7 @@ namespace Team1_ESNET_CA.Data
                         productImage = (string)reader["Product_Image"],
                         productDescription = (string)reader["Product_Description"],
                         unitPrice = (double)reader["Unit_Price"],
-                        //Quantity = (int)reader["Quantity"],
+                        Quantity = (int)reader["Quantity"],
                         CartId = (int)reader["Cart_ID"]
                     };
                     products.Add(product);
