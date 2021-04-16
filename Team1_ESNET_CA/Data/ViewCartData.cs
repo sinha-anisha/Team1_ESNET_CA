@@ -9,7 +9,7 @@ namespace Team1_ESNET_CA.Data
 {
     public class ViewCartData
     {
-        protected static readonly string connectionString = "Server=DESKTOP-SMR4OLJ; Database=NewDatabase; Integrated Security=true";
+        protected static readonly string connectionString = "Server=(local); Database=NewDatabase; Integrated Security=true";
 
         public static List<ViewCartProduct> GetAllProduct()
         {
@@ -18,9 +18,9 @@ namespace Team1_ESNET_CA.Data
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = @"SELECT Q.[Product_ID], Q.[Product_Name], Q.[Product_Image], Q.[Product_Description], Q.[Unit_Price], C.[Product_ID], C.[Quantity], C.[Cart_ID]
-                                FROM [Quantity] AS Q,[Cart] AS C
-                                WHERE Q.[Product_ID] =C.[Product_ID]";
+                string sql = @"SELECT p.[Product_ID], p.[Product_Name], p.[Product_Image], p.[Product_Description], p.[Unit_Price], c.[Product_ID], c.[Quantity], c.[Cart_ID]
+                                FROM [Product] AS p,[Cart] AS c
+                                WHERE p.[Product_ID] =c.[Product_ID]";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
