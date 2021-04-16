@@ -9,7 +9,7 @@ namespace Team1_ESNET_CA.Data
 {
     public class ViewCartData
     {
-        protected static readonly string connectionString = "Server=(local); Database=NewDatabase; Integrated Security=true";
+        protected static readonly string connectionString = "Server=(local);Database=Necrosoft_14_04_21; Integrated Security=true";
 
         public static List<ViewCartProduct> GetAllProduct()
         {

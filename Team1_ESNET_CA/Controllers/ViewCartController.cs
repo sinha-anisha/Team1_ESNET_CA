@@ -23,6 +23,10 @@ namespace Team1_ESNET_CA.Controllers
 
         public IActionResult Index()
         {
+            List<ViewCartProduct> products = ViewCartData.GetAllProduct();
+
+            ViewData["products"] = products;
+
             return View();
         }
         public IActionResult CheckOut(List<Cart> c)
