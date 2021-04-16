@@ -16,7 +16,7 @@ namespace Team1_ESNET_CA.Controllers
 
         private readonly AppData appData;
 
-        public CartController(AppData appData)
+        public ViewCartController(AppData appData)
         {
             this.appData = appData;
         }
