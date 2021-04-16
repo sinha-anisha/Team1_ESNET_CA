@@ -13,10 +13,10 @@ namespace Team1_ESNET_CA.Data
 {
     public class OrderData : DataConnection
     {
-        public static List<Order> getPdtInfo(Product Product_ID)
+        public static List<string> generateActCode(Cart Order_ID , Cart Product_ID)
         {
-            List<Order> orderInfos = new List<Order>();
 
+            List<string> actcodes = new List<string>();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -29,7 +29,9 @@ namespace Team1_ESNET_CA.Data
                                 AND o.Order_ID = od.Order_ID
                                 AND o.Order_ID = '124'"; 
 
-                //SQLCommand
+                string sql = @"SELECT COUNT(Product_ID) FROM [Cart_Product] 
+                            WHERE Order_ID = " + Order_ID;
+
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -37,20 +39,20 @@ namespace Team1_ESNET_CA.Data
                 {
                     Order orderInfo = new Order()
                     {
-                        //link to model var name
-                        ProductName = (string)reader["Product_Name"],
-                        ProductImg = (string)reader["Product_Image"],
-                        ProductDesc = (string)reader["Product_Description"],
-                        OrderDate = (DateTime)reader["Order_Date"],
-                        OrderQuantity = (int)reader["Quantity"],
-                        ActivationCode = (string)reader["Activation_Code"]
-                    };
-                    orderInfos.Add(orderInfo);
-                }
+                        var uid = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
 
+                        string sql1 = @"INSERT INTO Order_Details (@Activation_Code,@Order_ID,@Product_ID)
+                                VALUES ( @Activation_Code, @Order_ID, @Product_ID)";
+
+                        SqlCommand cmd1 = new SqlCommand(sql1, conn);
+                        cmd1.Parameters.AddWithValue("@Activation_Code", uid);
+                        cmd1.Parameters.AddWithValue("@Order_ID", Order_ID);
+                        cmd1.Parameters.AddWithValue("@Product_ID", Product_ID);
+                    }
+                };
                 conn.Close();
             }
-            return orderInfos;
+            return actcodes;
         }
 
 

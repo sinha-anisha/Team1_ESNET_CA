@@ -14,12 +14,14 @@ namespace Team1_ESNET_CA.Models
             Product = new List<Product>();
             Carts = new List<Cart>();
             Sessions = new List<Session>();
+            Orders = new List<Order>();
         }
 
         public List<Customer> Customers { get; set; }
         public List<Product> Product { get; set; }
         public List<Cart> Carts { get; set; }
         public List<Session> Sessions { get; set; }
+        public List<Order> Orders { get; set; }
 
     }
 }
