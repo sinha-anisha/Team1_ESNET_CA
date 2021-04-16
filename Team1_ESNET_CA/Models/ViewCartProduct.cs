@@ -13,6 +13,6 @@ namespace Team1_ESNET_CA.Models
         public string productDescription { get; set; }
         public double unitPrice { get; set; }
         public int Quantity { get; set; }
-        public int CartId { get; set; }
+        public string CartId { get; set; }
     }
 }

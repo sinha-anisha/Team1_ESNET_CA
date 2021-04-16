@@ -19,8 +19,8 @@ namespace Team1_ESNET_CA.Data
             {
                 conn.Open();
                 string sql = @"SELECT p.[Product_ID], p.[Product_Name], p.[Product_Image], p.[Product_Description], p.[Unit_Price], c.[Product_ID], c.[Quantity], c.[Cart_ID]
-                                FROM [Product] AS p,[Cart] AS c
-                                WHERE p.[Product_ID] =c.[Product_ID]";
+                                FROM [Product] AS p,[Cart_Product] AS c
+                                WHERE p.[Product_ID] =c.[Product_ID]" ;
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -35,7 +35,7 @@ namespace Team1_ESNET_CA.Data
                         productDescription = (string)reader["Product_Description"],
                         unitPrice = (double)reader["Unit_Price"],
                         Quantity = (int)reader["Quantity"],
-                        CartId = (int)reader["Cart_ID"]
+                        CartId = (string)reader["Cart_ID"]
                     };
                     products.Add(product);
                 }
