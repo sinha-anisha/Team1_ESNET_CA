@@ -24,12 +24,13 @@ namespace Team1_ESNET_CA.Controllers
             this.appData = appData;
         }
   
-        public IActionResult AddToCart( string Email , Product pdt,Cart c)
+        public IActionResult AddToCart( Product pdt,Cart c)
         {
-            
+            List<Session> sess = SessionData.GetAllSessions();
+
            
-           
-       
+
+
             c.Total_Qty_Cart = c.Total_Qty_Cart + c.Quantity;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -49,16 +50,23 @@ namespace Team1_ESNET_CA.Controllers
                 SqlCommand cmd1 = new SqlCommand(sql2, conn);
 
 
-             
+                string user = "";
                 string sessionId = Request.Cookies["sessionId"];
+
+                foreach (var s in sess)
+                {
+                    if (s.Session_ID == sessionId)
+                        user = s.Email;
+                }
+
+
 
                 if (sessionId != null)
                 {
-                    Session session = appData.Sessions.FirstOrDefault(x =>x.Email == Email);
-                    if (session != null)
+                    if (user != null)
                     {
                         c.Cart_ID = sessionId;
-                        c.Email = Email;
+                        c.Email = user;
                         cmdEmail.Parameters.AddWithValue("@Cart_ID", c.Cart_ID);
                         cmdEmail.Parameters.AddWithValue("@Email", c.Email);
                         cmdEmail.Parameters.AddWithValue("@Total_Qty_Cart", c.Total_Qty_Cart);
