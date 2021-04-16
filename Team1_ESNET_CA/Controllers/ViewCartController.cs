@@ -49,7 +49,7 @@ namespace Team1_ESNET_CA.Controllers
                         if (sessionid != null)
                         {
                             //Add to Order Table and Order Detail Tables
-                            cmd.Parameters.AddWithValue("@Order_ID", cart.Cart_ID);
+                            cmd.Parameters.AddWithValue("@Order_ID", cart.Session_Cart_ID);
                             //cmd.Parameters.AddWithValue("@Order_Date", cart.Date); Check if cart table have date
                             cmd.Parameters.AddWithValue("@Email", cart.Email);
                             cmd.Parameters.AddWithValue("@Quantity", cart.Quantity);
