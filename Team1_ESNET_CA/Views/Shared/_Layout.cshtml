@@ -31,7 +31,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Purchase History</a>
                         </li>
+                        <li>
+                            <input type="text" value=@ViewData["Total_Qty_Cart"] />
 
+                        </li>
                     </ul>
                 </div>
 
@@ -44,6 +47,7 @@
                     {
                         <a class="nav-link text-danger mr-2" asp-controller="Logout" asp-action="Index">Logout</a>
                     }
+
 
                 </div>
                 <form class="d-flex" id="cartid">

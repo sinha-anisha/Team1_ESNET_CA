@@ -49,55 +49,9 @@ namespace Team1_ESNET_CA.Data
             }
             return products;
         }
-       /* public static List<Product> AddProducts(Product pdt, int qty)
-        {
-            List<Product> products = new List<Product>();
-
-
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                string sql = @"insert into Cart (Cart_ID,Product_ID,Email,Quantity)
-                                Values(@Cart_ID,@Product_ID,@Email,@Quantity)";
-
-                SqlCommand cmd = new SqlCommand(sql, conn);
-
-                Product product = new Product()
-                {
-                    cmd.Parameters.AddWithValue("@Cart_ID", ),
-                    cmd.Parameters.AddWithValue("@Poduct_ID", pdt.Product_ID),
-                    cmd.Parameters.AddWithValue("@Email", ),
-                    cmd.Parameters.AddWithValue("@Quantity",qty)
-                
-                };
-                products.Add(product);
-
-
-                return products;
-            }
-
-
-        }*/
+     
     }
 
 }
 
-   /* 
-    cmd.Parameters.AddWithValue("@First_Name", cust.First_Name);
-    cmd.Parameters.AddWithValue("@Last_Name", cust.Last_Name);
-    cmd.Parameters.AddWithValue("@Password", cust.Password);
-    cmd.Parameters.AddWithValue("@Mobile", cust.Mobile);
-
-    int i = cmd.ExecuteNonQuery();
-    if (i > 0)
-    {
-        ViewData["errMsg"] = "Registration Completed.";
-        return RedirectToAction("Index", "Home");
-    }
-    else
-    {
-        ViewData["errMsg"] = "Registration NOT Completed.";
-        return View();
-    }
-}*/
+   

@@ -19,6 +19,7 @@ namespace Team1_ESNET_CA.Data
             AppData appData = new AppData();
 
             GetAllCustomers(appData.Customers);
+           
 
             return appData;
         }
@@ -46,31 +47,7 @@ namespace Team1_ESNET_CA.Data
             return customers;
         }
 
-        /*public static void InsertRecord(Customer cust)
-        {
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                string sql = @"insert into Customer (Email,First_Name,Last_Name,Password,Mobile)
-                                Values(@Email,@First_Name,@Last_Name,@Password,@Mobile)";
-
-                SqlCommand cmd = new SqlCommand(sql, conn);
-
-                //Customer cust = new Customer();
-
-                cmd.Parameters.AddWithValue("@Email", cust.Username);
-                cmd.Parameters.AddWithValue("@First_Name", cust.FirstName);
-                cmd.Parameters.AddWithValue("@Last_Name", cust.LastName);
-                cmd.Parameters.AddWithValue("@Password", cust.Password);
-                cmd.Parameters.AddWithValue("@Mobile", cust.Mobile);
-
-                cmd.ExecuteNonQuery();
-            }
-            
-        }*/
-
-
+       
 
     }
 }

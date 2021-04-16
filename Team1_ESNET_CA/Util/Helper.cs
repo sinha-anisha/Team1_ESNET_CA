@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,10 +30,7 @@ namespace Team1_ESNET_CA.Util
 
         public static void AddCustomers(List<Customer> cust)
         {
-            string[] names = { "Ani", "Sam" };
-
-            if (cust == null)
-                return;
+            
 
             foreach (string name in names)
             {
@@ -44,7 +41,7 @@ namespace Team1_ESNET_CA.Util
                     Password = name
                 };
 
-                
+
                 cust.Add(customer);
             }
         }
@@ -52,7 +49,7 @@ namespace Team1_ESNET_CA.Util
 
         public static void AddGallery(List<Product> Product_Images)
         {
-            /*if (Product_Images == null)
+            if (Product_Images == null)
                 return;
 
 
@@ -72,14 +69,15 @@ namespace Team1_ESNET_CA.Util
                 {
                     Product_ID = Product_ID,
                     Product_Image = pair[0],
-                    
+
                     Tags = new List<string>(pair[1].Split(","))
                 };
                 Product_Images.Add(product);
-            }*/
+            }
         }
 
 
     }
 }
 
+*/

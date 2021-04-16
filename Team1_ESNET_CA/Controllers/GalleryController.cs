@@ -26,7 +26,7 @@ namespace Team1_ESNET_CA.Controllers
             ViewData["products"] = products;
             
             string sessionId = HttpContext.Request.Cookies["sessionId"];
-            if (sessionId != null)
+            /*if (sessionId != null)
             {
                 Customer customer = appData.Customers.Find(x => x.SessionId == sessionId);
                 if (customer == null)
@@ -34,7 +34,7 @@ namespace Team1_ESNET_CA.Controllers
 
                 ViewData["sessionId"] = sessionId;
                 
-            }
+            }*/
 
             return View();
         }
