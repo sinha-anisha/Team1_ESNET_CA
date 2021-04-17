@@ -61,6 +61,21 @@
     #desc {
         height: 120px;
     }
+
+    #Quantity {
+        
+        width: 10%;
+        vertical-align: middle;
+        font-size:12px;
+        
+    }
+    #add {
+        vertical-align: middle;
+        font-size: 12px;
+    }
+    .input-group{
+        
+    }
 </style>
 
 
@@ -111,8 +126,23 @@
                     <div>
                         Price: @item.Unit_Price
                     </div><br>
-                    <input type="text" id="quantity" name="Quantity" />
-                    <button type="submit" class="btn btn-success">Add To Cart</button>
+
+
+                          <div class="input-group justify-content-center">
+                              <select class="custom-select col-sm-2 align-items-center" id="Quantity" name="Quantity" >
+                                  <option selected value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  
+                                 
+                              </select>
+                              <div class="input-group-append">
+                                  <button type="submit" class="btn btn-outline-success" id="add">Add</button>
+                              </div>
+                          </div>
+
 
                 @:</form>
 
