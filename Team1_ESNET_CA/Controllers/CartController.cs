@@ -10,12 +10,12 @@ using Team1_ESNET_CA.Models;
 
 namespace Team1_ESNET_CA.Controllers
 {
-   
+
     public class CartController : Controller
     {
         protected static readonly string connectionString = "Server=(local);Database=Necrosoft_14_04_21; Integrated Security=true";
-        
-       
+
+
 
         private readonly AppData appData;
 
@@ -23,11 +23,13 @@ namespace Team1_ESNET_CA.Controllers
         {
             this.appData = appData;
         }
-  
-        public IActionResult AddToCart( Product pdt,Cart c)
+
+        public IActionResult AddToCart(Product pdt, Cart c)
         {
             List<Session> sess = SessionData.GetAllSessions();
-       
+            List<ViewCartProduct> products = ViewCartData.GetQuantity();
+
+
             c.Total_Quantity = c.Total_Quantity + c.Quantity;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -43,7 +45,7 @@ namespace Team1_ESNET_CA.Controllers
 
 
 
-                
+
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlCommand cmd1 = new SqlCommand(sql1, conn);
                 SqlCommand cmd2 = new SqlCommand(sql2, conn);
@@ -62,42 +64,57 @@ namespace Team1_ESNET_CA.Controllers
                 {
                     if (user != null)
                     {
-                        if (pdt.Product_ID == c.Product_ID)
-                        {
-                            //Update Quantity basis productid
-                            c.Quantity = c.Quantity + 100;
-                            string sql3 = @"update Cart_After_Login set Quantity="+c.Quantity+" where Product_ID='100'";
-                            SqlCommand cmd3 = new SqlCommand(sql3, conn);
-                            cmd3.ExecuteNonQuery();
-                        }
-                        else
-                        {
-                            c.Email = user;
-                            cmd.Parameters.AddWithValue("@Email", c.Email);
-                            cmd.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
-                            cmd.Parameters.AddWithValue("@Quantity", c.Quantity);
-
-                            cmd.ExecuteNonQuery();
-                        }
-                    }
-
-                    else if (pdt.Product_ID == c.Product_ID)
-                    {
                         //Update Quantity basis productid
-                        c.Quantity = c.Quantity + 3000;
-                        string sql3 = @"update Cart_Before_Login set Quantity="+ c.Quantity +" where Product_ID='101'";
-                        SqlCommand cmd3 = new SqlCommand(sql3, conn);
-                        cmd3.ExecuteNonQuery();
+
+                        foreach (var v in products)
+                        {
+                            if (v.productId == c.Product_ID)
+                            {
+                                c.Quantity = c.Quantity + v.Quantity;
+                                string sql3 = @"update Cart_After_Login set Quantity=" + c.Quantity + " where Product_ID=" + c.Product_ID;
+                                SqlCommand cmd3 = new SqlCommand(sql3, conn);
+                                cmd3.ExecuteNonQuery();
+
+                            }
+                            else
+                            {
+                                c.Email = user;
+                                cmd.Parameters.AddWithValue("@Email", c.Email);
+                                cmd.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
+                                cmd.Parameters.AddWithValue("@Quantity", c.Quantity);
+
+                                cmd.ExecuteNonQuery();
+                            }
+
+
+                        }
 
                     }
+
                     else
                     {
+                        //Update Quantity basis productid
+                        foreach (var v in products)
+                        {
+                            if (v.productId == c.Product_ID)
+                            {
+                                c.Quantity = c.Quantity + v.Quantity;
+                                string sql3 = @"update Cart_Before_Login set Quantity=" + c.Quantity + " where Product_ID=" + c.Product_ID;
+                                SqlCommand cmd3 = new SqlCommand(sql3, conn);
+                                cmd3.ExecuteNonQuery();
+                            }
+                            else
+                            {
 
-                        c.Session_Cart_ID = sessionId;
-                        cmd1.Parameters.AddWithValue("@Session_Cart_ID", c.Session_Cart_ID);
-                        cmd1.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
-                        cmd1.Parameters.AddWithValue("@Quantity", c.Quantity);
-                        cmd1.ExecuteNonQuery();
+                                c.Session_Cart_ID = sessionId;
+                                cmd1.Parameters.AddWithValue("@Session_Cart_ID", c.Session_Cart_ID);
+                                cmd1.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
+                                cmd1.Parameters.AddWithValue("@Quantity", c.Quantity);
+                                cmd1.ExecuteNonQuery();
+
+                            }
+
+                        }
 
                     }
                 }
@@ -111,11 +128,12 @@ namespace Team1_ESNET_CA.Controllers
 
                 }
 
-                ViewData["Total_Qty_Cart"] = c.Total_Quantity;
+                    ViewData["Total_Qty_Cart"] = c.Total_Quantity;
 
-                return RedirectToAction("Index", "Gallery");
+                    return RedirectToAction("Index", "Gallery");
+                
+
             }
-
         }
     }
 }

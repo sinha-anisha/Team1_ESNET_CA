@@ -46,6 +46,32 @@ namespace Team1_ESNET_CA.Data
         }
 
 
+        public static List<ViewCartProduct> GetQuantity()
+        {
+            List<ViewCartProduct> products = new List<ViewCartProduct>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string sql = @"select Product_ID,Quantity from Cart_After_Login";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ViewCartProduct product = new ViewCartProduct()
+                    {
+                        productId = (int)reader["Product_ID"],
+                        Quantity = (int)reader["Quantity"],
+                    };
+                    products.Add(product);
+                }
+            }
+
+            return products;
+
+        }
     }
 }
 
