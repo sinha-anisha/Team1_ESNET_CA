@@ -128,7 +128,7 @@ namespace Team1_ESNET_CA.Controllers
 
                 }
 
-                    ViewData["Total_Qty_Cart"] = c.Total_Quantity;
+                    ViewData["Total_Qty_Cart"] = c.Quantity;
 
                     return RedirectToAction("Index", "Gallery");
                 

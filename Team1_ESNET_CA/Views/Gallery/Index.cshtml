@@ -64,12 +64,23 @@
 @{
     ViewBag.Title = "search";
 }
-<h2>Search</h2>
-@using (Html.BeginForm("index", "Gallery", FormMethod.Get))
+@*@using (Html.BeginForm("index", "Gallery", FormMethod.Get))
 {
     @Html.TextBox("search")
     <input type="submit" value="Submit" />
-}
+}*@
+    <form method="post" id="form" action="/Gallery/Index">
+        <nav class="navbar navbar-expand-sm bg-white navbar-dark">
+            <div class="input-group mb-3">
+                <input type="text" name="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+
+                </div>
+            </div>
+        </nav>
+       
+    </form>
 
 <table>
 
@@ -80,10 +91,10 @@
     @foreach (var item in Model)
 
     {
-          @if (i % 3 == 0)
+        @if (i % 3 == 0)
         {
             @:<tr>
-        }
+            }
 
 
         @:<td>
@@ -96,13 +107,17 @@
                     <div>@item.Product_Description</div><br>
                     <div>Price: @item.Unit_Price</div><br>
                     <input type="text" id="quantity" name="Quantity" />
-                   /* <input type="button" class="btn btn-success" asp-action="AddToCart" asp-controller="Cart" />*/
-                     <button type="submit" class="btn btn-success">Add To Cart</button>
+                    /* <input type="button" class="btn btn-success" asp-action="AddToCart" asp-controller="Cart" />*/
+                    <button type="submit" class="btn btn-success">Add To Cart</button>
 
                 @:</form>
 
 
+
+
             @:</div>
+
+
 
 
         @:</td>
@@ -110,11 +125,16 @@
 
 
 
+
+
+
+
         @if ((i + 1) % 3 == 0)
         {
         @:</tr>
-           
-        }
+
+
+    }
         { i++; }
     }
 

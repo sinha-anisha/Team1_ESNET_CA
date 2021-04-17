@@ -30,16 +30,10 @@ namespace Team1_ESNET_CA.Controllers
             {
                 productlist = productlist.Where(s => s.Product_Name.Contains(search) || search == null);
             }
+           
             string sessionId = HttpContext.Request.Cookies["sessionId"];
-            /*if (sessionId != null)
-            {
-                Customer customer = appData.Customers.Find(x => x.SessionId == sessionId);
-                if (customer == null)
-                    return RedirectToAction("Index", "Logout");
+            ViewData["sessionId"] = sessionId;
 
-                ViewData["sessionId"] = sessionId;
-                
-            }*/
 
             return View(productlist.ToList());
         }

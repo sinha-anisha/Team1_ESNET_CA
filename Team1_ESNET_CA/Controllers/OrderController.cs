@@ -10,12 +10,12 @@ namespace Team1_ESNET_CA.Controllers
 {
     public class OrderController : Controller
     {
-       
-        
+
+
 
         public IActionResult Index(Session email)
         {
-         string sessionId = Request.Cookies["sessionId"];
+            string sessionId = Request.Cookies["sessionId"];
 
             if (sessionId == null)
             {
@@ -25,11 +25,11 @@ namespace Team1_ESNET_CA.Controllers
             //Link Controller to model to Database
             List<Order> FinishedPdt = OrderData.getPdtInfo(email);
 
-                ViewData["orderInfos"] = FinishedPdt;
+            ViewData["orderInfos"] = FinishedPdt;
 
             return View();
         }
-        public IActionResult getActCode(Cart productId , Cart orderId)
+        public IActionResult getActCode(Cart productId, Cart orderId)
         {
             List<string> actCode = OrderData.generateActCode(productId, orderId);
             ViewData["actCodes"] = actCode;
