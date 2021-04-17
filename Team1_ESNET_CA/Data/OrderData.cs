@@ -106,9 +106,8 @@ namespace Team1_ESNET_CA.Data
 {
     public class OrderData : DataConnection
     {
-        public static List<Order> addToOrder()
+        public static List<Order> addToOrder(Cart cart)
         {
-            Cart cartId = new Cart();
             List<Order> addToCarts = new List<Order>();
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -118,7 +117,7 @@ namespace Team1_ESNET_CA.Data
                 SqlCommand cmd = new SqlCommand("", conn, trans);
                 try
                 {
-                    cmd.CommandText = @"SELECT Product_ID, Email FROM Cart WHERE Email = 'janedoe@gmail.com'";
+                    cmd.CommandText = @"SELECT Product_ID, Email FROM Cart_After_Login WHERE Email = " + cart.Email;
                     //cmd.Parameters.AddWithValue("@Cart_ID", cartId.Session_Cart_ID);
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
@@ -126,13 +125,15 @@ namespace Team1_ESNET_CA.Data
                         Order addToCart = new Order()
                         {
                             Product_ID = (int)reader["Product_ID"],
-                            Email = (string)reader["Email"]
+                            Email = (string)reader["Email"],
+                            Order_ID = Guid.NewGuid().ToString(),
+                            Order_Date = DateTime.Now
                         };
                         addToCarts.Add(addToCart);
                     }
 
-                    cmd.CommandText = @"DELETE FROM Cart WHERE Email = @Email";
-                    cmd.Parameters.AddWithValue("@Email", cartId.Email);
+                    cmd.CommandText = @"DELETE FROM Cart_After_Login WHERE Email = @Email";
+                    cmd.Parameters.AddWithValue("@Email", cart.Email);
                     cmd.ExecuteNonQuery();
                     trans.Commit();
                 }
@@ -144,7 +145,7 @@ namespace Team1_ESNET_CA.Data
                 return addToCarts;
             }
         } //Cart to Order
-        public static void generateActCode(List<Order> orderdetail) // replace product Id model from Order to Cart
+        public static void generateActCode(List<Order> orderdetail) // Insert from Order to Order details
         {
             //Need do validation on current Order_Id with session_ID
             List<Order> orderdetails = new List<Order>();
@@ -154,24 +155,22 @@ namespace Team1_ESNET_CA.Data
                 foreach (var o in orderdetail)
                 {
                     var uid = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
-                    string sql1 = @"INSERT INTO Order_Details (Activation_Code,Order_ID,Product_ID)
+                    string sql1 = @"INSERT INTO Order_Details (Activation_Code,Order_ID,Product_ID,)
                                 VALUES ( @Activation_Code, @Order_ID, @Product_ID)";
                     SqlCommand cmd1 = new SqlCommand(sql1, conn);
                     cmd1.Parameters.AddWithValue("@Activation_Code", uid);
 
-                    cmd1.Parameters.Add("@Order_ID", SqlDbType.Int);
-                    cmd1.Parameters["@Order_ID"].Value = o.Session_ID;
+                    cmd1.Parameters.AddWithValue("@Order_ID", o.Order_ID);
 
                     cmd1.Parameters.Add("@Product_ID", SqlDbType.Int);
                     cmd1.Parameters["@Product_ID"].Value = o.Product_ID;
-                    //cmd1.Parameters.AddWithValue("@Order_ID", Order_ID);
                     //cmd1.Parameters.AddWithValue("@Product_ID", Product_ID);
                     cmd1.ExecuteNonQuery();
                 };
                 conn.Close();
             }
         }
-        public static List<Order> getPdtInfo()
+        public static List<Order> getPdtInfo(Order order)
         {
             List<Order> orderInfos = new List<Order>();
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -182,7 +181,7 @@ namespace Team1_ESNET_CA.Data
                                 FROM Product AS p, [Order] AS o, Order_Details AS od
                                 WHERE p.Product_ID = od.Product_ID
                                 AND o.Order_ID = od.Order_ID
-                                and od.Order_ID = '1'"; //OrderId should be replaced with email (New Database)
+                                and o.Email= " + order.Email;
                 //SQLCommand
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();

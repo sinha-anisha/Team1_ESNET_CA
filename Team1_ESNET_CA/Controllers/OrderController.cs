@@ -55,15 +55,10 @@ namespace Team1_ESNET_CA.Controllers
         public OrderController(AppData appData)
         {
             this.appData = appData;
-            getActCode(appData.Carts);
         }
-        //public IActionResult cartToOrder()
-        //{
-        //    List<Cart> cartdetail = OrderData.addToOrder();
-        //    return RedirectToAction("getActCode", cartdetail);
-        //} Not NEEDED
-        public IActionResult getActCode(List<Cart> cart)
+        public IActionResult getActCode()
         {
+            Cart cart = new Cart;
             string sessionId = "SOMETHING MOCK"; //Request.Cookies["sessionId"];
             if (sessionId != null)
             {
@@ -72,7 +67,7 @@ namespace Team1_ESNET_CA.Controllers
                 //    Session sessionid = appData.Sessions.FirstOrDefault(x => x.Email == c.Email);
                 //    if (sessionid != null)
                 //    {
-                        List<Order> cartdetail = OrderData.addToOrder();
+                        List<Order> cartdetail = OrderData.addToOrder(cart);
                         OrderData.generateActCode(cartdetail);
                         //Redirect to Index Action 
                 //    }
@@ -85,7 +80,8 @@ namespace Team1_ESNET_CA.Controllers
         }
         public IActionResult Index()
         {
-            List<Order> allPdtDetails = OrderData.getPdtInfo();
+            Order orderdetails = new Order();
+            List<Order> allPdtDetails = OrderData.getPdtInfo(orderdetails);
             ViewData["orderInfos"] = allPdtDetails;
             return View();
         } 
