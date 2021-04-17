@@ -28,6 +28,7 @@ namespace Team1_ESNET_CA.Controllers
         {
             List<Session> sess = SessionData.GetAllSessions();
             List<ViewCartProduct> products = ViewCartData.GetQuantity();
+            List<ViewCartProduct> product = ViewCartData.GetQuantityBeforeLogin();
 
 
             c.Total_Quantity = c.Total_Quantity + c.Quantity;
@@ -52,6 +53,7 @@ namespace Team1_ESNET_CA.Controllers
 
 
                 string user = "";
+                int flag = 0;
                 string sessionId = Request.Cookies["sessionId"];
 
                 foreach (var s in sess)
@@ -70,14 +72,17 @@ namespace Team1_ESNET_CA.Controllers
                         {
                             if (v.productId == c.Product_ID)
                             {
-                                c.Quantity = c.Quantity + v.Quantity;
+                                c.Quantity += v.Quantity;
+                                flag = 1;
                                 string sql3 = @"update Cart_After_Login set Quantity=" + c.Quantity + " where Product_ID=" + c.Product_ID;
                                 SqlCommand cmd3 = new SqlCommand(sql3, conn);
                                 cmd3.ExecuteNonQuery();
 
                             }
-                            else
+                        }
+                        if (flag!=1)
                             {
+
                                 c.Email = user;
                                 cmd.Parameters.AddWithValue("@Email", c.Email);
                                 cmd.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
@@ -86,35 +91,35 @@ namespace Team1_ESNET_CA.Controllers
                                 cmd.ExecuteNonQuery();
                             }
 
-
-                        }
-
+                                         
                     }
 
                     else
                     {
                         //Update Quantity basis productid
-                        foreach (var v in products)
+                        foreach (var v in product)
                         {
                             if (v.productId == c.Product_ID)
                             {
+                                flag = 1;
                                 c.Quantity = c.Quantity + v.Quantity;
                                 string sql3 = @"update Cart_Before_Login set Quantity=" + c.Quantity + " where Product_ID=" + c.Product_ID;
                                 SqlCommand cmd3 = new SqlCommand(sql3, conn);
                                 cmd3.ExecuteNonQuery();
                             }
-                            else
-                            {
+                        }
+                        if (flag != 1)
+                        {
 
-                                c.Session_Cart_ID = sessionId;
+                            c.Session_Cart_ID = sessionId;
                                 cmd1.Parameters.AddWithValue("@Session_Cart_ID", c.Session_Cart_ID);
                                 cmd1.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
                                 cmd1.Parameters.AddWithValue("@Quantity", c.Quantity);
                                 cmd1.ExecuteNonQuery();
+                            
+                         }
 
-                            }
-
-                        }
+                        
 
                     }
                 }
@@ -129,6 +134,7 @@ namespace Team1_ESNET_CA.Controllers
                 }
 
                     ViewData["Total_Qty_Cart"] = c.Quantity;
+
 
                     return RedirectToAction("Index", "Gallery");
                 

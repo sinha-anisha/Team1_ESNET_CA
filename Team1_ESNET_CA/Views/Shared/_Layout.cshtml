@@ -47,8 +47,17 @@
 
 
                 </div>
+                <p></p>
                 <form class="d-flex" id="cartid">
-                    <a class="bg-transparent" asp-controller="ViewCart" asp-action="Index"><i class="fa fa-shopping-cart mr-1"></i><sup class="shop-badge  mr-5">@ViewData["Total_Qty_Cart"]</sup></a>
+                    @if (ViewData["sessionId"] == null)
+                    {
+                        <a class="bg-transparent" asp-controller="ViewCart" asp-action="Index"><i class="fa fa-shopping-cart mr-1"></i><sup class="shop-badge  mr-5">0</sup></a>
+                    }
+                    else
+                    {
+                        <a class="bg-transparent" asp-controller="Cart" asp-action="AddToCart"><i class="fa fa-shopping-cart mr-1"></i><sup class="shop-badge  mr-5">@ViewData["Total_Qty_Cart"]</sup></a>
+
+                    }
                 </form>
             </div>
         </nav>

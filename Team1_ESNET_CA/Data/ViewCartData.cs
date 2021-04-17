@@ -53,7 +53,7 @@ namespace Team1_ESNET_CA.Data
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = @"select Product_ID,Quantity from Cart_After_Login";
+                string sql = @"select Email,Product_ID,Quantity from Cart_After_Login";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -62,6 +62,35 @@ namespace Team1_ESNET_CA.Data
                 {
                     ViewCartProduct product = new ViewCartProduct()
                     {
+                        Email= (string)reader["Email"],
+                        productId = (int)reader["Product_ID"],
+                        Quantity = (int)reader["Quantity"],
+                    };
+                    products.Add(product);
+                }
+            }
+
+            return products;
+
+        }
+
+        public static List<ViewCartProduct> GetQuantityBeforeLogin()
+        {
+            List<ViewCartProduct> products = new List<ViewCartProduct>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string sql = @"select Session_Cart_ID,Product_ID,Quantity from Cart_Before_Login";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ViewCartProduct product = new ViewCartProduct()
+                    {
+                        Session_ID= (string)reader["Session_Cart_ID"],
                         productId = (int)reader["Product_ID"],
                         Quantity = (int)reader["Quantity"],
                     };
@@ -74,4 +103,5 @@ namespace Team1_ESNET_CA.Data
         }
     }
 }
+
 

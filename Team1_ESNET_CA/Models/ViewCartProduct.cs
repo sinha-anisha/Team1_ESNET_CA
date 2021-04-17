@@ -11,6 +11,8 @@ namespace Team1_ESNET_CA.Models
         public string productNmae { get; set; }
         public string productImage { get; set; }
         public string productDescription { get; set; }
+        public string Email { get; set; }
+        public string Session_ID { get; set; }
         public double unitPrice { get; set; }
         public int Quantity { get; set; }
         public string CartId { get; set; }
