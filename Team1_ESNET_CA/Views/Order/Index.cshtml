@@ -35,7 +35,7 @@
 
 
             @: <td style="text-align:center">
-                        @: <img src="@orderinfo.ProductImg" width="250" />
+                        @: <img src="@orderinfo.Product_Img" width="250" />
                         @: <p><br /><button type="button" onclick="downloadStarted()">Download</button></p>
                     @: </td>
         
@@ -48,15 +48,15 @@
                     @: </td>
         
             @: <td class="order_details">
-                        @: <span class="desc"> @orderinfo.ProductName </span>
-                        @: <span class="desc"> @orderinfo.ProductDesc </span>
-                        @: <span class="Od_desc"> @orderinfo.OrderDate</span>
-                        @: <span class="Od_desc"> @orderinfo.OrderQuantity</span>
-                        if (orderinfo.OrderQuantity >= 1)
+                        @: <span class="desc"> @orderinfo.Product_Name </span>
+                        @: <span class="desc"> @orderinfo.Product_Desc </span>
+                        @: <span class="Od_desc"> @orderinfo.Order_Date</span>
+                        @: <span class="Od_desc"> @orderinfo.Order_Quantity</span>
+                        if (orderinfo.Order_Quantity >= 1)
                             {
-                                for (int i = 0; i < orderinfo.OrderQuantity; i++)
+                                for (int i = 0; i < orderinfo.Order_Quantity; i++)
                                 {
-                                <span> <select class="actCodeBox"> <option selected>@orderinfo.ActivationCode</option> 
+                                <span> <select class="actCodeBox"> <option selected>@orderinfo.Activation_Code</option> 
                                 </select> </span> 
                                 }
                             }
