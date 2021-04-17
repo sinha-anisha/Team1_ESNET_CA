@@ -9,18 +9,20 @@ namespace Team1_ESNET_CA.Models
 {
     public class Order
     {
-        //Model get;set; for Order Controller/View
-        //Parameters we need
-        public string ProductImg { get; set; }
-        public string ProductName { get; set; }
-        public string ProductDesc { get; set; }
-        public DateTime OrderDate { get;set;}
-        public int OrderQuantity { get; set;}
-        public string ActivationCode { get; set;}
-        public string SessionId { get;set;}
-        public string Email { get;set;}
-        public string OrderID { get;set;}
-        public string ProductID { get;set;}
+        //Parameters for Product Table
+        public string Product_Img { get; set; }
+        public string Product_Name { get; set; }
+        public string Product_Desc { get; set; }
 
+        //Paramteres for Order Table
+        public DateTime Order_Date { get;set;}
+        public int Order_Quantity { get; set;}
+        public string Session_ID { get;set;}
+        public string Email { get;set;}
+
+        //Parameters for Order_Details Table
+        public int Product_ID { get;set;}
+        public string Activation_Code { get; set; }
+        public string Order_ID { get; set; }
     }
 }

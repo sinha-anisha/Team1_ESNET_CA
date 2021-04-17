@@ -29,39 +29,39 @@ namespace Team1_ESNET_CA.Controllers
 
             return View();
         }
-        public IActionResult CheckOut(List<Cart> c)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                //insert into Order
-                string sql = @"INSERT INTO Orders (Order_ID, Order_Date, Email, Quantity)
-                               VALUES(@Order_ID, @Order_Date, @Email, @Quantity)";
-                SqlCommand cmd = new SqlCommand(sql, conn);
+        //public IActionResult CheckOut(List<Cart> c)
+        //{
+        //    using (SqlConnection conn = new SqlConnection(connectionString))
+        //    {
+        //        conn.Open();
+        //        //insert into Order
+        //        string sql = @"INSERT INTO Orders (Order_ID, Order_Date, Email, Quantity)
+        //                       VALUES(@Order_ID, @Order_Date, @Email, @Quantity)";
+        //        SqlCommand cmd = new SqlCommand(sql, conn);
 
-                //check if user is log in
-                string session = Request.Cookies["sessionId"];
-                if (session != null)
-                {
-                    foreach (Cart cart in c)
-                    {
-                        Session sessionid = appData.Sessions.FirstOrDefault(x => x.Email == cart.Email);
-                        if (sessionid != null)
-                        {
-                            //Add to Order Table and Order Detail Tables
-                            cmd.Parameters.AddWithValue("@Order_ID", cart.Session_Cart_ID);
-                            //cmd.Parameters.AddWithValue("@Order_Date", cart.Date); Check if cart table have date
-                            cmd.Parameters.AddWithValue("@Email", cart.Email);
-                            cmd.Parameters.AddWithValue("@Quantity", cart.Quantity);
-                            cmd.ExecuteNonQuery();
-                            return RedirectToAction("getActCode", "Order");
-                        }
-                    }
+        //        //check if user is log in
+        //        string session = Request.Cookies["sessionId"];
+        //        if (session != null)
+        //        {
+        //            foreach (Cart cart in c)
+        //            {
+        //                Session sessionid = appData.Sessions.FirstOrDefault(x => x.Email == cart.Email);
+        //                if (sessionid != null)
+        //                {
+        //                    //Add to Order Table and Order Detail Tables
+        //                    cmd.Parameters.AddWithValue("@Order_ID", cart.Session_Cart_ID);
+        //                    //cmd.Parameters.AddWithValue("@Order_Date", cart.Date); Check if cart table have date
+        //                    cmd.Parameters.AddWithValue("@Email", cart.Email);
+        //                    cmd.Parameters.AddWithValue("@Quantity", cart.Quantity);
+        //                    cmd.ExecuteNonQuery();
+        //                    return RedirectToAction("getActCode", "Order");
+        //                }
+        //            }
 
-                }
-                conn.Close();
-            }
-            return RedirectToAction("index", "Login");
-        }
+        //        }
+        //        conn.Close();
+        //    }
+        //    return RedirectToAction("index", "Login");
+        //}
     }
 }
