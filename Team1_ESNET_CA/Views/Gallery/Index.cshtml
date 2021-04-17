@@ -1,27 +1,21 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     var products = (List<Product>)ViewData["products"];
     var likes = (List<string>)ViewData["likes"];
-
 }
-
 @section Scripts
     {
     <script src="~/js/shared/image_gallery.js"></script>
 }
-
 <style>
     table {
         width: 100%;
-        margin-left: 5px;
-        margin-right: 5px;
+        height:100%;
+        margin: auto;
     }
-
     .badge {
         font-size: 14px !important;
     }
-
     .like_icon {
         width: 40px;
         height: 40px;
@@ -30,115 +24,65 @@
         right: 30px;
         cursor: pointer;
     }
-
     .img_container {
-        position: relative;
+        @* position: relative;*@
+        vertical-align: top;
     }
-
     .badge_container {
         position: absolute;
         left: 10px;
         bottom: 10px;
         opacity: 0.7;
     }
-
     .button {
         width: 40px;
         height: 40px;
         position: absolute;
         bottom: 10px;
     }
-
     .bold_menu {
         font-weight: bold;
     }
-
     td {
         padding: 10px;
         text-align: center;
-        vertical-align: auto;
+        position: relative;
+        vertical-align: top;
+    }
+    .view {
+        vertical-align: bottom;
+    }
+    #desc {
+        height: 120px;
     }
 </style>
-
-@model IEnumerable<Team1_ESNET_CA.Models.Product>
-@{
-    ViewBag.Title = "search";
-}
-@*@using (Html.BeginForm("index", "Gallery", FormMethod.Get))
-{
-    @Html.TextBox("search")
-    <input type="submit" value="Submit" />
-}*@
-<p>@ViewData["Total_Qty_Cart"]</p>
-    <form method="post" id="form" action="/Gallery/Index">
-        <nav class="navbar navbar-expand-sm bg-white navbar-dark">
-            <div class="input-group mb-3">
-                <input type="text" name="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-
-                </div>
-            </div>
-        </nav>
-       
-    </form>
-
+<input autofocus placeholder="search" class="form-control" type="text" autocomplete="off" name="Search" id="search" />
 <table>
-
-
-
-
-    @{ int i = 0;}
-    @foreach (var item in Model)
-
+    @for (int i = 0; i < products.Count; i++)
     {
-        @if (i % 3 == 0)
+        if (i % 3 == 0)
         {
             @:<tr>
             }
-
-
-        @:<td>
-            @:<div class="img_container">
-                @:<form method="post" id="form" action="/Cart/AddToCart">
-                    <input type="hidden" name="Product_ID" value="@item.Product_ID" />
-                    <input type="hidden" name="Email" value="anisha@gmail.com" />
-                    @:<img src=@item.Product_Image width="350" height=250 /><br><br>
-                    <div>Product Name: @item.Product_Name</div><br><br>
-                    <div>@item.Product_Description</div><br>
-                    <div>Price: @item.Unit_Price</div><br>
-                    <input type="text" id="quantity" name="Quantity" />
-                    /* <input type="button" class="btn btn-success" asp-action="AddToCart" asp-controller="Cart" />*/
-                    <button type="submit" class="btn btn-success">Add To Cart</button>
-
-                @:</form>
-
-
-
-
-            @:</div>
-
-
-
-
-        @:</td>
-
-
-
-
-
-
-
-
-        @if ((i + 1) % 3 == 0)
-        {
-        @:</tr>
-
-
+            <td>
+                <form method="post" id="form" action="/Cart/AddToCart">
+                    <div class="img_container">
+                        <input type="hidden" name="Product_ID" value="@products[i].Product_ID" />
+                        <input type="hidden" name="Email" value="anisha@gmail.com" />
+                        <img src=@products[i].Product_Image width="350" height="250" position="relative" />
+                        <div><strong>@products[i].Product_Name</strong></div>
+                        <div id="desc">@products[i].Product_Description</div>
+                        <div><b>$@products[i].Unit_Price</b></div>
+                    </div>
+                    <div class="view">
+                        <input type="text" id="quantity" name="Quantity" />
+                        <button type="submit" class="btn btn-success">Add To Cart</button>
+                    </div>
+                </form>
+            </td>
+ if ((i + 1) % 3 == 0)
+            {
+            @:</tr>
+        }
     }
-        { i++; }
-    }
-
-
 </table>
-
