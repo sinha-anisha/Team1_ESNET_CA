@@ -58,7 +58,7 @@ namespace Team1_ESNET_CA.Controllers
         }
         public IActionResult getActCode()
         {
-            Cart cart = new Cart;
+            Cart cart = new Cart();
             string sessionId = "SOMETHING MOCK"; //Request.Cookies["sessionId"];
             if (sessionId != null)
             {

@@ -55,6 +55,7 @@ namespace Team1_ESNET_CA.Controllers
                 string user = "";
                 int flag = 0;
                 string sessionId = Request.Cookies["sessionId"];
+                string tempSession= "90821121-25ea-4303-9467-e62c71cf7c01";
 
                 foreach (var s in sess)
                 {
@@ -70,11 +71,11 @@ namespace Team1_ESNET_CA.Controllers
 
                         foreach (var v in products)
                         {
-                            if (v.productId == c.Product_ID)
+                            if (v.productId == c.Product_ID && user== v.Email)
                             {
                                 c.Quantity += v.Quantity;
                                 flag = 1;
-                                string sql3 = @"update Cart_After_Login set Quantity=" + c.Quantity + " where Product_ID=" + c.Product_ID;
+                                string sql3 = @"update Cart_After_Login set Quantity=" + c.Quantity + " where Product_ID=" + c.Product_ID + "and Email='" + user+"'";
                                 SqlCommand cmd3 = new SqlCommand(sql3, conn);
                                 cmd3.ExecuteNonQuery();
 
@@ -94,43 +95,29 @@ namespace Team1_ESNET_CA.Controllers
                                          
                     }
 
-                    else
-                    {
-                        //Update Quantity basis productid
-                        foreach (var v in product)
-                        {
-                            if (v.productId == c.Product_ID)
-                            {
-                                flag = 1;
-                                c.Quantity = c.Quantity + v.Quantity;
-                                string sql3 = @"update Cart_Before_Login set Quantity=" + c.Quantity + " where Product_ID=" + c.Product_ID;
-                                SqlCommand cmd3 = new SqlCommand(sql3, conn);
-                                cmd3.ExecuteNonQuery();
-                            }
-                        }
-                        if (flag != 1)
-                        {
-
-                            c.Session_Cart_ID = sessionId;
-                                cmd1.Parameters.AddWithValue("@Session_Cart_ID", c.Session_Cart_ID);
-                                cmd1.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
-                                cmd1.Parameters.AddWithValue("@Quantity", c.Quantity);
-                                cmd1.ExecuteNonQuery();
-                            
-                         }
-
-                        
-
-                    }
+                  
                 }
                 else
                 {
-                    c.Session_Cart_ID = Guid.NewGuid().ToString();
-                    cmd1.Parameters.AddWithValue("@Session_Cart_ID", c.Session_Cart_ID);
-                    cmd1.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
-                    cmd1.Parameters.AddWithValue("@Quantity", c.Quantity);
-                    cmd1.ExecuteNonQuery();
-
+                    foreach (var v in product)
+                    {
+                        if (v.productId == c.Product_ID)
+                        {
+                            flag = 1;
+                            c.Quantity = c.Quantity + v.Quantity;
+                            string sql3 = @"update Cart_Before_Login set Quantity=" + c.Quantity + " where Product_ID=" + c.Product_ID;
+                            SqlCommand cmd3 = new SqlCommand(sql3, conn);
+                            cmd3.ExecuteNonQuery();
+                        }
+                    }
+                    if (flag != 1)
+                    {
+                        
+                        cmd1.Parameters.AddWithValue("@Session_Cart_ID", tempSession);
+                        cmd1.Parameters.AddWithValue("@Product_ID", pdt.Product_ID);
+                        cmd1.Parameters.AddWithValue("@Quantity", c.Quantity);
+                        cmd1.ExecuteNonQuery();
+                    }
                 }
 
                     ViewData["Total_Qty_Cart"] = c.Quantity;
