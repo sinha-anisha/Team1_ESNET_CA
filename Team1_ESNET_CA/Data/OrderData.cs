@@ -117,7 +117,7 @@ namespace Team1_ESNET_CA.Data
                 SqlCommand cmd = new SqlCommand("", conn, trans);
                 try
                 {
-                    cmd.CommandText = @"SELECT Product_ID, Email FROM Cart_After_Login WHERE Email = " + cart.Email;
+                    cmd.CommandText = @"SELECT Product_ID, Email, Quantity FROM Cart_After_Login WHERE Email = " + cart.Email;
                     //cmd.Parameters.AddWithValue("@Cart_ID", cartId.Session_Cart_ID);
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
@@ -126,6 +126,7 @@ namespace Team1_ESNET_CA.Data
                         {
                             Product_ID = (int)reader["Product_ID"],
                             Email = (string)reader["Email"],
+                            Order_Quantity = (int)reader["Quantity"],
                             Order_ID = Guid.NewGuid().ToString(),
                             Order_Date = DateTime.Now
                         };
@@ -155,8 +156,8 @@ namespace Team1_ESNET_CA.Data
                 foreach (var o in orderdetail)
                 {
                     var uid = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
-                    string sql1 = @"INSERT INTO Order_Details (Activation_Code,Order_ID,Product_ID,)
-                                VALUES ( @Activation_Code, @Order_ID, @Product_ID)";
+                    string sql1 = @"INSERT INTO Order_Details (Activation_Code,Order_ID,Product_ID,Quantity)
+                                VALUES ( @Activation_Code, @Order_ID, @Product_ID, @Quantity)";
                     SqlCommand cmd1 = new SqlCommand(sql1, conn);
                     cmd1.Parameters.AddWithValue("@Activation_Code", uid);
 
@@ -164,6 +165,9 @@ namespace Team1_ESNET_CA.Data
 
                     cmd1.Parameters.Add("@Product_ID", SqlDbType.Int);
                     cmd1.Parameters["@Product_ID"].Value = o.Product_ID;
+
+                    cmd1.Parameters.Add("@Quantity", SqlDbType.Int);
+                    cmd1.Parameters["@Quantity"].Value = o.Order_Quantity;
                     //cmd1.Parameters.AddWithValue("@Product_ID", Product_ID);
                     cmd1.ExecuteNonQuery();
                 };
@@ -177,7 +181,7 @@ namespace Team1_ESNET_CA.Data
             {
                 conn.Open();
                 //SQL string
-                string sql = @"SELECT p.Product_Name, p.Product_Image, p.Product_Description, o.Order_Date,od.Product_ID , od.Activation_Code
+                string sql = @"SELECT p.Product_Name, p.Product_Image, p.Product_Description, o.Order_Date,od.Quantity, od.Product_ID , od.Activation_Code
                                 FROM Product AS p, [Order] AS o, Order_Details AS od
                                 WHERE p.Product_ID = od.Product_ID
                                 AND o.Order_ID = od.Order_ID
@@ -194,7 +198,7 @@ namespace Team1_ESNET_CA.Data
                         Product_Img = (string)reader["Product_Image"],
                         Product_Desc = (string)reader["Product_Description"],
                         Order_Date = (DateTime)reader["Order_Date"],
-                        Order_Quantity = (int)reader["Product_ID"],
+                        Order_Quantity = (int)reader["Quantity"],
                         Activation_Code = (string)reader["Activation_Code"],
                     };
                     orderInfos.Add(orderInfo);
