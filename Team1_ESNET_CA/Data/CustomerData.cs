@@ -26,11 +26,13 @@ namespace Team1_ESNET_CA.Data
 
         public static List<Customer> GetAllCustomers(List<Customer> customers)
         {
+            //List<Customer> customers = new List<Customer>();
+
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = @"SELECT Customer.Email,Customer.Password FROM Customer";
+                string sql = @"SELECT Email,First_Name,Last_Name,Password,Mobile FROM Customer";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -39,7 +41,10 @@ namespace Team1_ESNET_CA.Data
                     Customer cust = new Customer()
                     {
                        Username = (string)reader["Email"],
+                       First_Name=(string)reader["First_Name"],
+                       Last_Name= (string)reader["Last_Name"],
                         Password = (string)reader["Password"],
+                        Mobile=(int)reader["Mobile"]
                     };
                     customers.Add(cust);
                 }

@@ -26,15 +26,11 @@ namespace Team1_ESNET_CA
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            /* services.AddSingleton(_ => {
-                 return Helper.InitAppData();
-             });*/
+            
 
             services.AddSingleton(_ => {
                 return CustomerData.InitAppData();
-                //return Product_Data.InitAppData();
-               // return Helper.InitAppData();
-
+                
 
             });
 

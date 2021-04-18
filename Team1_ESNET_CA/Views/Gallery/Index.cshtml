@@ -8,6 +8,7 @@
 @section Scripts
     {
     <script src="~/js/shared/image_gallery.js"></script>
+    <script src="~/js/Script_gallery.js"></script>
 }
 
 <style>
@@ -63,18 +64,20 @@
     }
 
     #Quantity {
-        
         width: 10%;
         vertical-align: middle;
-        font-size:12px;
-        
+        font-size: 12px;
     }
+
     #add {
         vertical-align: middle;
         font-size: 12px;
     }
-    .input-group{
-        
+
+    .input-group {
+    }
+    #cartid{
+        float:right;
     }
 </style>
 
@@ -92,14 +95,10 @@
         </div>
 
     </nav>
+
 </form>
 
-
-
 <table>
-
-
-
 
     @{ int i = 0;}
     @foreach (var item in Model)
@@ -115,9 +114,9 @@
 
         @:<td>
             @:<div class="img_container">
-                @:<form method="post" id="form" action="/Cart/AddToCart">
+                @:<form method="post" id="form" action="/Cart/Index">
                     <input type="hidden" name="Product_ID" value=@item.Product_ID />
-                    <input type="hidden" name="Email"/>
+                    <input type="hidden" name="Email" />
                     @:<img src=@item.Product_Image width="350" height=250 /><br><br>
                     <div>
                         Product Name: @item.Product_Name
@@ -126,22 +125,22 @@
                     <div>
                         Price: @item.Unit_Price
                     </div><br>
+                    <p>@ViewData["Total"]</p>
+
+                    <div class="input-group justify-content-center">
+                        <select class="custom-select col-sm-2 align-items-center" id="Quantity" name="Quantity">
+                            <option selected value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
 
 
-                          <div class="input-group justify-content-center">
-                              <select class="custom-select col-sm-2 align-items-center" id="Quantity" name="Quantity" >
-                                  <option selected value="1">1</option>
-                                  <option value="2">2</option>
-                                  <option value="3">3</option>
-                                  <option value="4">4</option>
-                                  <option value="5">5</option>
-                                  
-                                 
-                              </select>
-                              <div class="input-group-append">
-                                  <button type="submit" class="btn btn-outline-success" id="add">Add</button>
-                              </div>
-                          </div>
+                        </select>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-outline-success" id="add">Add</button>
+                        </div>
+                    </div>
 
 
                 @:</form>
@@ -154,9 +153,13 @@
 
 
 
-
-
         @:</td>
+
+
+
+
+
+
 
 
         @if ((i + 1) % 3 == 0)
