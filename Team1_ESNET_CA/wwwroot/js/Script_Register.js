@@ -33,32 +33,51 @@
         }
         else if (!fname.match(letters))
         {
-            alert("Please enter only letters  for First Name.");
+            error_elem.innerHTML = "Please enter only letters  for First Name.";
+
+            //alert("Please enter only letters  for First Name.");
             return false;
         }
         else if (!lname.match(letters))
         {
-            alert("Please enter only letters for Last Name.");
+            error_elem.innerHTML = "Please enter only letters for Last Name";
+
+            //alert("Please enter only letters for Last Name.");
             return false;
         }
         else if (!mail.match(validmail))
         {
-            alert("Please enter letters,digits,@ and underscores only.");
+            error_elem.innerHTML = "Please enter letters,digits,@ and underscores only.";
+
+            //alert("Please enter letters,digits,@ and underscores only.");
             return false;
         }
         else if (!mobile.match(validmobile))
         {
-            alert("Please enter only digits for mobile no.");
+            error_elem.innerHTML = "Please enter only digits for mobile no. ";
+
+            //alert("Please enter only digits for mobile no.");
             return false;
         }
         else if (!pwd.match(validpwd))
         {
-            alert("Please enter letters,numbers,@ and underscores only.");
+            error_elem.innerHTML = "Please enter letters,numbers,@ and underscores only. ";
+
+            //alert("Please enter letters,numbers,@ and underscores only.");
             return false;
         }
         else if (!confirmpwd.match(validpwd))
         {
-            alert("Please enter letters,numbers,@ and underscores only.");
+            error_elem.innerHTML = "Please enter letters,numbers,@ and underscores only.";
+
+            //alert("Please enter letters,numbers,@ and underscores only.");
+            return false;
+        }
+        else if (confirmpwd != pwd)
+        {
+            error_elem.innerHTML = "Password does not match.";
+
+            //alert("Password does not match.");
             return false;
         }
         return true;

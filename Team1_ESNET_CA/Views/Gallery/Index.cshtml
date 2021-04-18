@@ -83,7 +83,7 @@
 
 
 
-<form method="post" action="/Gallery/Index">
+<form method="post" action="/Gallery/Index" onload="">
     <nav class="navbar navbar-expand-sm bg-white navbar-dark">
         <div class="input-group mb-3">
 
@@ -114,7 +114,9 @@
 
         @:<td>
             @:<div class="img_container">
-                @:<form method="post" id="form" action="/Cart/Index">
+              @:<form method="post" action="/Gallery/Index">
+
+    
                     <input type="hidden" name="Product_ID" value=@item.Product_ID />
                     <input type="hidden" name="Email" />
                     @:<img src=@item.Product_Image width="350" height=250 /><br><br>

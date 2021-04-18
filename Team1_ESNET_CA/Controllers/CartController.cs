@@ -24,7 +24,7 @@ namespace Team1_ESNET_CA.Controllers
             this.appData = appData;
         }
 
-        public IActionResult Index(Product pdt, Cart c)
+       /* public IActionResult Index(Product pdt, Cart c)
         {
             List<Session> sess = SessionData.GetAllSessions();
             List<ViewCartProduct> products = ViewCartData.GetQuantity();
@@ -105,10 +105,16 @@ namespace Team1_ESNET_CA.Controllers
                                 if (v.productId == c.Product_ID)
                                 {
                                     flag1 = 1;
-                                    c.Quantity = c.Quantity + v.Quantity ;
-                                    string sql3 = @"update Cart_After_Login set Quantity=(Quantity + " + c.Quantity + ") where Product_ID=" + c.Product_ID + "and Email='" + user + "'";
+                                    //c.Quantity = c.Quantity + v.Quantity ;
+                                    string sql3 = @"select Quantity Cart_After_Login where Product_ID=" + c.Product_ID + "and Email='" + user + "'";
                                     SqlCommand cmd3 = new SqlCommand(sql3, conn);
-                                    cmd3.ExecuteNonQuery();
+                                   
+                                    int qty= cmd3.ExecuteNonQuery();
+                                    c.Quantity = c.Quantity + v.Quantity+qty;
+                                    
+                                    string sql4 = @"update Cart_After_Login set Quantity=Quantity" + c.Quantity + " where Product_ID=" + c.Product_ID + "and Email='" + user + "'";
+                                    SqlCommand cmd4 = new SqlCommand(sql4, conn);
+                                    cmd4.ExecuteNonQuery();
                                 }
                             }
                             if (flag1 != 1)
@@ -155,7 +161,7 @@ namespace Team1_ESNET_CA.Controllers
             }
            
             return RedirectToAction("Index", "Gallery");
-        }
+        }*/
     }
 }
 

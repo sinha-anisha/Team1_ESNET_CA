@@ -15,134 +15,265 @@ namespace Team1_ESNET_CA.Controllers
 
         private readonly AppData appData;
         public static int flag = 0;
+        public static int usercount = 0;
+        
 
         public GalleryController(AppData appData)
         {
             this.appData = appData;
         }
 
-      
-        
-        public IActionResult Index(string search,int Quantity)
+
+
+
+        public IActionResult Index(string search, Product pdt, Cart c)
         {
-
-             List<Customer> customers = new List<Customer>();
-            List<Cart> cart = new List<Cart>();
             List<Session> sess = SessionData.GetAllSessions();
-            List<Product> products = Product_Data.GetProducts();
-            List<Product> productsn = Product_Data.GetProducts();
-            int Quan = Quantity;
+            List<ViewCartProduct> products = ViewCartData.GetQuantity();
+            List<ViewCartProduct> product = ViewCartData.GetQuantityBeforeLogin();
+            List<Product> prod = Product_Data.GetProducts();
+           // List<Product> prodbefore = ViewCartData.GetQuantityBeforeLogin();
 
-            ViewData["products"] = products;
+            ViewData["products"] = prod;
             var productlist = from s in Product_Data.GetProducts()
                               select s;
             if (!String.IsNullOrEmpty(search))
             {
                 productlist = productlist.Where(s => s.Product_Name.Contains(search) || search == null);
             }
-            string username = "Guest";
-            String Email = null;
-           
-            string sessionId = HttpContext.Request.Cookies["sessionId"];
 
-           
+            string user = null;
 
+            int flag1 = 0;
+            string sessionId = Request.Cookies["sessionId"];
+            string tempSession = "90821121-25ea-4303-9467-e62c71cf7c01";
+          
+            int Quan = 0;
+            //int prod_id = 0;
             foreach (var s in sess)
             {
                 if (s.Session_ID == sessionId)
-                {
-                    Email = s.Email;
-                }
+                    user = s.Email;
             }
-
-           
+            
+            
+            
+            
+            
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = @"SELECT First_Name FROM Customer where Email='"+Email+"'";
+                string sql = @"insert into [Cart_After_Login] (Email,Product_ID,Quantity)
+                                Values(@Email,@Product_ID,@Quantity)";
+
+                string sql1 = @"insert into [Cart_Before_Login] (Session_Cart_ID,Product_ID,Quantity)
+                                Values(@Session_Cart_ID,@Product_ID,@Quantity)";
+
+                string sql2 = @"select Session_ID,Email from Session";
+                string sql5 = @"SELECT sum(Quantity) as sum FROM Cart_After_Login where Email='" + user + "'";
+                string sql6 = @"SELECT sum(Quantity) as sum FROM Cart_before_Login";
+                string sql7 = @"delete FROM Cart_before_Login";
+                string sql8 = @"select * FROM Cart_before_Login";
+
+
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                SqlDataReader reader = cmd.ExecuteReader();
+                SqlCommand cmd1 = new SqlCommand(sql1, conn);
+                SqlCommand cmd2 = new SqlCommand(sql2, conn);
+                SqlCommand cmd5 = new SqlCommand(sql5, conn);
+                SqlCommand cmd6 = new SqlCommand(sql6, conn);
+                SqlCommand cmd7 = new SqlCommand(sql7, conn);
+                SqlCommand cmd8 = new SqlCommand(sql8, conn);
+
+
+
+                
+
+
+
+
+               
+                /*SqlDataReader reader = cmd8.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    Customer cust = new Customer()
+                    Cart ct = new Cart()
                     {
-                        First_Name = (string)reader["First_Name"],
+                        Product_ID = (int)reader["Product_ID"],
+                        Quantity = (int)reader["Quantity"]
                     };
-                    customers.Add(cust);
-                }
-            }
-            foreach (var cs in customers)
-            {
-                username = cs.First_Name;
-            }
-
+                }*/
            
-                using (SqlConnection conn = new SqlConnection(connectionString))
+
+
+
+
+
+
+            if (flag > 0)
                 {
-                    conn.Open();
-                    string sql = @"SELECT sum(Quantity) as sum FROM Cart_After_Login where Email='" + Email + "'";
-                    string sql1 = @"SELECT sum(Quantity) as sum FROM Cart_before_Login";
-                    string sql2 = @"delete FROM Cart_before_Login";
+
+                    if (sessionId != null)
+                    {
+                        if (user != null)
+                        {
+                           
+                            //Update Quantity basis productid
+                            int count = product.Count;
+                            if (count == 0)
+                            {
+                                foreach (var v in products)
+                                {
+                                    if (v.productId == c.Product_ID && user == v.Email)
+                                    {
+                                        c.Quantity += v.Quantity;
+                                        flag = 1;
+                                        string sql3 = @"update Cart_After_Login set Quantity=" + c.Quantity + " where Product_ID=" + c.Product_ID + "and Email='" + user + "'";
+                                        SqlCommand cmd3 = new SqlCommand(sql3, conn);
+                                        cmd3.ExecuteNonQuery();
+
+                                    }
+                                }
+                                if (flag != 1)
+                                {
+
+                                    c.Email = user;
+                                    cmd.Parameters.AddWithValue("@Email", c.Email);
+                                    cmd.Parameters.AddWithValue("@Product_ID", c.Product_ID);
+                                    cmd.Parameters.AddWithValue("@Quantity", c.Quantity);
+
+                                    cmd.ExecuteNonQuery();
+                                }
+
+                            }
+
+                            else
+                            {
+                                c.Email = user;
+                                foreach (var v in products)
+                                {
+                                    foreach (var p in product)
+                                    {
+                                        if (v.productId == p.productId && v.Email==user)
+                                        {
+                                            flag1 = 99;
+                                            //c.Quantity = c.Quantity + v.Quantity ;
+                                           /* string sql3 = @"select Quantity from Cart_After_Login where Product_ID=" + p.productId + "and Email='" + user + "'";
+                                            SqlCommand cmd3 = new SqlCommand(sql3, conn);
+
+                                            int qty = cmd3.ExecuteNonQuery();*/
+                                            c.Quantity =  v.Quantity + p.Quantity;
+
+                                            string sql4 = @"update Cart_After_Login set Quantity=" + c.Quantity + " where Product_ID=" + p.productId + "and Email='" + user + "'";
+                                            SqlCommand cmd4 = new SqlCommand(sql4, conn);
+                                            cmd4.ExecuteNonQuery();
+                                        }
+                                    }
+                                }
+                                if (flag1 != 99)
+                                {
+                                    foreach (var p in product)
+                                    {
+
+                                        cmd.Parameters.AddWithValue("@Email", user);
+                                        cmd.Parameters.AddWithValue("@Product_ID",p.productId);
+                                        cmd.Parameters.AddWithValue("@Quantity", p.Quantity);
+
+                                        cmd.ExecuteNonQuery();
+                                        cmd.Parameters.Clear();
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        foreach (var v in product)
+                        {
+                            if (v.productId == c.Product_ID)
+                            {
+                                flag = 99;
+                                c.Quantity = c.Quantity + v.Quantity;
+                                string sql3 = @"update Cart_Before_Login set Quantity=" + c.Quantity + " where Product_ID=" + c.Product_ID;
+                                SqlCommand cmd3 = new SqlCommand(sql3, conn);
+                                cmd3.ExecuteNonQuery();
+                            }
+                        }
                    
+                        if (flag != 99)
+                        {
+
+                            cmd1.Parameters.AddWithValue("@Session_Cart_ID", tempSession);
+                            cmd1.Parameters.AddWithValue("@Product_ID", c.Product_ID);
+                            cmd1.Parameters.AddWithValue("@Quantity", c.Quantity);
+                            cmd1.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            c.Quantity = 0;
+                        }
 
 
-                    SqlCommand cmd = new SqlCommand(sql, conn);
-                    SqlCommand cmd1 = new SqlCommand(sql1, conn);
-                    SqlCommand cmd2 = new SqlCommand(sql2, conn);
-                   
-               
 
-                if (Email != null)
-                {
-                    try
-                    {
-                        Quan += (int)cmd.ExecuteScalar();
-                    }catch(Exception e)
-                    {
-                        Quan = Quantity;
                     }
-                    
-                }
 
-                else if (flag > 0)
-                {
-                    try
-                    {
-                        Quan += (int)cmd1.ExecuteScalar();
-                    }
-                    catch (Exception e)
-                    {
-                        Quan = Quantity;
-                    }
+
+                        if (user != null)
+                        {
+                            try
+                            {
+                                Quan += (int)cmd5.ExecuteScalar();
+                            }
+                            catch (Exception e)
+                            {
+                                c.Quantity = c.Quantity;
+                            }
+
+                        }
+
+                        else if (flag > 0)
+                        {
+                            try
+                            {
+                                Quan += (int)cmd6.ExecuteScalar();
+                            }
+                            catch (Exception e)
+                            {
+                                Quan= c.Quantity;
+                            }
+                        }
+                        else
+                        {
+                            //cmd7.ExecuteNonQuery();
+                            Quan = 0;
+                        }
+                
                 }
                 else
                 {
-                    cmd2.ExecuteNonQuery();
+                    cmd7.ExecuteNonQuery();
+                    
                     Quan = 0;
                 }
             }
 
-                 ++flag;
+            
+            ++flag;
 
-                ViewData["sessionId"] = sessionId;
-                ViewData["UserName"] = username;
-                ViewData["qty"] = Quan.ToString();
-
-             
+            ViewData["qty"] = Quan.ToString();
+            ViewData["sessionId"] = sessionId;
+            
             return View(productlist.ToList());
-        }
 
 
-        public IActionResult Index1(string search, int Quantity)
-        {
-            TempData["temp"] = 20;
-            TempData.Keep();
-            return View();
-        }
 
 
         }
+
+
+    }
+
 }
 
-
+    
