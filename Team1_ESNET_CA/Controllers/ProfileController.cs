@@ -5,11 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Team1_ESNET_CA.Data;
 using Team1_ESNET_CA.Models;
+using System.Data.SqlClient;
 
 namespace Team1_ESNET_CA.Controllers
 {
     public class ProfileController : Controller
     {
+        protected static readonly string connectionString = "Server=(local);Database=Necrosoft_14_04_21; Integrated Security=true";
         private readonly AppData appData;
 
         public ProfileController(AppData appData)
@@ -52,6 +54,18 @@ namespace Team1_ESNET_CA.Controllers
             else
             {
                 return View();
+            }
+        }
+
+        public void btnUpdate_Click()
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string sql = @"insert into Customer (First_Name,Last_Name,Mobile) Values (@txtFName,@txtLName,@txtMobile)";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.ExecuteNonQuery();
+                
             }
         }
         

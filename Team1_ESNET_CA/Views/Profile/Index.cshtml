@@ -23,47 +23,47 @@
     <div class="container">
         <div class="row justify-content-center my-auto align-items-center">
             <div class="px-xl-5 py-4">
-                <h4 class="text-capitalize">Create new account</h4>
+                <h4 class="text-capitalize">Profile</h4>
                 <form method="post" id="form" action="/Profile/Index">
                     <div class="form-row ">
                         <div class="col-lg-6 ">
-                            <label class="form-control my-3 p-3" >First Name:</label>
+                            <label>Email:</label>
                         </div>
                         <div class="col-lg-6">
-                            <label class="form-control my-3 p-3">@ViewData["First_Name"]</label>
+                            <label> @ViewData["Username"]</label>
+                        </div>
+                    </div>
+                    <div class="form-row ">
+                        <div class="col-lg-6 ">
+                            <label>First Name:</label>
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" id="txtFName" value=@ViewData["First_Name"]>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-lg-6">
-                            <label class="form-control my-3 p-3">Last Name:</label>
+                            <label>Last Name:</label>
                         </div>
                         <div class="col-lg-6">
-                            <label class="form-control my-3 p-3">@ViewData["Last_Name"]</label>
+                            <input type="text" id="txtLName" value=@ViewData["Last_Name"]>
                         </div>
                     </div>
 
+
                     <div class="form-row">
                         <div class="col-lg-6">
-                            <label class="form-control my-3 p-3">UserName:</label>
-                        </div>
-                       
-                        <div class="col-lg-6">
-                            <label class="form-control my-3 p-3">@ViewData["Username"]</label>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-lg-6">
-                            <label class="form-control my-3 p-3">Mobile:</label>
+                            <label>Mobile:</label>
                         </div>
 
                         <div class="col-lg-6">
-                            <label class="form-control my-3 p-3">@ViewData["Mobile"]</label>
+                            <input type="text" id="txtMobile" value=@ViewData["Mobile"]>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="col-lg-12">
-                            <button type="submit" class="btn mt-3 mb-3" tabindex="7">Update</button>
+                            <button type="submit" class="btn mt-3 mb-3" tabindex="7" id="btnUpdate">Update</button>
                         </div>
                     </div>
                     <div class="form-row my-auto justify-content-center align-items-center">
