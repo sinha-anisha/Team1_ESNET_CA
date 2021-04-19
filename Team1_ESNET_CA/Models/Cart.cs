@@ -12,7 +12,7 @@ namespace Team1_ESNET_CA.Models
         public string Email { get; set; }
         public int Quantity { get; set; }
         public int Total_Quantity { get; set; }
-        public int Checkout_total { get; set; }
+        public double Checkout_total { get; set; }
       
 
     }

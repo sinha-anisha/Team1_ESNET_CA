@@ -22,13 +22,12 @@
 
                 @if (ViewData["sessionId"] == null)
                 {
-                    <a class="navbar-brand">@ViewData["UserName"]</a>
+                    <a class="navbar-brand">Guest</a>
 
                 }
                 else
                 {
-                   // <a class="navbar-brand" asp-controller="Profile" asp-action="Index">@ViewData["UserName"]</a>
-                   <a class="navbar-brand" asp-controller="Gallery" asp-action="Index">@ViewData["UserName"]</a>
+            <a class="navbar-brand" asp-controller="Profile" asp-action="Index">@ViewData["First_Name"]</a>
 
                 }
                 <a class="navbar-brand" asp-controller="Gallery" asp-action="Index">Gallery</a>
@@ -40,11 +39,12 @@
 
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
+                       
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Profile" asp-action="Index">Profile </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="fromPurchaseHistory">Purchase History</a>
+                            @if (ViewData["sessionId"] != null)
+                            {
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="fromPurchaseHistory">Purchase History</a>
+                            }
                         </li>
                         
                     </ul>

@@ -13,7 +13,7 @@ namespace Team1_ESNET_CA.Controllers
 
     public class CartController : Controller
     {
-        protected static readonly string connectionString = "Server=(local);Database=Necrosoft_14_04_21; Integrated Security=true";
+        protected static readonly string connectionString = "Server=(local);Database=Necrosoft_LAST; Integrated Security=true";
 
 
 

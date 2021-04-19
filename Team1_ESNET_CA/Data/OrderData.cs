@@ -109,7 +109,7 @@ namespace Team1_ESNET_CA.Data
     {
         private static string orderid = null;
         private static string OEmail = null;
-        public static List<Order> addToOrder()
+        public static List<Order> addToOrder(string email)
         {
             List<Order> addToCarts = new List<Order>();
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -117,8 +117,8 @@ namespace Team1_ESNET_CA.Data
                 SqlDataReader reader = null;
                 SqlCommand cmd = new SqlCommand("", conn);
                 conn.Open();
-                cmd.CommandText = @"SELECT Product_ID, Email,Quantity FROM Cart_After_Login WHERE Email = 'anisha@gmail.com'";
-                //cmd.Parameters.AddWithValue("@Email", cart.Email);
+                cmd.CommandText = @"SELECT Product_ID, Email,Quantity FROM Cart_After_Login WHERE Email = @Email";
+                cmd.Parameters.AddWithValue("@Email", email);
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -226,13 +226,13 @@ namespace Team1_ESNET_CA.Data
             {
                 conn.Open();
                 //SQL string
-                string sql = @"SELECT od.Product_ID,p.Product_Name,p.Product_Image,p.Product_Description,o.Order_Date,o.Quantity
+                string sql = @"SELECT od.Product_ID,p.Product_Name,p.Product_Image,p.Product_Description,o.Order_Date,o.Quantity, p.Product_Summary
                                 FROM [Order] AS o, Order_Details AS od, Product AS p
                                 WHERE od.Product_ID = o.Product_ID
                                 AND p.Product_ID = o.Product_ID
                                 AND o.Order_ID = od.Order_ID
                                 AND o.Email = @Email
-                                GROUP BY od.Product_ID,p.Product_Name,p.Product_Image,p.Product_Description,o.Order_Date,o.Quantity";
+                                GROUP BY od.Product_ID,p.Product_Name,p.Product_Image,p.Product_Description,o.Order_Date,o.Quantity, p.Product_Summary";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@Email", email);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -240,15 +240,13 @@ namespace Team1_ESNET_CA.Data
                 {
                     Order orderInfo = new Order()
                     {
-                        //link to model var name
                         Product_ID = (int)reader["Product_ID"],
                         Product_Name = (string)reader["Product_Name"],
                         Product_Img = (string)reader["Product_Image"],
-                        //roduct_Summ = (string)reader["Product_Summary"],
+                        Product_Summ = (string)reader["Product_Summary"],
                         Product_Desc = (string)reader["Product_Description"],
                         Order_Date = (DateTime)reader["Order_Date"],
                         Order_Quantity = (int)reader["Quantity"],
-                        //Activation_Code = (string)reader["Activation_code"]
                     };
                     orderInfos.Add(orderInfo);
                 }

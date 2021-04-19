@@ -11,7 +11,7 @@ namespace Team1_ESNET_CA.Controllers
     public class RegisterController : Controller
     {
        // protected static readonly string connectionString = "Server=(local);Database=CA_DB; Integrated Security=true";
-        protected static readonly string connectionString = "Server=(local);Database=Necrosoft_14_04_21; Integrated Security=true";
+        protected static readonly string connectionString = "Server=(local);Database=Necrosoft_LAST; Integrated Security=true";
         private readonly AppData appData;
 
         public RegisterController(AppData appData)

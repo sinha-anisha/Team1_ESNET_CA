@@ -11,7 +11,7 @@ namespace Team1_ESNET_CA.Controllers
 {
     public class ProfileController : Controller
     {
-        protected static readonly string connectionString = "Server=(local);Database=Necrosoft_14_04_21; Integrated Security=true";
+        protected static readonly string connectionString = "Server=(local);Database=Necrosoft_LAST; Integrated Security=true";
         private readonly AppData appData;
 
         public ProfileController(AppData appData)
@@ -47,14 +47,16 @@ namespace Team1_ESNET_CA.Controllers
                     };
 
                 }
-                //ViewData["sessionId"] = sessionId;
-                ViewData["Total"] = "20000";
+                ViewData["sessionId"] = sessionId;
                 return View();
             }
             else
             {
+                ViewData["sessionId"] = sessionId;
                 return View();
             }
+
+            
         }
 
         public IActionResult update(Customer c)

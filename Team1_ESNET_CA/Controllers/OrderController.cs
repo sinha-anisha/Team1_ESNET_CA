@@ -23,9 +23,9 @@ namespace Team1_ESNET_CA.Controllers
                     if (s.Session_ID == sessionId)
                         email = s.Email;
                 }
-            if (sessionId != null)
+            if (sessionId != null && email != null)
             {
-                List<Order> cartdetail = OrderData.addToOrder();
+                List<Order> cartdetail = OrderData.addToOrder(email);
                 email = OrderData.generateActCode(cartdetail);
                 //If user i
                 List<Order> actCode = OrderData.getActCode(email);
@@ -36,10 +36,7 @@ namespace Team1_ESNET_CA.Controllers
                 return View();
             }
             else
-                return View("Index", "Cart");
-            return View();
-
-
+                return RedirectToAction("Index", "Login");
         }
         public IActionResult fromPurchaseHistory()
         {
@@ -60,6 +57,7 @@ namespace Team1_ESNET_CA.Controllers
             ViewData["orderInfos"] = allPdtDetails;
             return View("Index");
         }
+
 
         }
     }

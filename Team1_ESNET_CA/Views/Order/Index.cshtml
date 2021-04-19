@@ -21,7 +21,7 @@
         border-bottom: 1px dotted grey;
     }
 
-        .shortText:hover + .longText {
+        .shortText:hover + .longText:hover {
             visibility: visible;
         }
 
@@ -78,11 +78,11 @@
             @:<td class="order_details">
                 <span class="desc"> @detail.Product_Name </span><br />
                 <div class="shortText">
-                    <span class="desc"> @detail.Product_Desc</span>
+                    <span class="desc"> @detail.Product_Summ</span>
                 </div><br />
-                @*<div class="longText">
+                <div class="longText">
                     <span class="desc"> @detail.Product_Desc </span>
-                </div><br />*@
+                </div><br />
                 <span class="Od_desc"> @detail.Order_Date.ToShortDateString()</span><br />
                 <span class="Od_desc"> @detail.Order_Quantity</span><br />
                 if (detail.Order_Quantity == 1)
@@ -90,7 +90,7 @@
                     <span></span>
                 }
                 @:<span>
-                    @:<select class="actCodeBox">
+                    @:<select class="actCodeBox btn-success">
 
 
                         @foreach (Order ac in actCodes)

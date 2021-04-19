@@ -11,7 +11,7 @@ namespace Team1_ESNET_CA.Controllers
 {
     public class LoginController : Controller
     {
-        protected static readonly string connectionString = "Server=(local);Database=Necrosoft_14_04_21; Integrated Security=true";
+        protected static readonly string connectionString = "Server=(local);Database=Necrosoft_LAST; Integrated Security=true";
 
         private readonly AppData appData;
 
@@ -20,8 +20,20 @@ namespace Team1_ESNET_CA.Controllers
             this.appData = appData;
         }
 
-        public IActionResult Index()
+        public IActionResult Index( )
         {
+           /* List<Customer> customers = CustomerData.GetAllCustomers(appData.Customers);
+            string firstname = "Guest";
+            foreach (var c in customers)
+            {
+                if (c.Email == username)
+                {
+                    firstname = c.First_Name;
+                }
+            }
+
+            ViewData["username"] = username;
+            ViewData["fname"] = firstname;*/
             return View();
         }
 
@@ -64,7 +76,51 @@ namespace Team1_ESNET_CA.Controllers
                 }
             }
 
-                ViewData["username"] = username;
+
+
+
+            List<Session> sess = SessionData.GetAllSessions();
+            List<Customer> customers = CustomerData.GetAllCustomers(appData.Customers);
+            string sessionId = Request.Cookies["sessionId"];
+           
+            foreach (var s in sess)
+            {
+                if (s.Session_ID == sessionId)
+                    username = s.Email;
+            }
+            
+
+            if (cust != null)
+            {
+                foreach (var c in customers)
+                {
+                    if (c.Email == username)
+                    {
+                        ViewData["Username"] = username;
+                        ViewData["First_Name"] = c.First_Name;
+                        ViewData["Last_Name"] = c.Last_Name;
+                        ViewData["Password"] = c.Password;
+                        ViewData["Mobile"] = c.Mobile;
+                    };
+
+                }
+                ViewData["sessionId"] = sessionId;
+               
+            }
+            else
+            {
+                ViewData["sessionId"] = sessionId;
+               
+            }
+
+
+
+            ViewData["sessionId"] = sessionId;
+
+           
+
+
+           
 
             return RedirectToAction("Index", "Gallery");
 

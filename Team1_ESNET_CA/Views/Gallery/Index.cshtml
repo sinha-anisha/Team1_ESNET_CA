@@ -75,10 +75,27 @@
     }
 
     .input-group {
+        padding-bottom: 30px;
     }
+
     #cartid{
         float:right;
     }
+
+    .img {
+        width: 350px;
+        height: 250px;
+    }
+
+    .pdtName {
+        font-weight: bolder;
+        padding-top: 20px;
+    }
+
+    .pdtPrice {
+        font-weight: 600;
+    }
+
 </style>
 
 
@@ -119,18 +136,18 @@
     
                     <input type="hidden" name="Product_ID" value=@item.Product_ID />
                     <input type="hidden" name="Email" />
-                    @:<img src=@item.Product_Image width="350" height=250 /><br><br>
-                    <div>
-                        Product Name: @item.Product_Name
-                    </div><br><br>
-                    <div id="desc">@item.Product_Description</div><br>
-                    <div>
-                        Price: @item.Unit_Price
-                    </div><br>
+                    @:<img class="img" src=@item.Product_Image />
+                    <div class="pdtName">
+                        @item.Product_Name
+                    </div>
+                    <div id="desc">@item.Product_Description</div>
+                    <div class="pdtPrice">
+                        $@item.Unit_Price
+                    </div>
                     <p>@ViewData["Total"]</p>
 
                     <div class="input-group justify-content-center">
-                        <select class="custom-select col-sm-2 align-items-center" id="Quantity" name="Quantity">
+                        <select style="display:none" class="custom-select col-sm-2 align-items-center" id="Quantity" name="Quantity">
                             <option selected value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>

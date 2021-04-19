@@ -5,13 +5,7 @@
 
     var prod = (List<ViewCartProduct>)ViewData["viewcartprod"];
 
-    double TotalPrice = 0;
-
-    foreach (var QuantityNum in prod)
-    {
-
-        TotalPrice += (QuantityNum.unitPrice * QuantityNum.Quantity);
-    }
+    var total = (double)ViewData["Total"];
     }
 
 <head>
@@ -76,10 +70,10 @@
 </head>
 
 <body>
-   
+
 
     <form>
-        <p name="ToatalPrice" id="TotalPrice" style=" text-align: right">Total Price: @TotalPrice</p>
+        <p name="ToatalPrice" id="TotalPrice" style=" text-align: right">Total Price: @total.ToString("c")</p>
     </form>
     <hr>
 
@@ -91,60 +85,69 @@
 
         @foreach (var product in prod)
         {
+            <form action="/ViewCart/changeQuantity" method="post">
+                <tr>
 
-            <tr>
-
-                <div class="row">
-                    <div class="column">
-                        <img src=@product.productImage class="row column img" />
-                        <div class="format">
-                            <p><b>@product.productNmae</b></p>
-                            <p>@product.productDescription</p>
-                        </div>
-                    </div>
-
-                    <form action="/ViewCart/changeQuantity" method="post">
+                    <div class="row">
                         <div class="column">
-                            <div class="button">
-                                <input type="number" id="Quantity" name="Quantity" min="0" max="100" value="@product.Quantity">
-                                <input type="submit" />
+                            <img src=@product.productImage class="row column img" />
+                            <div class="format">
+                                <p><b>@product.productNmae</b></p>
+                                <p>@product.productDescription</p>
+                                <input type="hidden" name="Product_ID" value=@product.productId>
                             </div>
                         </div>
-                    </form>
 
-                    <form>
+                        <div class="column">
+
+                            <div class="input-group justify-content-center">
+                                <select class="custom-select col-sm-2 align-items-center" id="Quantity" name="Quantity">
+                                    <option selected value=@product.Quantity>@product.Quantity</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+
+
+                                </select>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-outline-success" id="add">Add</button>
+                                </div>
+                            </div>
+
+
+                           
+                        </div>
+
                         <div class="column">
                             <div class="Price">
-                                <p><input type="text" name="EachPrice" id="EachPrice" value="@product.unitPrice" readonly></p>
-                                
+                                <p><input type="text" name="EachPrice" id="EachPrice" value="@product.unitPrice.ToString("c")" readonly></p>
+
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
 
-            </tr>
+                </tr>
+            </form>
 
         }
-        <hr>
-        <tr>
-            <div class="row">
-                <div class="column">
-                </div>
-
-                <div class="column">
-                </div>
-
-                <div class="column">
-                    <div class="Checkout">
-                        <input type="submit" asp-controller="Order" asp-action="Index" value="Checkout" class="button">
-                    </div>
-                </div>
-            </div>
-        </tr>
-
-
-
     </table>
+    <div>
+        <a asp-controller="Gallery" asp-action="Index" style="float:right">Continue Shopping</a>
+    </div>
+    <br />
+    <br />
+    <br />
+    <form asp-action="Index" asp-controller="Order" style="float:right">
+        <div class="Checkout">
+            <input type="submit" value="Checkout" class="btn btn-success">
+        </div>
+    </form>
+
+
+
+
 
 
 

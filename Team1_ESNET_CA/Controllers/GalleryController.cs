@@ -11,7 +11,7 @@ namespace Team1_ESNET_CA.Controllers
 {
     public class GalleryController : Controller
     {
-        protected static readonly string connectionString = "Server=(local);Database=Necrosoft_14_04_21; Integrated Security=true";
+        protected static readonly string connectionString = "Server=(local);Database=Necrosoft_LAST; Integrated Security=true";
 
         private readonly AppData appData;
         public static int flag = 0;
@@ -39,7 +39,7 @@ namespace Team1_ESNET_CA.Controllers
                               select s;
             if (!String.IsNullOrEmpty(search))
             {
-                productlist = productlist.Where(s => s.Product_Name.Contains(search) || search == null);
+                productlist = productlist.Where(s => s.Product_Name.Contains(search,StringComparison.OrdinalIgnoreCase) || search == null);
             }
 
             string user = null;
@@ -249,8 +249,31 @@ namespace Team1_ESNET_CA.Controllers
             
             ++flag;
 
+
+            
+            List<Customer> customers = CustomerData.GetAllCustomers(appData.Customers);
+
+            
+
+
+            if (user != null)
+            {
+                foreach (var a in customers)
+                {
+                    if (a.Email == user)
+                    {
+                        ViewData["First_Name"] = a.First_Name;
+                        
+                    };
+
+                }
+               
+            }
+
+
             ViewData["qty"] = Quan.ToString();
             ViewData["sessionId"] = sessionId;
+            ViewData["user"] = user;
             
             return View(productlist.ToList());
 

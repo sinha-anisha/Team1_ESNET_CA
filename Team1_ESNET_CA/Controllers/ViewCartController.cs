@@ -87,7 +87,7 @@ namespace CA.Controllers
                 {
                     foreach (var t in viewcart)
                     {
-                        if (q.Product_ID == t.Product_ID )
+                        if (q.Product_ID == t.Product_ID && t.Email==user)
                         {
                             ViewCartProduct viewcartprod = new ViewCartProduct()
                             {
@@ -133,6 +133,15 @@ namespace CA.Controllers
 
             }
 
+            
+            foreach (var QuantityNum in vc)
+            {
+
+                c.Checkout_total += (QuantityNum.unitPrice * QuantityNum.Quantity);
+            }
+
+
+            ViewData["Total"] = c.Checkout_total;
             ViewData["Products"] = products;
             ViewData["viewcartprod"] = vc;
             ViewData["sessionId"] = sessionId;
@@ -182,9 +191,9 @@ namespace CA.Controllers
 
 
 
-                    string sql = @"update Cart_After_Login set Quantity =" + c.Quantity + "Email=" + user;
-                    SqlCommand cmd = new SqlCommand(sql, conn);
-                    string sql1 = @"update Cart_Before_Login set Quantity =" + c.Quantity + " and Product_ID=" + c.Product_ID;
+                    string sql = @"update Cart_After_Login set Quantity =" + c.Quantity + "Where Email='" + user + "' and Product_ID=" + c.Product_ID;
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                    string sql1 = @"update Cart_Before_Login set Quantity =" + c.Quantity + " where Product_ID=" + c.Product_ID;
                     SqlCommand cmd1 = new SqlCommand(sql1, conn);
 
 
@@ -205,7 +214,7 @@ namespace CA.Controllers
                     ViewData["prodbefore"] = products;
                     ViewData["prod"] = products;
 
-                    return View();
+                    return View("Index","ViewCart");
                 }
             }
         
