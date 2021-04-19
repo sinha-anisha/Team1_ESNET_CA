@@ -39,7 +39,7 @@
                             <label>First Name:</label>
                         </div>
                         <div class="col-lg-6">
-                            <input type="text" id="txtFName" value=@ViewData["First_Name"]>
+                            <input type="text" name="First_Name" id="txtFName" value=@ViewData["First_Name"]>
                         </div>
                     </div>
                     <div class="form-row">
@@ -47,7 +47,7 @@
                             <label>Last Name:</label>
                         </div>
                         <div class="col-lg-6">
-                            <input type="text" id="txtLName" value=@ViewData["Last_Name"]>
+                            <input type="text" name="Last_Name" id="txtLName" value=@ViewData["Last_Name"]>
                         </div>
                     </div>
 
@@ -58,13 +58,13 @@
                         </div>
 
                         <div class="col-lg-6">
-                            <input type="text" id="txtMobile" value=@ViewData["Mobile"]>
+                            <input type="text"  name="Mobile" id="txtMobile" value=@ViewData["Mobile"]>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="col-lg-12">
-                            <button type="submit" class="btn mt-3 mb-3" tabindex="7" id="btnUpdate">Update</button>
+                            <button type="submit" class="btn mt-3 mb-3" asp-action="update" asp-controller="Profile" tabindex="7" id="btnUpdate">Update</button>
                         </div>
                     </div>
                     <div class="form-row my-auto justify-content-center align-items-center">

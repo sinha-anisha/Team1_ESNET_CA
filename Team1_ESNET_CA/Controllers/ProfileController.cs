@@ -57,16 +57,28 @@ namespace Team1_ESNET_CA.Controllers
             }
         }
 
-        public void btnUpdate_Click()
+        public IActionResult update(Customer c)
         {
+
+            string sessionId = Request.Cookies["sessionId"];
+            List<Session> sess = SessionData.GetAllSessions();
+
+            string username = null;
+            foreach (var s in sess)
+            {
+                if (s.Session_ID == sessionId)
+                    username = s.Email;
+            }
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = @"insert into Customer (First_Name,Last_Name,Mobile) Values (@txtFName,@txtLName,@txtMobile)";
+                string sql = @"update Customer set First_Name='"+c.First_Name+"',Last_Name='"+c.Last_Name+"',Mobile="+c.Mobile
+                                               +"where Email='"+username+"'";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.ExecuteNonQuery();
 
             }
+            return RedirectToAction("Index", "Gallery");
         }
 
     }

@@ -20,11 +20,13 @@ namespace CA.Controllers
 
         public IActionResult Index(Cart c)
         {
+
+            string user = null;
             List<Product> products = Product_Data.GetProducts();
             List<Cart> cartAfter = ViewCartData.GetQuantity();
             List<Cart> cartBefore = ViewCartData.GetQuantityBeforeLogin();
             List<Cart> viewcart = new List<Cart>();
-            List<Session> sess = new List<Session>();
+            List<Session> sess = SessionData.GetAllSessions();
             List<ViewCartProduct> vc = new List<ViewCartProduct>();
             ViewData["products"] = products;
 
@@ -34,7 +36,7 @@ namespace CA.Controllers
 
 
 
-            string user = null;
+           
 
             foreach (var s in sess)
             {
@@ -43,7 +45,7 @@ namespace CA.Controllers
             }
 
 
-            if (user != null)
+            if (sessionId != null)
             {
                 viewcart = ViewCartData.GetQuantity();
             }
@@ -78,33 +80,63 @@ namespace CA.Controllers
                 }
             }
 
-            foreach (var q in products)
-            {
-                foreach (var t in viewcart)
-                {
-                    if (q.Product_ID == t.Product_ID)
-                    {
-                        ViewCartProduct viewcartprod = new ViewCartProduct()
-                        {
-                            productId = t.Product_ID,
-                            productImage = q.Product_Image,
-                            productDescription = q.Product_Description,
-                            unitPrice = q.Unit_Price,
-                            Quantity = t.Quantity
 
-                        };
-                        vc.Add(viewcartprod);
+            if (sessionId != null)
+            {
+                foreach (var q in products)
+                {
+                    foreach (var t in viewcart)
+                    {
+                        if (q.Product_ID == t.Product_ID )
+                        {
+                            ViewCartProduct viewcartprod = new ViewCartProduct()
+                            {
+                                productId = t.Product_ID,
+                                productImage = q.Product_Image,
+                                productDescription = q.Product_Description,
+                                unitPrice = q.Unit_Price,
+                                Quantity = t.Quantity
+
+                            };
+                            vc.Add(viewcartprod);
+
+                        }
 
                     }
+                }
+            }
+            else
+            {
 
+                foreach (var q in products)
+                {
+                    foreach (var t in viewcart)
+                    {
+                        if (q.Product_ID == t.Product_ID)
+                        {
+                            ViewCartProduct viewcartprod = new ViewCartProduct()
+                            {
+                                productId = t.Product_ID,
+                                productImage = q.Product_Image,
+                                productDescription = q.Product_Description,
+                                unitPrice = q.Unit_Price,
+                                Quantity = t.Quantity
+
+                            };
+                            vc.Add(viewcartprod);
+
+                        }
+
+                    }
                 }
 
 
-                ViewData["Products"] = products;
-                ViewData["viewcartprod"] = vc;
-
-                
             }
+
+            ViewData["Products"] = products;
+            ViewData["viewcartprod"] = vc;
+            ViewData["sessionId"] = sessionId;
+
 
             return View();
 

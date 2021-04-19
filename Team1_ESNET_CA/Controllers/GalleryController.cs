@@ -91,24 +91,6 @@ namespace Team1_ESNET_CA.Controllers
 
 
 
-               
-                /*SqlDataReader reader = cmd8.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    Cart ct = new Cart()
-                    {
-                        Product_ID = (int)reader["Product_ID"],
-                        Quantity = (int)reader["Quantity"]
-                    };
-                }*/
-           
-
-
-
-
-
-
             if (flag > 0)
                 {
 
@@ -203,11 +185,17 @@ namespace Team1_ESNET_CA.Controllers
                    
                         if (flag != 99)
                         {
+                            try
+                            {
+                                cmd1.Parameters.AddWithValue("@Session_Cart_ID", tempSession);
+                                cmd1.Parameters.AddWithValue("@Product_ID", c.Product_ID);
+                                cmd1.Parameters.AddWithValue("@Quantity", c.Quantity);
+                                cmd1.ExecuteNonQuery();
+                            }
+                            catch(Exception e)
+                            {
 
-                            cmd1.Parameters.AddWithValue("@Session_Cart_ID", tempSession);
-                            cmd1.Parameters.AddWithValue("@Product_ID", c.Product_ID);
-                            cmd1.Parameters.AddWithValue("@Quantity", c.Quantity);
-                            cmd1.ExecuteNonQuery();
+                            }
                         }
                         else
                         {

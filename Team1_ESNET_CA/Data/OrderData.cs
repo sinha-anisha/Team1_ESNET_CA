@@ -107,16 +107,17 @@ namespace Team1_ESNET_CA.Data
 {
     public class OrderData : DataConnection
     {
+        private static string orderid = null;
+        private static string OEmail = null;
         public static List<Order> addToOrder()
         {
             List<Order> addToCarts = new List<Order>();
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                conn.Open();
                 SqlDataReader reader = null;
                 SqlCommand cmd = new SqlCommand("", conn);
-
-                cmd.CommandText = @"SELECT Product_ID, Email,Quantity FROM Cart_After_Login WHERE Email = 'gen@gmail.com'";
+                conn.Open();
+                cmd.CommandText = @"SELECT Product_ID, Email,Quantity FROM Cart_After_Login WHERE Email = 'anisha@gmail.com'";
                 //cmd.Parameters.AddWithValue("@Email", cart.Email);
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -129,14 +130,13 @@ namespace Team1_ESNET_CA.Data
                     };
                     addToCarts.Add(addToCart);
                 }
+                conn.Close();
                 return addToCarts;
             }
         } //Cart to Order
         public static string generateActCode(List<Order> orderdetail) // Insert from Order to Order details
         {
-            string testEmail = null;
-            string orderid = null;
-
+            //Need do validation on current Order_Id with session_ID
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("", conn);
@@ -149,25 +149,31 @@ namespace Team1_ESNET_CA.Data
                     o.Order_ID = createNewID;
                     o.Order_Date = DateTime.Now;
                     cmd.Parameters.AddWithValue("@Order_ID", o.Order_ID);
-
                     cmd.Parameters.Add("@Order_Date", SqlDbType.Date);
                     cmd.Parameters["@Order_Date"].Value = o.Order_Date;
-
                     cmd.Parameters.AddWithValue("@Email", o.Email);
-
                     cmd.Parameters.Add("@Product_ID", SqlDbType.Int);
                     cmd.Parameters["@Product_ID"].Value = o.Product_ID;
-
                     cmd.Parameters.Add("@Quantity", SqlDbType.Int);
                     cmd.Parameters["@Quantity"].Value = o.Order_Quantity;
-
                     cmd.ExecuteNonQuery();
-                    testEmail = o.Email;
+                    OEmail = o.Email;
+                    orderid = o.Order_ID;
                     cmd.Parameters.Clear();
                 };
-
                 conn.Close();
-            
+                conn.Open();
+                try
+                {
+                    cmd.CommandText = @"DELETE FROM Cart_After_Login WHERE Email = @Email";
+                    cmd.Parameters.AddWithValue("@Email", OEmail);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error");
+                }
+                conn.Close();
                 conn.Open();
                 foreach (var o in orderdetail)
                 {
@@ -184,21 +190,22 @@ namespace Team1_ESNET_CA.Data
                         cmd.ExecuteNonQuery();
                         cmd.Parameters.Clear();
                     }
-                    orderid = o.Email; //Plan for say 2 emails
                 };
                 conn.Close();
-
             }
-            return orderid;
+            return OEmail;
         }
-        public static List<Order> getActCode()
+        public static List<Order> getActCode(string email)
         {
             List<Order> actcodes = new List<Order>();
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("", conn);
                 conn.Open();
-                cmd.CommandText = @"SELECT DISTINCT(Product_ID), Activation_Code FROM Order_Details";
+                cmd.CommandText = @"SELECT DISTINCT(OD.Product_ID), OD.Activation_Code FROM Order_Details AS OD, [Order] AS O
+                                    WHERE OD.Order_ID = o.Order_ID
+                                    AND o.Email = @Email";
+                cmd.Parameters.AddWithValue("@Email", email);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -215,10 +222,10 @@ namespace Team1_ESNET_CA.Data
         public static List<Order> getPdtInfo(string email)
         {
             List<Order> orderInfos = new List<Order>();
-
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
+                //SQL string
                 string sql = @"SELECT od.Product_ID,p.Product_Name,p.Product_Image,p.Product_Description,o.Order_Date,o.Quantity
                                 FROM [Order] AS o, Order_Details AS od, Product AS p
                                 WHERE od.Product_ID = o.Product_ID
@@ -226,7 +233,6 @@ namespace Team1_ESNET_CA.Data
                                 AND o.Order_ID = od.Order_ID
                                 AND o.Email = @Email
                                 GROUP BY od.Product_ID,p.Product_Name,p.Product_Image,p.Product_Description,o.Order_Date,o.Quantity";
-
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@Email", email);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -234,21 +240,20 @@ namespace Team1_ESNET_CA.Data
                 {
                     Order orderInfo = new Order()
                     {
+                        //link to model var name
                         Product_ID = (int)reader["Product_ID"],
                         Product_Name = (string)reader["Product_Name"],
                         Product_Img = (string)reader["Product_Image"],
-                        //Product_Summ = (string)reader["Product_Summary"],
+                        //roduct_Summ = (string)reader["Product_Summary"],
                         Product_Desc = (string)reader["Product_Description"],
                         Order_Date = (DateTime)reader["Order_Date"],
                         Order_Quantity = (int)reader["Quantity"],
                         //Activation_Code = (string)reader["Activation_code"]
                     };
                     orderInfos.Add(orderInfo);
-
                 }
                 conn.Close();
             }
-
             return orderInfos;
         }
     }

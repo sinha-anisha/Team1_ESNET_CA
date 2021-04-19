@@ -12,31 +12,54 @@ namespace Team1_ESNET_CA.Controllers
     {
         public IActionResult Index()
         {
+            string email = null;
             List<Order> actCodes = new List<Order>();
-            string sessionId = "SOMETHING MOCK"; //Request.Cookies["sessionId"];
+                List<Session> sess = SessionData.GetAllSessions();
+
+                string sessionId = Request.Cookies["sessionId"];
+
+                foreach (var s in sess)
+                {
+                    if (s.Session_ID == sessionId)
+                        email = s.Email;
+                }
             if (sessionId != null)
             {
-                //foreach (Cart c in cart)
-                //{
-                //    Session sessionid = appData.Sessions.FirstOrDefault(x => x.Email == c.Email);
-                //    if (sessionid != null)
-                //    {
                 List<Order> cartdetail = OrderData.addToOrder();
-                string orderdetail = OrderData.generateActCode(cartdetail);
-                List<Order> actCode = OrderData.getActCode();
-                List<Order> allPdtDetails = OrderData.getPdtInfo(orderdetail);
+                email = OrderData.generateActCode(cartdetail);
+                //If user i
+                List<Order> actCode = OrderData.getActCode(email);
+                List<Order> allPdtDetails = OrderData.getPdtInfo(email);
                 //ViewData["actCodes"] = actCodes;
                 ViewData["actCodes"] = actCode;
                 ViewData["orderInfos"] = allPdtDetails;
                 return View();
-                //Redirect to Index Action 
-                //    }
-                //}
             }
-            if (sessionId == null)
+            else
                 return View("Index", "Cart");
-            return RedirectToAction("Index", "Order");
+            return View();
+
+
+        }
+        public IActionResult fromPurchaseHistory()
+        {
+            List<Cart> cart = new List<Cart>();
+            string email = null;
+            List<Session> sess = SessionData.GetAllSessions();
+
+            string sessionId = Request.Cookies["sessionId"];
+
+            foreach (var s in sess)
+            {
+                if (s.Session_ID == sessionId)
+                    email = s.Email;
+            }
+            List<Order> actCode = OrderData.getActCode(email);
+            List<Order> allPdtDetails = OrderData.getPdtInfo(email);
+            ViewData["actCodes"] = actCode;
+            ViewData["orderInfos"] = allPdtDetails;
+            return View("Index");
+        }
 
         }
     }
-}

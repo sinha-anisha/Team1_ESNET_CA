@@ -79,7 +79,7 @@
    
 
     <form>
-        <p name="ToatalPrice" id="TotalPrice">@TotalPrice</p>
+        <p name="ToatalPrice" id="TotalPrice" style=" text-align: right">Total Price: @TotalPrice</p>
     </form>
     <hr>
 
@@ -116,7 +116,7 @@
                         <div class="column">
                             <div class="Price">
                                 <p><input type="text" name="EachPrice" id="EachPrice" value="@product.unitPrice" readonly></p>
-                                <p><input type="submit" id="Delete" name="Delete" value="Delete" /></p>
+                                
                             </div>
                         </div>
                     </form>
@@ -136,7 +136,7 @@
 
                 <div class="column">
                     <div class="Checkout">
-                        <input type="submit" value="Checkout" class="button">
+                        <input type="submit" asp-controller="Order" asp-action="Index" value="Checkout" class="button">
                     </div>
                 </div>
             </div>
