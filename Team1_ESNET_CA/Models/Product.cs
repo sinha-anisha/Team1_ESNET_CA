@@ -20,5 +20,7 @@ namespace Team1_ESNET_CA.Models
         public string Download_Link { get; set; }
 
         public List<string> Tags { get; set; }
+        public int Quantity { get; set; }
+        public int Checkout_total { get; set; }
     }
 }

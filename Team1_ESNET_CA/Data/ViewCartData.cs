@@ -11,44 +11,13 @@ namespace Team1_ESNET_CA.Data
     {
         protected static readonly string connectionString = "Server=(local);Database=Necrosoft_14_04_21; Integrated Security=true";
 
-        public static List<ViewCartProduct> GetAllProduct()
+
+
+
+        
+        public static List<Cart> GetQuantity()
         {
-            List<ViewCartProduct> products = new List<ViewCartProduct>();
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                string sql = @"SELECT p.[Product_ID], p.[Product_Name], p.[Product_Image], p.[Product_Description], p.[Unit_Price], c.[Product_ID], c.[Quantity], c.[Cart_ID]
-                                FROM [Product] AS p,[Cart_Product] AS c
-                                WHERE p.[Product_ID] =c.[Product_ID]" ;
-
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    ViewCartProduct product = new ViewCartProduct()
-                    {
-                        productId = (int)reader["Product_ID"],
-                        productNmae = (string)reader["Product_Name"],
-                        productImage = (string)reader["Product_Image"],
-                        productDescription = (string)reader["Product_Description"],
-                        unitPrice = (double)reader["Unit_Price"],
-                        Quantity = (int)reader["Quantity"],
-                        CartId = (string)reader["Cart_ID"]
-                    };
-                    products.Add(product);
-                }
-            }
-
-            return products;
-
-        }
-
-
-        public static List<ViewCartProduct> GetQuantity()
-        {
-            List<ViewCartProduct> products = new List<ViewCartProduct>();
+            List<Cart> products = new List<Cart>();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -60,10 +29,10 @@ namespace Team1_ESNET_CA.Data
 
                 while (reader.Read())
                 {
-                    ViewCartProduct product = new ViewCartProduct()
+                    Cart product = new Cart()
                     {
                         Email= (string)reader["Email"],
-                        productId = (int)reader["Product_ID"],
+                        Product_ID = (int)reader["Product_ID"],
                         Quantity = (int)reader["Quantity"],
                     };
                     products.Add(product);
@@ -74,9 +43,9 @@ namespace Team1_ESNET_CA.Data
 
         }
 
-        public static List<ViewCartProduct> GetQuantityBeforeLogin()
+        public static List<Cart> GetQuantityBeforeLogin()
         {
-            List<ViewCartProduct> products = new List<ViewCartProduct>();
+            List<Cart> products = new List<Cart>();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -88,10 +57,10 @@ namespace Team1_ESNET_CA.Data
 
                 while (reader.Read())
                 {
-                    ViewCartProduct product = new ViewCartProduct()
+                    Cart product = new Cart()
                     {
-                        Session_ID= (string)reader["Session_Cart_ID"],
-                        productId = (int)reader["Product_ID"],
+                        Session_Cart_ID= (string)reader["Session_Cart_ID"],
+                        Product_ID = (int)reader["Product_ID"],
                         Quantity = (int)reader["Quantity"],
                     };
                     products.Add(product);

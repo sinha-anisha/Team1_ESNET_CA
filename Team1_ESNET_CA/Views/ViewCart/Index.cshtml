@@ -1,16 +1,18 @@
 ﻿
-
-
-<!--<!--<h1>Index</h1>-->
-
-<!--@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@-->
 @{
-    var products = (List<ViewCartProduct>)ViewData["products"];
+    var products = (List<Product>)ViewData["products"];
+    var prodbefore = (List<Cart>)ViewData["prodbefore"];
 
+    var prod = (List<ViewCartProduct>)ViewData["viewcartprod"];
 
-}
+    double TotalPrice = 0;
+
+    foreach (var QuantityNum in prod)
+    {
+
+        TotalPrice += (QuantityNum.unitPrice * QuantityNum.Quantity);
+    }
+    }
 
 <head>
 
@@ -19,7 +21,7 @@
             box-sizing: border-box;
         }
 
-        /* Create three equal columns that floats next to each other */
+        
         .column {
             float: left;
             width: 33.33%;
@@ -27,33 +29,23 @@
         }
 
 
-        /* Clear floats after the columns */
+        
         .row:after {
             content: "";
             display: table;
             clear: both;
         }
 
-        /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-        media screen and (max-width:600px) {
-            .column
 
-        {
-            width: 100%;
-        }
-
-        }
-
-
-        /* To make sure that the name and the description have a right format*/
+        
         div.format {
             padding: 2px;
-            text-align: center-left;
+            text-align: center;
         }
 
         .button {
             background-color: #DCDCDC;
-            2px solid #e7e7e7 color: #DCDCDC;
+           
             padding: 5px 20px;
             text-align: center;
             display: inline-block;
@@ -68,89 +60,92 @@
                 color: white;
             }
 
-        .row column img {
-            width ="600" height="550" object-fit: cover;
+       @* .row column img {
+            width:"600";
+            height="550";
+            object-fit: cover;
         }
-
-        .Price p {
+*@
+        .Checkout p {
             text-align: right;
+            
         }
     </style>
 
-    @section Scripts
-    {
-        <script type="text/javascript">
-        </script>
-    }
 
 </head>
 
 <body>
-    <h2>Shopping Cart</h2>
+   
 
-
-
-    <hr>
     <form>
-        <table>
+        <p name="ToatalPrice" id="TotalPrice">@TotalPrice</p>
+    </form>
+    <hr>
 
-            @foreach (var product in products)
-            {
 
-                <tr>
+    <table>
 
-                    <div class="row">
-                        <div class="column">
-                            <img src=@product.productImage class="row column img" />
-                            <div class="format">
-                                <p><b>@product.productNmae</b></p>
-                                <p>@product.productDescription</p>
 
-                            </div>
-                        </div>
 
-                        <form>
-                            <div class="column">
-                                <div class="button">
-                                    <input type="number" id="quantity" name="quantity" min="1" max="100" value="@product.Quantity">
-                                    <input type="submit" name="changeQuantity"/>
-                                </div>
-                            </div>
-                        </form>
 
-                        <form>
-                            <div class="column">
-                                <div class="Price">
-                                    <p><input type="text" name="unitPrice" id="unitPrice" value="@(product.unitPrice*product.Quantity)" readonly></p>
-                                    <p><button>Delete</button></p>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+        @foreach (var product in prod)
+        {
 
-                </tr>
-             }
-            <hr>
             <tr>
+
                 <div class="row">
                     <div class="column">
-                    </div>
-
-                    <div class="column">
-                    </div>
-
-                    <div class="column">
-                        <div class="Price">
-                            <input type="submit" value="Checkout" class="button">
+                        <img src=@product.productImage class="row column img" />
+                        <div class="format">
+                            <p><b>@product.productNmae</b></p>
+                            <p>@product.productDescription</p>
                         </div>
                     </div>
+
+                    <form action="/ViewCart/changeQuantity" method="post">
+                        <div class="column">
+                            <div class="button">
+                                <input type="number" id="Quantity" name="Quantity" min="0" max="100" value="@product.Quantity">
+                                <input type="submit" />
+                            </div>
+                        </div>
+                    </form>
+
+                    <form>
+                        <div class="column">
+                            <div class="Price">
+                                <p><input type="text" name="EachPrice" id="EachPrice" value="@product.unitPrice" readonly></p>
+                                <p><input type="submit" id="Delete" name="Delete" value="Delete" /></p>
+                            </div>
+                        </div>
+                    </form>
                 </div>
+
             </tr>
 
+        }
+        <hr>
+        <tr>
+            <div class="row">
+                <div class="column">
+                </div>
+
+                <div class="column">
+                </div>
+
+                <div class="column">
+                    <div class="Checkout">
+                        <input type="submit" value="Checkout" class="button">
+                    </div>
+                </div>
+            </div>
+        </tr>
 
 
-        </table>
 
-    </form>
+    </table>
+
+
 
 </body>

@@ -29,8 +29,8 @@ namespace Team1_ESNET_CA.Controllers
         public IActionResult Index(string search, Product pdt, Cart c)
         {
             List<Session> sess = SessionData.GetAllSessions();
-            List<ViewCartProduct> products = ViewCartData.GetQuantity();
-            List<ViewCartProduct> product = ViewCartData.GetQuantityBeforeLogin();
+            List<Cart> products = ViewCartData.GetQuantity();
+            List<Cart> product = ViewCartData.GetQuantityBeforeLogin();
             List<Product> prod = Product_Data.GetProducts();
            // List<Product> prodbefore = ViewCartData.GetQuantityBeforeLogin();
 
@@ -123,7 +123,7 @@ namespace Team1_ESNET_CA.Controllers
                             {
                                 foreach (var v in products)
                                 {
-                                    if (v.productId == c.Product_ID && user == v.Email)
+                                    if (v.Product_ID == c.Product_ID && user == v.Email)
                                     {
                                         c.Quantity += v.Quantity;
                                         flag = 1;
@@ -153,7 +153,7 @@ namespace Team1_ESNET_CA.Controllers
                                 {
                                     foreach (var p in product)
                                     {
-                                        if (v.productId == p.productId && v.Email==user)
+                                        if (v.Product_ID == p.Product_ID && v.Email==user)
                                         {
                                             flag1 = 99;
                                             //c.Quantity = c.Quantity + v.Quantity ;
@@ -163,7 +163,7 @@ namespace Team1_ESNET_CA.Controllers
                                             int qty = cmd3.ExecuteNonQuery();*/
                                             c.Quantity =  v.Quantity + p.Quantity;
 
-                                            string sql4 = @"update Cart_After_Login set Quantity=" + c.Quantity + " where Product_ID=" + p.productId + "and Email='" + user + "'";
+                                            string sql4 = @"update Cart_After_Login set Quantity=" + c.Quantity + " where Product_ID=" + p.Product_ID + "and Email='" + user + "'";
                                             SqlCommand cmd4 = new SqlCommand(sql4, conn);
                                             cmd4.ExecuteNonQuery();
                                         }
@@ -175,7 +175,7 @@ namespace Team1_ESNET_CA.Controllers
                                     {
 
                                         cmd.Parameters.AddWithValue("@Email", user);
-                                        cmd.Parameters.AddWithValue("@Product_ID",p.productId);
+                                        cmd.Parameters.AddWithValue("@Product_ID",p.Product_ID);
                                         cmd.Parameters.AddWithValue("@Quantity", p.Quantity);
 
                                         cmd.ExecuteNonQuery();
@@ -191,7 +191,7 @@ namespace Team1_ESNET_CA.Controllers
                     {
                         foreach (var v in product)
                         {
-                            if (v.productId == c.Product_ID)
+                            if (v.Product_ID == c.Product_ID)
                             {
                                 flag = 99;
                                 c.Quantity = c.Quantity + v.Quantity;
